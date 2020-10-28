@@ -4,7 +4,7 @@ import { Row, Col, Radio, Card } from 'antd';
 import { RadioChangeEvent } from 'antd/es/radio/interface';
 import FreeManageItem from '@/components/FreeManageItem';
 
-import styles from './manage.less';
+import styles from './index.less';
 
 const RadioGroup = Radio.Group;
 
@@ -24,8 +24,6 @@ const manageType = [
 
 const Manage: FC<PageProps> = ({ manage, dispatch }) => {
   const { manages = [], filterKey = 0, freemanages = [], itemHover = 0 } = manage;
-  console.log(freemanages)
-  console.log(123)
   const onChange = (e: RadioChangeEvent) => {
     dispatch!({
       type: "manage/save", payload: {
@@ -44,43 +42,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
 
   return (
     <div className={styles.normal}>
-      <div className={styles.info}>
-        <Row className={styles.freemanage}>
-          <Col span={24}>
-            <p>周免英雄</p>
-            <div>
-              {
-                Array.isArray(freemanages)&&freemanages.map((data, index) => (
-                  <FreeManageItem
-                    data={data}
-                    itemHover={itemHover}
-                    onItemHover={onItemHover}
-                    thisIndex={index}
-                    key={index}
-                  />
-                ))
-              }
-            </div>
-          </Col>
-        </Row>
-      </div>
-      <Card className={styles.radioPanel}>
-        <RadioGroup onChange={onChange} value={filterKey}>
-          {manageType.map(data => (
-            <Radio value={data.key} key={`manage-rodio-${data.key}`}>
-              {data.value}
-            </Radio>
-          ))}
-        </RadioGroup>
-      </Card>
-      <Row>
-        {manages.filter(item => filterKey === 0 || item.manage_type === filterKey).reverse().map(item => (
-          <Col key={item.ename} span={3} className={styles.manageitem}>
-            <img src={`https://game.gtimg.cn/images/yxzj/img201606/manageimg/${item.ename}/${item.ename}.jpg`} />
-            <p>{item.cname}</p>
-          </Col>
-        ))}
-      </Row>
+      123
     </div>
   );
 }
