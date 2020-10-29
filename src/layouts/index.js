@@ -3,6 +3,8 @@ import './index.less';
 import { Link } from 'umi';
 import { HomeIcon, CipherIcon, WarnIcon, ManageIcon } from './svg.js';
 
+const minHeight = document.body.clientHeight - 136 + 'px';
+
 const { Header, Content, Footer, Sider } = Layout;
 const menuData = [
   { route: '/', name: '首页', icon: HomeIcon},
@@ -20,7 +22,7 @@ function BasicLayout(props) {
   return (
     <Layout>
       <Sider
-        width="112px"
+        width="12px"
         breakpoint="lg"
         collapsedWidth="0"
         onBreakpoint={broken => {
@@ -64,8 +66,8 @@ function BasicLayout(props) {
           <div
             className="site-layout-background"
             style={{
-              padding: 24,
-              minHeight: document.body.clientHeight - 136 + 'px',
+              padding: 0,
+              minHeight,
             }}
           >
             {children}
