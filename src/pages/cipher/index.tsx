@@ -2,7 +2,12 @@ import { ConnectProps, connect, CipherModelState } from 'umi';
 import React, { FC, useState } from 'react';
 import styles from './index.less';
 import { Tabs, Tree } from 'antd';
-import { CarryOutOutlined,  FormOutlined, PlusOutlined, DownOutlined } from '@ant-design/icons';
+import {
+  CarryOutOutlined,
+  FormOutlined,
+  PlusOutlined,
+  DownOutlined,
+} from '@ant-design/icons';
 
 const { TabPane } = Tabs;
 
@@ -76,7 +81,7 @@ const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
       ],
     },
   ];
-  const onSelect = (selectedKeys:any, info:any) => {
+  const onSelect = (selectedKeys: any, info: any) => {
     console.log('selected', selectedKeys, info);
   };
   const minHeight = document.body.clientHeight - 136 + 'px';
@@ -84,24 +89,22 @@ const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
   return (
     <>
       <div className="tabs">
-        <Tabs tabPosition="left" size="large" style={{minHeight}}>
+        <Tabs tabPosition="left" size="large" style={{ minHeight }}>
           {catalogue.map((item, index) => {
             return (
               <TabPane tab={item} key={index}>
-                <div className={styles.tree}>
+                <div className={styles.tree} style={{ minHeight }}>
                   <Tree
-                    // switcherIcon={<PlusOutlined />}
+                    // switcherIcon={<P ·78h'b  lusOutlined />}
                     // showLine={false}
-                    showLine={{showLeafIcon:false}}
+                    showLine={{ showLeafIcon: false }}
                     showIcon={false}
                     defaultExpandedKeys={['0-0-0']}
                     onSelect={onSelect}
                     treeData={treeData}
                   />
                 </div>
-                <div className='content'>
-123
-                </div>
+                <div className="content">123</div>
               </TabPane>
             );
           })}

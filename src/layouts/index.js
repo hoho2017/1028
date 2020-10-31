@@ -7,10 +7,10 @@ const minHeight = document.body.clientHeight - 136 + 'px';
 
 const { Header, Content, Footer, Sider } = Layout;
 const menuData = [
-  { route: '/', name: '首页', icon: HomeIcon},
-  { route: '/cipher', name: '密码应用', icon:CipherIcon },
-  { route: '/risk', name: '风险控制', icon:WarnIcon },
-  { route: '/manage', name: '系统管理' ,icon:ManageIcon},
+  { route: '/', name: '首页', icon: HomeIcon },
+  { route: '/cipher', name: '密码应用', icon: CipherIcon },
+  { route: '/risk', name: '风险控制', icon: WarnIcon },
+  { route: '/manage', name: '系统管理', icon: ManageIcon },
 ];
 
 function BasicLayout(props) {
@@ -22,7 +22,7 @@ function BasicLayout(props) {
   return (
     <Layout>
       <Sider
-        width="12px"
+        width="112px"
         breakpoint="lg"
         collapsedWidth="0"
         onBreakpoint={broken => {

@@ -1,0 +1,8 @@
+export default class RequestError extends Error {
+    constructor(response, data, reqOptions){
+        super(data.message);
+        this.response = response;
+        this.data = data;
+        this.reqOptions = reqOptions;
+    }
+}

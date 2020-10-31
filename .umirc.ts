@@ -4,10 +4,10 @@ export default defineConfig({
   dva: {},
   antd: {},
   proxy: {
-    "/api/": {
-      "target": "https://pvp.qq.com/",
-      "changeOrigin": true,
-      "pathRewrite": { "^/api/": "" }
-    }
-  }
+    '/sys/': {
+      target: 'http://49.232.45.79:8280/renren-admin/',
+      changeOrigin: true,
+      pathRewrite: { '^/api/': '' },
+    },
+  },
 });
