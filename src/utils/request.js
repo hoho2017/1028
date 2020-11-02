@@ -68,7 +68,6 @@ export function requestRaw(url, option = { method: 'GET' }) {
   //         // 'X-Auth-Token': token
   //     };
   // }
-  console.log(url);
   return fetch(url, newOptions)
     .then(response => checkStatus(response, newOptions))
     .then(response => {
