@@ -1,7 +1,7 @@
 import { ConnectProps, connect, CipherModelState } from 'umi';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import styles from './index.less';
-import { Tabs, Tree } from 'antd';
+import { Tabs, Tree, Input } from 'antd';
 import {
   CarryOutOutlined,
   FormOutlined,
@@ -10,82 +10,86 @@ import {
 } from '@ant-design/icons';
 
 const { TabPane } = Tabs;
+const { Search } = Input;
 
 interface PageProps extends ConnectProps {
   cipher: CipherModelState;
 }
 
 const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
-  const { catalogue } = cipher; //二级目录
-  const treeData = [
-    {
-      title: 'parent 1',
-      key: '0-0',
-      icon: <CarryOutOutlined />,
-      children: [
-        {
-          title: 'parent 1-0',
-          key: '0-0-0',
-          icon: <CarryOutOutlined />,
-          children: [
-            { title: 'leaf', key: '0-0-0-0', icon: <CarryOutOutlined /> },
-            {
-              title: (
-                <>
-                  <div>multiple line title</div>
-                </>
-              ),
-              key: '0-0-0-1',
-              icon: <CarryOutOutlined />,
-            },
-            { title: 'leaf', key: '0-0-0-2', icon: <CarryOutOutlined /> },
-          ],
-        },
-        {
-          title: 'parent 1-1',
-          key: '0-0-1',
-          icon: <CarryOutOutlined />,
-          children: [
-            { title: 'leaf', key: '0-0-1-0', icon: <CarryOutOutlined /> },
-          ],
-        },
-        {
-          title: 'parent 1-2',
-          key: '0-0-2',
-          icon: <CarryOutOutlined />,
-          children: [
-            { title: 'leaf', key: '0-0-2-0', icon: <CarryOutOutlined /> },
-            {
-              title: 'leaf',
-              key: '0-0-2-1',
-              icon: <CarryOutOutlined />,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      title: 'parent 2',
-      key: '0-1',
-      icon: <CarryOutOutlined />,
-      children: [
-        {
-          title: 'parent 2-0',
-          key: '0-1-0',
-          icon: <CarryOutOutlined />,
-          children: [
-            { title: 'leaf', key: '0-1-0-0', icon: <CarryOutOutlined /> },
-            { title: 'leaf', key: '0-1-0-1', icon: <CarryOutOutlined /> },
-          ],
-        },
-      ],
-    },
-  ];
+  const { catalogue, treeData, treeList } = cipher; //二级目录
+
+  const [expandedKeys, setExpandedKeys] = useState([]);
+  const [searchValue, setSearchValue] = useState('');
+  const [autoExpandParent, setAutoExpandParent] = useState(true);
+
+  useEffect(()=>{
+    setExpandedKeys(treeList.map(item=>item.name))
+  },[treeList])
+
   const onSelect = (selectedKeys: any, info: any) => {
     console.log('selected', selectedKeys, info);
   };
   const minHeight = document.body.clientHeight - 136 + 'px';
+  const getParentKey = (key, tree) => {
+    let parentKey;
+    for (let i = 0; i < tree.length; i++) {
+      const node = tree[i];
+      if (node.children) {
+        if (node.children.some(item => item.key === key)) {
+          parentKey = node.key;
+        } else if (getParentKey(key, node.children)) {
+          parentKey = getParentKey(key, node.children);
+        }
+      }
+    }
+    return parentKey;
+  };
+  const onChange = e => {
+    const { value } = e.target;
+    const expandedKeys = treeList
+      .map(item => {
+        if (item.title.indexOf(value) > -1) {
+          return getParentKey(item.key, treeData);
+        }
+        return null;
+      })
+      .filter((item, i, self) => item && self.indexOf(item) === i);
+      console.log('====================================');
+      console.log(expandedKeys);
+      console.log('====================================');
+    setExpandedKeys(expandedKeys);
+    setSearchValue(value);
+    setAutoExpandParent(true);
+  };
+  const loop = data =>
+    data.map(item => {
+      const index = item.title.indexOf(searchValue);
+      const beforeStr = item.title.substr(0, index);
+      const afterStr = item.title.substr(index + searchValue.length);
+      const title =
+        index > -1 ? (
+          <span>
+            {beforeStr}
+            <span className={styles.choosed}>{searchValue}</span>
+            {afterStr}
+          </span>
+        ) : (
+          <span>{item.title}</span>
+        );
+      if (item.children) {
+        return { title, key: item.key, children: loop(item.children) };
+      }
 
+      return {
+        title,
+        key: item.key,
+      };
+    });
+   const onExpand = expandedKeys => {
+     setExpandedKeys(expandedKeys)
+     setAutoExpandParent(false)
+    };
   return (
     <>
       <div className="tabs">
@@ -99,9 +103,16 @@ const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
                     // showLine={false}
                     showLine={{ showLeafIcon: false }}
                     showIcon={false}
-                    defaultExpandedKeys={['0-0-0']}
+                    onExpand={onExpand}
+                    expandedKeys={expandedKeys}
+                    autoExpandParent={autoExpandParent}
                     onSelect={onSelect}
-                    treeData={treeData}
+                    treeData={loop(treeData)}
+                  />
+                  <Search
+                    style={{ marginBottom: 8 }}
+                    placeholder="Search"
+                    onChange={onChange}
                   />
                 </div>
                 <div className="content">123</div>
