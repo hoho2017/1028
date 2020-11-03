@@ -2,12 +2,7 @@ import { ConnectProps, connect, CipherModelState } from 'umi';
 import React, { FC, useEffect, useState } from 'react';
 import styles from './index.less';
 import { Tabs, Tree, Input } from 'antd';
-import {
-  CarryOutOutlined,
-  FormOutlined,
-  PlusOutlined,
-  DownOutlined,
-} from '@ant-design/icons';
+import Box from './children/index.tsx';
 
 const { TabPane } = Tabs;
 const { Search } = Input;
@@ -22,13 +17,22 @@ const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
   const [expandedKeys, setExpandedKeys] = useState([]);
   const [searchValue, setSearchValue] = useState('');
   const [autoExpandParent, setAutoExpandParent] = useState(true);
+  const [deptId, setDeptId] = useState(1);
+  const [deptName, setDeptName] = useState('t');
 
-  useEffect(()=>{
-    setExpandedKeys(treeList.map(item=>item.name))
-  },[treeList])
+  useEffect(() => {
+    setExpandedKeys(treeList.map(item => item.name));
+  }, [treeList]);
 
   const onSelect = (selectedKeys: any, info: any) => {
-    console.log('selected', selectedKeys, info);
+    let deptId = 1;
+    treeList.forEach(item => {
+      if (item.name === selectedKeys[0]) {
+        deptId = item.deptId;
+      }
+    });
+    setDeptId(deptId);
+    setDeptName(selectedKeys[0]);
   };
   const minHeight = document.body.clientHeight - 136 + 'px';
   const getParentKey = (key, tree) => {
@@ -55,9 +59,7 @@ const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
         return null;
       })
       .filter((item, i, self) => item && self.indexOf(item) === i);
-      console.log('====================================');
-      console.log(expandedKeys);
-      console.log('====================================');
+
     setExpandedKeys(expandedKeys);
     setSearchValue(value);
     setAutoExpandParent(true);
@@ -86,10 +88,10 @@ const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
         key: item.key,
       };
     });
-   const onExpand = expandedKeys => {
-     setExpandedKeys(expandedKeys)
-     setAutoExpandParent(false)
-    };
+  const onExpand = expandedKeys => {
+    setExpandedKeys(expandedKeys);
+    setAutoExpandParent(false);
+  };
   return (
     <>
       <div className="tabs">
@@ -99,8 +101,6 @@ const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
               <TabPane tab={item} key={index}>
                 <div className={styles.tree} style={{ minHeight }}>
                   <Tree
-                    // switcherIcon={<P ·78h'b  lusOutlined />}
-                    // showLine={false}
                     showLine={{ showLeafIcon: false }}
                     showIcon={false}
                     onExpand={onExpand}
@@ -111,11 +111,14 @@ const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
                   />
                   <Search
                     style={{ marginBottom: 8 }}
-                    placeholder="Search"
+                    placeholder="输入关键字搜索"
                     onChange={onChange}
+                    enterButton
                   />
                 </div>
-                <div className="content">123</div>
+                <div className="content">
+                  <Box deptId={deptId} deptName={deptName} index={index} />
+                </div>
               </TabPane>
             );
           })}

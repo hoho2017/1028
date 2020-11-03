@@ -22,7 +22,7 @@ function BasicLayout(props) {
   return (
     <Layout>
       <Sider
-        width="1px"
+        width="112px"
         breakpoint="lg"
         collapsedWidth="0"
         onBreakpoint={broken => {
