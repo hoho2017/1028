@@ -1,6 +1,6 @@
 import { Effect, Reducer, Subscription, request } from 'umi';
 import { login } from '@/services/login';
-import { queryTree, deptSumTotal } from '@/services/cipher';
+import { queryTree, queryYear, queryTable } from '@/services/cipher';
 import { treeMake } from '@/utils/translateFunc.js';
 export interface CipherModelState {
   catalogue: Array<string>;
@@ -14,6 +14,8 @@ export interface CipherModelType {
   effects: {
     login: Effect;
     query: Effect;
+    queryY: Effect;
+    queryTable: Effect;
   };
   reducers: {
     save: Reducer<CipherModelState>;
@@ -34,8 +36,16 @@ const CipherModel: CipherModelType = {
         username: 'admin',
         password: 'admin',
       });
-      document.cookie = 'JSESSIONID=f46b03a5-91ac-4959-b6b1-9abdc994afc6';
+      document.cookie = 'JSESSIONID=ec8857eb-22c4-42d8-b727-217236029b87';
       if (callback) callback();
+    },
+    *queryY({ type, payload, callback }, { put, call, select }) {
+      const { year } = yield call(queryYear, payload);
+      if (callback) callback(year);
+    },
+    *queryTable({ type, payload, callback }, { put, call, select }) {
+      const { data } = yield call(queryTable, payload);
+      if (callback) callback(data);
     },
     *query({ type, payload }, { put, call, select }) {
       //请求tree data

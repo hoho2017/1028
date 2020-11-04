@@ -19,7 +19,7 @@ const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
   const [autoExpandParent, setAutoExpandParent] = useState(true);
   const [deptId, setDeptId] = useState(1);
   const [deptName, setDeptName] = useState('t');
-
+  useEffect(() => {}, []);
   useEffect(() => {
     setExpandedKeys(treeList.map(item => item.name));
   }, [treeList]);
@@ -99,7 +99,10 @@ const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
           {catalogue.map((item, index) => {
             return (
               <TabPane tab={item} key={index}>
-                <div className={styles.tree} style={{ minHeight }}>
+                <div
+                  className={styles.tree}
+                  style={{ minHeight, height: '100%' }}
+                >
                   <Tree
                     showLine={{ showLeafIcon: false }}
                     showIcon={false}
@@ -117,7 +120,12 @@ const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
                   />
                 </div>
                 <div className="content">
-                  <Box deptId={deptId} deptName={deptName} index={index} />
+                  <Box
+                    deptId={deptId}
+                    dispatch={dispatch}
+                    deptName={deptName}
+                    index={index}
+                  />
                 </div>
               </TabPane>
             );

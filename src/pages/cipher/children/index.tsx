@@ -2,10 +2,27 @@ import { ConnectProps, connect, CipherModelState } from 'umi';
 import React, { FC, useEffect, useState } from 'react';
 import styles from './index.less';
 import { Row, Col } from 'antd';
+import Sec from './sec.tsx';
+import Frist from './frist.tsx';
 
 function Box(props) {
-  const { deptId, deptName, index } = props;
-  console.log(deptId, deptName, index);
+  const { deptId, deptName, index, dispatch } = props;
+  const [year, setYear] = useState([]);
+  useEffect(() => {
+    dispatch({
+      type: 'cipher/queryY',
+      payload: {
+        deptId: 9,
+      },
+      callback: y => {
+        setYear(
+          Object.keys(y).map(item => {
+            return item.split('-')[0];
+          }),
+        );
+      },
+    });
+  }, [deptId]);
   return (
     <>
       <Row className={styles.pt20}>
@@ -36,6 +53,13 @@ function Box(props) {
             调用详情
           </div>
         </Col>
+      </Row>
+      <Row>
+        {index === 0 ? (
+          <Frist deptName={deptName} />
+        ) : index === 1 ? (
+          <Sec yearData={year} dispatch={dispatch} deptId={deptId} />
+        ) : null}
       </Row>
     </>
   );
