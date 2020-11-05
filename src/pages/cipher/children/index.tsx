@@ -8,13 +8,21 @@ import Frist from './frist.tsx';
 function Box(props) {
   const { deptId, deptName, index, dispatch } = props;
   const [year, setYear] = useState([]);
+  const [allYearData, setAllYearData] = useState([]);
+  const [sum, setSum] = useState({});
   useEffect(() => {
     dispatch({
       type: 'cipher/queryY',
       payload: {
         deptId: 9,
       },
-      callback: y => {
+      callback: (y, sum) => {
+        setAllYearData(
+          Object.keys(y).map(item => {
+            return { ...y[item], year: item.split('-')[0] };
+          }),
+        );
+        setSum({ ...sum });
         setYear(
           Object.keys(y).map(item => {
             return item.split('-')[0];
@@ -56,7 +64,13 @@ function Box(props) {
       </Row>
       <Row>
         {index === 0 ? (
-          <Frist deptName={deptName} />
+          <Frist
+            addYearData={allYearData}
+            deptName={deptName}
+            sum={sum}
+            dispatch={dispatch}
+            deptId={deptId}
+          />
         ) : index === 1 ? (
           <Sec yearData={year} dispatch={dispatch} deptId={deptId} />
         ) : null}

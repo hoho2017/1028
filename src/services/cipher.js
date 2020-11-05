@@ -22,3 +22,19 @@ export async function queryTable(params) {
     },
   );
 }
+export async function queryTitle(params) {
+  return request(`/sys/subapplication/list${getParamsStr(params)}`, {
+    method: 'POST',
+  });
+}
+
+export async function queryDouble(params) {
+  return request(
+    `/sys/subappalgorithmlogcollectarithtime/list-collect-last-year${getParamsStr(
+      params,
+    )}`,
+    {
+      method: 'POST',
+    },
+  );
+}

@@ -1,6 +1,12 @@
 import { Effect, Reducer, Subscription, request } from 'umi';
 import { login } from '@/services/login';
-import { queryTree, queryYear, queryTable } from '@/services/cipher';
+import {
+  queryTree,
+  queryYear,
+  queryTable,
+  queryTitle,
+  queryDouble,
+} from '@/services/cipher';
 import { treeMake } from '@/utils/translateFunc.js';
 export interface CipherModelState {
   catalogue: Array<string>;
@@ -15,6 +21,8 @@ export interface CipherModelType {
     login: Effect;
     query: Effect;
     queryY: Effect;
+    queryTitle: Effect;
+    queryDouble: Effect;
     queryTable: Effect;
   };
   reducers: {
@@ -36,12 +44,20 @@ const CipherModel: CipherModelType = {
         username: 'admin',
         password: 'admin',
       });
-      document.cookie = 'JSESSIONID=ec8857eb-22c4-42d8-b727-217236029b87';
+      document.cookie = 'JSESSIONID=3f22f2d7-893d-4d69-ba30-9bb7a42e1808';
       if (callback) callback();
     },
+    *queryDouble({ type, payload, callback }, { put, call, select }) {
+      const { allMonthTotal } = yield call(queryDouble, payload);
+      if (callback) callback(allMonthTotal);
+    },
+    *queryTitle({ type, payload, callback }, { put, call, select }) {
+      const { page } = yield call(queryTitle, payload);
+      if (callback) callback(page);
+    },
     *queryY({ type, payload, callback }, { put, call, select }) {
-      const { year } = yield call(queryYear, payload);
-      if (callback) callback(year);
+      const { year, sum } = yield call(queryYear, payload);
+      if (callback) callback(year, sum);
     },
     *queryTable({ type, payload, callback }, { put, call, select }) {
       const { data } = yield call(queryTable, payload);
