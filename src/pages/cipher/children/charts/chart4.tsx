@@ -18,7 +18,7 @@ import {
 
 const { Line } = Guide;
 
-const colors = ['#1249BB', '#2fc25b'];
+const colors = ['#1249BB', '#2fc25b', '#6B99F9'];
 
 const axisConfig = {
   line: {
@@ -41,8 +41,8 @@ function Chart4(props) {
   const { monthArith, zd } = props;
   let datas = Object.keys(monthArith).map(item => item.split('-')[1]);
   let data = [];
-  Object.values(monthArith).forEach((item,index) => {
-    Object.keys(item).forEach((name) => {
+  Object.values(monthArith).forEach((item, index) => {
+    Object.keys(item).forEach(name => {
       data.push({
         keyword: zd[Number(name) - 1].value,
         dates: datas[index],
@@ -62,10 +62,11 @@ function Chart4(props) {
 
   return (
     <Chart
+      width="100%"
       height={200}
       data={data}
       // scale={cols}
-      padding={[40, 80, 70, 80]}
+      padding={[10, 10, 30, 10]}
       autoFit
     >
       <Tooltip shared={true} showCrosshairs />

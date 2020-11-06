@@ -14,7 +14,7 @@ const columns = [
         children: value,
         props: {},
       };
-      obj.props.rowSpan = 10;
+      obj.props.rowSpan = 100;
 
       if (value === '技术要求' && index > 0) {
         obj.props.rowSpan = 0;
@@ -103,7 +103,11 @@ function Sec(props) {
   const handleChange = value => {
     setYear(value);
   };
-
+  const pagination = {
+    current: 1,
+    pageSize: 1000,
+    hideOnSinglePage: true,
+  };
   return (
     <>
       <div className={styles.content}>
@@ -133,6 +137,7 @@ function Sec(props) {
             style={{ width: '100%', marginTop: '2%', padding: '3%' }}
             columns={columns}
             dataSource={tableData}
+            pagination={pagination}
             bordered
           />
         </Row>

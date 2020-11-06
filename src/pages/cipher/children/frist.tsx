@@ -12,11 +12,13 @@ import { DownloadOutlined } from '@ant-design/icons';
 const { Option } = Select;
 
 function Frist(props) {
-  const { deptName, deptId, dispatch, sum, addYearData,ZD } = props;
+  const { deptName, deptId, dispatch, sum, addYearData, ZD } = props;
   const [title, setTitle] = useState({});
   const [allMonthTotal, setAllMonthTotal] = useState({});
   const [percent, setPercent] = useState({});
   const [monthArith, setMonthArith] = useState({});
+  const [value1, setValue1] = useState('');
+  const [value2, setValue2] = useState('');
   useEffect(() => {
     dispatch({
       type: 'cipher/queryTitle',
@@ -41,9 +43,9 @@ function Frist(props) {
       payload: {
         deptId: 9,
       },
-      callback: (allMonthTotal,percent, monthArith) => {
-        setMonthArith(monthArith)
-        setPercent(percent)
+      callback: (allMonthTotal, percent, monthArith) => {
+        setMonthArith(monthArith);
+        setPercent(percent);
         setAllMonthTotal(
           Object.keys(allMonthTotal).map(item => {
             return {
@@ -59,6 +61,17 @@ function Frist(props) {
   const handleChange = value => {
     console.log(`selected ${value}`);
   };
+  useEffect(() => {
+    const v1 = addYearData.filter(item => {
+      return item.assessmentType === 1;
+    });
+    v1.length > 0 && setValue1(v1[0].year);
+    const v2 = addYearData.filter(item => {
+      return item.assessmentType === 2;
+    });
+    v2.length > 0 && setValue2(v2[0].year);
+  }, [addYearData]);
+  console.log(value1);
 
   return (
     <>
@@ -146,31 +159,36 @@ function Frist(props) {
             >
               <div className={styles.innerTitle}>应用密码调用概况</div>
               <Row>
-                <Col span={12} style={{marginTop:'40px'}}>
+                <Col span={12} style={{ marginTop: '40px' }}>
                   <Chart2 allMonthTotal={allMonthTotal} />
                   <div style={{ textAlign: 'center' }}>近一年密码调用数量</div>
                 </Col>
-                <Col span={11} offset={1}>
+                <Col span={12}>
                   <div
                     className={styles.innerbox}
                     style={{
                       padding: '15px',
                       borderRadius: '40px',
                       marginTop: '30px',
-                      height:'45%'
+                      height: '30%',
                     }}
                   >
-                    <Chart3  percent={percent} zd={ZD.arith}/>
+                    <div style={{ textAlign: 'center' }}>
+                      近一年各类算法调用占比
+                    </div>
+                    <Chart3 percent={percent} zd={ZD.arith} />
                   </div>
                   <div
                     className={styles.innerbox}
                     style={{
-                      padding: '15px',
+                      paddingTop: '15px',
                       borderRadius: '40px',
                       marginTop: '20px',
                     }}
                   >
-                    <div>近一年各类算法调用趋势</div>
+                    <div style={{ textAlign: 'center' }}>
+                      近一年各类算法调用趋势
+                    </div>
                     <Chart4 monthArith={monthArith} zd={ZD.arith} />
                   </div>
                 </Col>
@@ -188,21 +206,25 @@ function Frist(props) {
                 <Col span={5}>
                   <div className={styles.innerTitle}>报告下载</div>
                 </Col>
-                <Col span={8} offset={3}>
+                <Col span={9} offset={1}>
                   <div>
                     <span style={{ fontWeight: '600' }}>密码测评报告</span>
                     <Select
-                      defaultValue="lucy"
-                      style={{ width: 70 }}
+                      value={value2}
+                      style={{ width: 75, marginLeft: '8px' }}
                       onChange={handleChange}
                     >
-                      <Option value="jack">Jack</Option>
-                      <Option value="lucy">Lucy</Option>
-                      <Option value="disabled" disabled>
-                        Disabled
-                      </Option>
-                      <Option value="Yiminghe">yiminghe</Option>
-                    </Select>{' '}
+                      {addYearData.map(item => {
+                        if (item.assessmentType === 2) {
+                          let year = item.assessmentDate.split('-')[0];
+                          return (
+                            <Option key={year} value={year}>
+                              {year}
+                            </Option>
+                          );
+                        }
+                      })}
+                    </Select>
                     <Button
                       className={styles.dbtn}
                       type="primary"
@@ -211,21 +233,25 @@ function Frist(props) {
                     />
                   </div>
                 </Col>
-                <Col span={8}>
+                <Col span={9}>
                   <div>
                     <span style={{ fontWeight: '600' }}>历年风评报告</span>
                     <Select
-                      defaultValue="lucy"
-                      style={{ width: 70 }}
+                      value={value1}
+                      style={{ width: 75, marginLeft: '8px' }}
                       onChange={handleChange}
                     >
-                      <Option value="jack">Jack</Option>
-                      <Option value="lucy">Lucy</Option>
-                      <Option value="disabled" disabled>
-                        Disabled
-                      </Option>
-                      <Option value="Yiminghe">yiminghe</Option>
-                    </Select>{' '}
+                      {addYearData.map(item => {
+                        if (item.assessmentType === 1) {
+                          let year = item.assessmentDate.split('-')[0];
+                          return (
+                            <Option key={year} value={year}>
+                              {year}
+                            </Option>
+                          );
+                        }
+                      })}
+                    </Select>
                     <Button
                       className={styles.dbtn}
                       type="primary"

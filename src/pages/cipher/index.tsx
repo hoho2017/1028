@@ -103,7 +103,7 @@ const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
                   className={styles.tree}
                   style={{ minHeight, height: '100%' }}
                 >
-                  {/* <Tree
+                  <Tree
                     showLine={{ showLeafIcon: false }}
                     showIcon={false}
                     onExpand={onExpand}
@@ -117,7 +117,7 @@ const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
                     placeholder="输入关键字搜索"
                     onChange={onChange}
                     enterButton
-                  /> */}
+                  />
                 </div>
                 <div className="content">
                   <Box
