@@ -6,7 +6,7 @@ import Sec from './sec.tsx';
 import Frist from './frist.tsx';
 
 function Box(props) {
-  const { deptId, deptName, index, dispatch } = props;
+  const { deptId, deptName, index, dispatch, ZD } = props;
   const [year, setYear] = useState([]);
   const [allYearData, setAllYearData] = useState([]);
   const [sum, setSum] = useState({});
@@ -65,6 +65,7 @@ function Box(props) {
       <Row>
         {index === 0 ? (
           <Frist
+            ZD={ZD}
             addYearData={allYearData}
             deptName={deptName}
             sum={sum}

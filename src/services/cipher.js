@@ -38,3 +38,12 @@ export async function queryDouble(params) {
     },
   );
 }
+export async function queryZD() {
+  return request(
+    `/sys/dict/list-map`,
+    {
+      method: 'POST',
+      body:{}
+    },
+  );
+}

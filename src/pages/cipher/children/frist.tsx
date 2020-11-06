@@ -12,9 +12,11 @@ import { DownloadOutlined } from '@ant-design/icons';
 const { Option } = Select;
 
 function Frist(props) {
-  const { deptName, deptId, dispatch, sum, addYearData } = props;
+  const { deptName, deptId, dispatch, sum, addYearData,ZD } = props;
   const [title, setTitle] = useState({});
   const [allMonthTotal, setAllMonthTotal] = useState({});
+  const [percent, setPercent] = useState({});
+  const [monthArith, setMonthArith] = useState({});
   useEffect(() => {
     dispatch({
       type: 'cipher/queryTitle',
@@ -39,13 +41,15 @@ function Frist(props) {
       payload: {
         deptId: 9,
       },
-      callback: data => {
+      callback: (allMonthTotal,percent, monthArith) => {
+        setMonthArith(monthArith)
+        setPercent(percent)
         setAllMonthTotal(
-          Object.keys(data).map(item => {
+          Object.keys(allMonthTotal).map(item => {
             return {
               time: item.split('-')[1],
-              value: data[item],
-              number: data[item],
+              value: allMonthTotal[item],
+              number: allMonthTotal[item],
             };
           }),
         );
@@ -142,7 +146,7 @@ function Frist(props) {
             >
               <div className={styles.innerTitle}>应用密码调用概况</div>
               <Row>
-                <Col span={12}>
+                <Col span={12} style={{marginTop:'40px'}}>
                   <Chart2 allMonthTotal={allMonthTotal} />
                   <div style={{ textAlign: 'center' }}>近一年密码调用数量</div>
                 </Col>
@@ -152,10 +156,11 @@ function Frist(props) {
                     style={{
                       padding: '15px',
                       borderRadius: '40px',
-                      marginTop: '20px',
+                      marginTop: '30px',
+                      height:'45%'
                     }}
                   >
-                    <Chart3 />
+                    <Chart3  percent={percent} zd={ZD.arith}/>
                   </div>
                   <div
                     className={styles.innerbox}
@@ -165,7 +170,8 @@ function Frist(props) {
                       marginTop: '20px',
                     }}
                   >
-                    <Chart4 />
+                    <div>近一年各类算法调用趋势</div>
+                    <Chart4 monthArith={monthArith} zd={ZD.arith} />
                   </div>
                 </Col>
               </Row>

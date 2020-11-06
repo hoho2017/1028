@@ -12,7 +12,7 @@ interface PageProps extends ConnectProps {
 }
 
 const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
-  const { catalogue, treeData, treeList } = cipher; //二级目录
+  const { catalogue, treeData, treeList, ZD } = cipher; //二级目录
 
   const [expandedKeys, setExpandedKeys] = useState([]);
   const [searchValue, setSearchValue] = useState('');
@@ -103,7 +103,7 @@ const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
                   className={styles.tree}
                   style={{ minHeight, height: '100%' }}
                 >
-                  <Tree
+                  {/* <Tree
                     showLine={{ showLeafIcon: false }}
                     showIcon={false}
                     onExpand={onExpand}
@@ -117,10 +117,11 @@ const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
                     placeholder="输入关键字搜索"
                     onChange={onChange}
                     enterButton
-                  />
+                  /> */}
                 </div>
                 <div className="content">
                   <Box
+                    ZD={ZD}
                     deptId={deptId}
                     dispatch={dispatch}
                     deptName={deptName}
