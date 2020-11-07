@@ -10,35 +10,31 @@ import {
   queryListCollect,
   queryFlist,
 } from '@/services/cipher';
+import { queryReason } from '@/services/risk';
 import { treeMake } from '@/utils/translateFunc.js';
-export interface CipherModelState {
+export interface RiskModelState {
   catalogue: Array<string>;
   treeData: Array<object>;
   treeList: Array<object>;
   ZD: object;
 }
 
-export interface CipherModelType {
-  namespace: 'cipher';
-  state: CipherModelState;
+export interface RiskModelType {
+  namespace: 'risk';
+  state: RiskModelState;
   effects: {
     login: Effect;
+    queryReason: Effect;
     query: Effect;
-    queryY: Effect;
-    queryTitle: Effect;
-    queryDouble: Effect;
-    queryTable: Effect;
-    queryFlist: Effect;
-    queryListCollect: Effect;
   };
   reducers: {
-    save: Reducer<CipherModelState>;
+    save: Reducer<RiskModelState>;
   };
   subscriptions: { init: Subscription };
 }
 
-const CipherModel: CipherModelType = {
-  namespace: 'cipher',
+const RiskModel: RiskModelType = {
+  namespace: 'risk',
   state: {
     catalogue: [],
     treeData: [],
@@ -54,39 +50,13 @@ const CipherModel: CipherModelType = {
       document.cookie = 'JSESSIONID=0b5864d1-d843-4ee7-986d-2a66f7f3d1e7';
       if (callback) callback();
     },
-    *queryFlist({ type, payload, callback }, { put, call, select }) {
-      const { data } = yield call(queryFlist, payload);
-      if (callback) callback(data);
-    },
-    *queryListCollect({ type, payload, callback }, { put, call, select }) {
-      const { yearArith, monthArith, allYearTotal } = yield call(
-        queryListCollect,
-        payload,
-      );
-      if (callback) callback(yearArith, monthArith, allYearTotal);
-    },
-    *queryDouble({ type, payload, callback }, { put, call, select }) {
-      const { allMonthTotal, percent, monthArith } = yield call(
-        queryDouble,
-        payload,
-      );
-      if (callback) callback(allMonthTotal, percent, monthArith);
-    },
-    *queryTitle({ type, payload, callback }, { put, call, select }) {
-      const { page } = yield call(queryTitle, payload);
+    *queryReason({ type, payload, callback }, { put, call, select }) {
+      const { page } = yield call(queryReason, payload);
       if (callback) callback(page);
-    },
-    *queryY({ type, payload, callback }, { put, call, select }) {
-      const { year, sum } = yield call(queryYear, payload);
-      if (callback) callback(year, sum);
-    },
-    *queryTable({ type, payload, callback }, { put, call, select }) {
-      const { data } = yield call(queryTable, payload);
-      if (callback) callback(data);
     },
     *query({ type, payload }, { put, call, select }) {
       //请求tree data
-      const localData = ['应用概况', '密评详情', '调用详情'];
+      const localData = ['风险概况', '警示详情'];
       // const localData = ['a', 'b', 'c'];
 
       const { data } = yield call(queryTree);
@@ -121,7 +91,7 @@ const CipherModel: CipherModelType = {
   subscriptions: {
     init({ dispatch, history }) {
       return history.listen(({ pathname }) => {
-        if (pathname === '/cipher') {
+        if (pathname === '/risk') {
           dispatch({
             type: 'login',
             callback: () => {
@@ -136,4 +106,4 @@ const CipherModel: CipherModelType = {
   },
 };
 
-export default CipherModel;
+export default RiskModel;

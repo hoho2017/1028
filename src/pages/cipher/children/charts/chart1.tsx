@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Chart, Point, Line, Area, Tooltip, Coordinate } from 'bizcharts';
+import { Chart, Point, Line, Area, Axis, Tooltip, Coordinate } from 'bizcharts';
 import DataSet from '@antv/data-set';
 function Chart1(props) {
   const { sum } = props;
   let data = [];
   Object.keys(sum).forEach(item => {
-    data.push({ item, value: sum[item] });
+    data.push({ item: item.substring(0, 2), value: sum[item] });
   });
 
   const { DataView } = DataSet;
@@ -27,6 +27,18 @@ function Chart1(props) {
         },
       }}
     >
+      <Axis
+        name="value"
+        line={null}
+        tickLine={null}
+        grid={{
+          type: 'circle',
+          lineStyle: {
+            lineDash: null,
+          },
+          alternateColor: 'rgba(0, 0, 0, 0.04)',
+        }}
+      />
       <Coordinate type="polar" radius={0.8} />
       <Line position="item*value" size="2" color="#FB7C56" />
       <Area position="item*value" color="#FB7C56" />

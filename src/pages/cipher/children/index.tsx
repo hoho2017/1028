@@ -4,6 +4,7 @@ import styles from './index.less';
 import { Row, Col } from 'antd';
 import Sec from './sec.tsx';
 import Frist from './frist.tsx';
+import Third from './third.tsx';
 
 function Box(props) {
   const { deptId, deptName, index, dispatch, ZD } = props;
@@ -74,7 +75,9 @@ function Box(props) {
           />
         ) : index === 1 ? (
           <Sec yearData={year} dispatch={dispatch} deptId={deptId} />
-        ) : null}
+        ) : (
+          <Third deptId={deptId} ZD={ZD} dispatch={dispatch} />
+        )}
       </Row>
     </>
   );

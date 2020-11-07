@@ -2,12 +2,20 @@ import { Chart, Tooltip, Legend, Point, Line, Interval } from 'bizcharts';
 import React, { FC, useEffect, useState } from 'react';
 
 function Chart2(props) {
-  const { allMonthTotal } = props;
+  const { allMonthTotal, td } = props;
+
   let data = [];
-  Array.isArray(allMonthTotal) &&
-    allMonthTotal.forEach(item => {
-      data.push(item);
+  if (td) {
+    td.forEach(item => {
+      data.push({ time: item.dates, value: item.first, number: item.first });
     });
+  } else {
+    Array.isArray(allMonthTotal) &&
+      allMonthTotal.forEach(item => {
+        data.push(item);
+      });
+  }
+
   let chartIns = null;
   const scale = {
     number: {

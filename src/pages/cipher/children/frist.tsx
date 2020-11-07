@@ -71,7 +71,6 @@ function Frist(props) {
     });
     v2.length > 0 && setValue2(v2[0].year);
   }, [addYearData]);
-  console.log(value1);
 
   return (
     <>
@@ -114,7 +113,7 @@ function Frist(props) {
             >
               <div className={styles.innerTitle}>应用密评概况</div>
               <Chart1 sum={sum} />
-              <Row>
+              <Row style={{ fontSize: '12px' }}>
                 {addYearData.map(item => {
                   return (
                     <>

@@ -38,12 +38,28 @@ export async function queryDouble(params) {
     },
   );
 }
-export async function queryZD() {
+export async function queryListCollect(params) {
   return request(
-    `/sys/dict/list-map`,
+    `/sys/subappalgorithmlogcollectarithtime/list-collect${getParamsStr(
+      params,
+    )}`,
     {
       method: 'POST',
-      body:{}
     },
   );
+}
+
+export async function queryFlist(params) {
+  return request(
+    `/sys/subappalgorithmlogcollectpath/list-collect${getParamsStr(params)}`,
+    {
+      method: 'POST',
+    },
+  );
+}
+export async function queryZD() {
+  return request(`/sys/dict/list-map`, {
+    method: 'POST',
+    body: {},
+  });
 }
