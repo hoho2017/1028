@@ -51,7 +51,7 @@ const CipherModel: CipherModelType = {
         username: 'admin',
         password: 'admin',
       });
-      document.cookie = 'JSESSIONID=0b5864d1-d843-4ee7-986d-2a66f7f3d1e7';
+      document.cookie = 'JSESSIONID=79d1ad9c-7833-4cb6-b317-ea2c0a8ecaf3';
       if (callback) callback();
     },
     *queryFlist({ type, payload, callback }, { put, call, select }) {

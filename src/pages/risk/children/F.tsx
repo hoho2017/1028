@@ -10,6 +10,7 @@ import {
   List,
   Typography,
   Divider,
+  Progress,
 } from 'antd';
 import Home from './img/home.png';
 import Inter from './img/inter.png';
@@ -18,129 +19,175 @@ import Chart4 from './chart4';
 import { DownloadOutlined } from '@ant-design/icons';
 const { Option } = Select;
 
-function J(props) {
-  const { deptName, deptId, dispatch, sum, addYearData, ZD } = props;
-  const [monthArith, setMonthArith] = useState({});
-  const [list, setList] = useState([]);
-  const [detail, setDetail] = useState({});
-  const [total, setTotal] = useState(0);
-
-  const [radio, setradio] = useState(ZD.arith[0].id);
+function F(props) {
+  const {
+    deptName,
+    deptId,
+    dispatch,
+    sum,
+    addYearData,
+    ZD: { arith },
+  } = props;
+  const [avg, setAvg] = useState();
+  const [max, setMax] = useState(1);
+  const [down, setDown] = useState([]);
+  const [stop, setStop] = useState([]);
+  const [wrong, setWrong] = useState([]);
   useEffect(() => {
     dispatch({
-      type: 'cipher/queryDouble',
+      type: 'risk/queryDouble',
       payload: {
         deptId: 9,
       },
-      callback: (allMonthTotal, percent, monthArith) => {
-        setMonthArith(monthArith);
+      callback: avgTime => {
+        let obj = {};
+        let max = 1;
+        Object.keys(avgTime).forEach(item => {
+          if (avgTime[item] > max) {
+            max = avgTime[item];
+          }
+          arith.forEach(a => {
+            if (a.id == item) {
+              obj[a.value] = avgTime[item];
+            }
+          });
+        });
+        setAvg(obj);
+        setMax(max);
       },
     });
-
     dispatch({
-      type: 'risk/queryReason',
+      type: 'risk/details',
       payload: {
         deptId: 9,
-        limit: 5,
-        page: 1,
+        appTypes: 1,
       },
-      callback: page => {
-        setList(page.list);
-        setTotal(page.totalCount);
-        setDetail(page.list.length > 0 && page.list[0]);
+      callback: list => {
+        setDown(list);
+      },
+    });
+    dispatch({
+      type: 'risk/details',
+      payload: {
+        deptId: 9,
+        appTypes: 2,
+      },
+      callback: list => {
+        setStop(list);
+      },
+    });
+    dispatch({
+      type: 'risk/details',
+      payload: {
+        deptId: 9,
+        appTypes: '1,2',
+      },
+      callback: list => {
+        setWrong(list);
       },
     });
   }, []);
-  const onChange = e => {
-    setradio(e.target.value); //1 2 3 4
-  };
-  const data = [
-    'Racing car sprays burning .',
-    'Japanese princess to wed r.',
-    'Australian walks 100km   crash.',
-    'Man charged over missing  .',
-    'Los Angeles battles huge .',
-  ];
-  const pageTurning = num => {
-    dispatch({
-      type: 'risk/queryReason',
-      payload: {
-        deptId: 9,
-        limit: 5,
-        page: num,
-      },
-      callback: page => {
-        setList(page.list);
-        setTotal(page.totalCount);
-      },
-    });
-  };
   return (
     <>
-      <div
-        className={styles.content}
-        style={{ padding: '15px', borderRadius: '40px', marginBottom: '2%' }}
-      >
-        <div className={styles.innerTitle}>调用风险预警</div>
-        <Radio.Group
-          style={{ width: '100%' }}
-          onChange={onChange}
-          value={radio}
-        >
-          {ZD.arith.map(item => {
-            return (
-              <Radio className={styles.radio} value={item.id}>
-                <span>{item.value}</span>
-              </Radio>
-            );
-          })}
-        </Radio.Group>
-        <Chart4 monthArith={monthArith} id={radio} zd={ZD.arith} />
-        <div style={{ textAlign: 'center' }}>近一年各类算法使用趋势</div>
-      </div>
-      <div
-        className={styles.content}
-        style={{ padding: '15px', borderRadius: '40px', marginBottom: '2%' }}
-      >
-        <div className={styles.innerTitle}>调用风险预警</div>
-        <Row style={{ marginTop: '10px', cursor: 'pointer' }}>
-          <Col span={8} offset={1}>
-            <List
-              size="small"
-              dataSource={list}
-              pagination={{
-                showSizeChanger: false,
-                size: 'small',
-                hideOnSinglePage: true,
-                pageSize: 5,
-                total: total,
-                onChange: page => {
-                  pageTurning(page);
-                },
-              }}
-              renderItem={item => (
-                <List.Item onClick={() => setDetail(item)}>
-                  {item.appName +
-                    ZD.arith[Number(radio)].value +
-                    item.appTypeName}
-                </List.Item>
-              )}
-            />
-          </Col>
-          <Col span={14} offset={1}>
-            <div className={styles.content2}>
-              <Row>
-                {detail.logDate},密码智能体调用{ZD.arith[Number(radio)].value}
-                出错
-              </Row>
-              <Row>错误代码:{detail.appWarnCode}</Row>
-              <Row>错误原因:{detail.logMessage}</Row>
+      <Row style={{ width: '100%' }}>
+        <Col span={10} offset={1}>
+          <div className={styles.content3}>
+            <div className={styles.innerTitle3}>应用密评概况</div>
+            {avg &&
+              Object.keys(avg).map((item, index) => {
+                let percent = (avg[item] / max) * 100;
+                return (
+                  <Row style={{ padding: '20px' }}>
+                    <Col>
+                      <div className={styles.sb}>{item}平均处理时长 </div>
+                    </Col>
+                    <Col span={15} style={{ marginLeft: '3px' }}>
+                      <Progress
+                        strokeColor={index % 2 === 0 ? '#FF5B2B' : '#0067E7'}
+                        percent={percent}
+                        format={percent => `${avg[item]} ms`}
+                        status="active"
+                      />
+                    </Col>
+                  </Row>
+                );
+              })}
+          </div>
+        </Col>
+        <Col span={10} style={{ height: '100%' }}>
+          <div className={styles.content3}>
+            <div
+              className={styles.innerTitle3}
+              style={{ marginBottom: '1rem' }}
+            >
+              密码算法调用趋势预警
             </div>
-          </Col>
-        </Row>
-      </div>
+            {down.map(item => {
+              const txt = (item.appName + item.appTypeName).split('下降');
+              console.log(txt);
+              return (
+                <div style={{ padding: '2px' }}>
+                  {txt[0]}
+                  <span style={{ color: '#1CC30A' }}>下降</span>
+                  {txt[1]}
+                </div>
+              );
+            })}
+          </div>
+        </Col>
+      </Row>
+      <Row style={{ width: '100%' }}>
+        <Col span={10} style={{ height: '100%' }} offset={1}>
+          <div className={styles.content3}>
+            <div
+              className={styles.innerTitle3}
+              style={{ marginBottom: '1rem' }}
+            >
+              密码算法调用趋势预警
+            </div>
+            {down.map(item => {
+              const txt = (item.appName + item.appTypeName).split('停止');
+              console.log(txt);
+              return (
+                <div style={{ padding: '2px' }}>
+                  {txt[0]}
+                  <span style={{ color: '#DF2B22' }}>停止</span>
+                  {txt[1]}
+                </div>
+              );
+            })}
+          </div>
+        </Col>
+        <Col span={10} style={{ height: '100%' }}>
+          <div className={styles.content3}>
+            <div
+              className={styles.innerTitle3}
+              style={{ marginBottom: '1rem' }}
+            >
+              密码算法调用趋势预警
+            </div>
+            {down.map(item => {
+              const txt = (item.appName + item.appTypeName).includes('故障')
+                ? (item.appName + item.appTypeName).split('故障')
+                : (item.appName + item.appTypeName).split('延时');
+              console.log(txt);
+              return (
+                <div style={{ padding: '2px' }}>
+                  {txt[0]} ·
+                  {(item.appName + item.appTypeName).includes('故障') ? (
+                    <span style={{ color: '#DF2B22' }}>故障</span>
+                  ) : (
+                    <span style={{ color: '#FFC521' }}>延时</span>
+                  )}
+                  {txt[1]}
+                </div>
+              );
+            })}
+          </div>
+        </Col>
+      </Row>
     </>
   );
 }
 
-export default J;
+export default F;

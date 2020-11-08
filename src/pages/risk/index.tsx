@@ -101,7 +101,11 @@ const Risk: FC<PageProps> = ({ risk, dispatch }) => {
               <TabPane tab={item} key={index}>
                 <div
                   className={styles.tree}
-                  style={{ minHeight, height: '100%' }}
+                  style={{
+                    minHeight,
+                    height: '100%',
+                    display: index === 0 ? 'none' : 'block',
+                  }}
                 >
                   <Tree
                     showLine={{ showLeafIcon: false }}

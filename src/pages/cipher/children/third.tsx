@@ -18,10 +18,12 @@ function Sec(props) {
   } = props;
   const [id, setId] = useState(1);
   const [no, setno] = useState(0);
-  const [cond, setcond] = useState(1);
+  const [cond, setcond] = useState(0);
   const [table, settable] = useState([]);
   const [monthArith, setmonthArith] = useState([]);
+  const [yearArith, setyearArith] = useState([]);
   const [lines, setlines] = useState({});
+  const [ylines, setylines] = useState({});
   const [flist, setflist] = useState({});
   const columns = [
     {
@@ -65,6 +67,7 @@ function Sec(props) {
       },
       callback: (yearArith, monthArith, allYearTotal) => {
         setmonthArith(monthArith);
+        setyearArith(yearArith);
         let arr = [];
         let ydata = Object.values(yearArith)[
           Object.values(yearArith).length - 1
@@ -83,6 +86,7 @@ function Sec(props) {
       },
     });
     dispatch({
+      //箭头 图
       type: 'cipher/queryFlist',
       payload: {
         deptId: 9,
@@ -101,7 +105,8 @@ function Sec(props) {
     hideOnSinglePage: true,
   };
   useEffect(() => {
-    let datas = Object.keys(monthArith).map(item => item.split('-')[1]);
+    // let datas = Object.keys(monthArith).map(item => item.split('-')[1]);
+    let datas = Object.keys(monthArith).map(item => item);
     let data = [];
     Object.values(monthArith).forEach((item, index) => {
       Object.keys(item).forEach(name => {
@@ -124,7 +129,32 @@ function Sec(props) {
     });
     setlines({ ...obj });
   }, [monthArith]);
-  console.log(arith);
+
+  useEffect(() => {
+    // let datas = Object.keys(monthArith).map(item => item.split('-')[1]);
+    let datas = Object.keys(yearArith).map(item => item);
+    let data = [];
+    Object.values(yearArith).forEach((item, index) => {
+      Object.keys(item).forEach(name => {
+        data.push({
+          keyword: arith[Number(name) - 1].value,
+          dates: datas[index],
+          first: item[name],
+        });
+      });
+    });
+
+    let obj = {};
+
+    data.forEach(item => {
+      if (obj[item.keyword]) {
+        obj[item.keyword].push(item);
+      } else {
+        obj[item.keyword] = [item];
+      }
+    });
+    setylines({ ...obj });
+  }, [yearArith]);
 
   return (
     <>
@@ -158,7 +188,10 @@ function Sec(props) {
         <div style={{ display: id === 1 ? 'block' : 'none' }}>
           <Row>
             <Col span={8} offset={1}>
-              <div className={styles.titleTxt}>近一年的调用情况</div>
+              <div className={styles.titleTxt}>
+                {cond === 1 ? '历年' : cond === 2 ? '近几月' : '近一年'}
+                的调用情况
+              </div>
             </Col>
             <Col span={8} offset={7}>
               <Button
@@ -191,10 +224,19 @@ function Sec(props) {
               <div>
                 算法密码
                 <span style={{ marginLeft: '8px' }}>
-                  {no === 0 ? Object.keys(lines)[no] : no}
+                  {no === 0 ? Object.keys(cond === 1 ? ylines : lines)[no] : no}
                 </span>
               </div>
-              <Chart2 td={no === 0 ? Object.values(lines)[no] : lines[no]} />
+              <Chart2
+                cond={cond}
+                td={
+                  no === 0
+                    ? Object.values(cond === 1 ? ylines : lines)[no]
+                    : cond === 1
+                    ? ylines[no]
+                    : lines[no]
+                }
+              />
             </Col>
             <Col span={12}>
               <div
@@ -218,31 +260,6 @@ function Sec(props) {
           <Row>
             <Col span={8} offset={1}>
               <div className={styles.titleTxt}>应用调用密码典型场景</div>
-            </Col>
-            <Col span={8} offset={7}>
-              <Button
-                type="primary"
-                onClick={() => setcond(1)}
-                shape="round"
-                style={{
-                  backgroundColor: cond === 1 ? '#1890ff' : '#ccc',
-                  borderColor: cond === 1 ? '#1890ff' : '#ccc',
-                }}
-              >
-                按年查询
-              </Button>
-              <Button
-                type="primary"
-                shape="round"
-                onClick={() => setcond(2)}
-                style={{
-                  marginLeft: '10px',
-                  backgroundColor: cond === 2 ? '#1890ff' : '#ccc',
-                  borderColor: cond === 2 ? '#1890ff' : '#ccc',
-                }}
-              >
-                按月查询
-              </Button>
             </Col>
           </Row>
           <Row>

@@ -7,3 +7,9 @@ export async function queryReason(params) {
     method: 'POST',
   });
 }
+
+export async function details(params) {
+  return request(`/sys/subappwarnlog/list${getParamsStr(params)}`, {
+    method: 'POST',
+  });
+}

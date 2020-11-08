@@ -11,16 +11,18 @@ function Box(props) {
   const [allYearData, setAllYearData] = useState([]);
   const [sum, setSum] = useState({});
   useEffect(() => {}, [deptId]);
-  console.log(index);
 
   return (
     <>
-      <Row className={styles.pt20}>
-        <Col span={8}>
+      <Row
+        className={styles.pt20}
+        style={{ display: index === 0 ? 'none' : 'block' }}
+      >
+        <Col span={15}>
           <div className={styles.title}>{deptName}OA系统</div>
         </Col>
       </Row>
-      <Row>
+      <Row style={{ marginBottom: '4%' }}>
         {index === 1 ? (
           <J
             ZD={ZD}

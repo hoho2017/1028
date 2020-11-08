@@ -2,7 +2,7 @@ import { Chart, Tooltip, Legend, Point, Line, Interval } from 'bizcharts';
 import React, { FC, useEffect, useState } from 'react';
 
 function Chart2(props) {
-  const { allMonthTotal, td } = props;
+  const { allMonthTotal, td, cond } = props;
 
   let data = [];
   if (td) {
@@ -26,6 +26,14 @@ function Chart2(props) {
     },
   };
   const colors = ['#6394f9', '#62daaa'];
+  console.log(data);
+  if (cond === 0) {
+    while (data.length > 12) {
+      console.log('init');
+
+      data.shift();
+    }
+  }
 
   return (
     <Chart

@@ -10,7 +10,7 @@ import {
   queryListCollect,
   queryFlist,
 } from '@/services/cipher';
-import { queryReason } from '@/services/risk';
+import { queryReason, details } from '@/services/risk';
 import { treeMake } from '@/utils/translateFunc.js';
 export interface RiskModelState {
   catalogue: Array<string>;
@@ -26,6 +26,8 @@ export interface RiskModelType {
     login: Effect;
     queryReason: Effect;
     query: Effect;
+    details: Effect;
+    queryDouble: Effect;
   };
   reducers: {
     save: Reducer<RiskModelState>;
@@ -43,16 +45,24 @@ const RiskModel: RiskModelType = {
   },
   effects: {
     *login({ type, payload, callback }, { put, call, select }) {
-      const data = yield call(login, {
+      const { cookie } = yield call(login, {
         username: 'admin',
         password: 'admin',
       });
-      document.cookie = 'JSESSIONID=0b5864d1-d843-4ee7-986d-2a66f7f3d1e7';
+      document.cookie = `JSESSIONID=79d1ad9c-7833-4cb6-b317-ea2c0a8ecaf3`;
       if (callback) callback();
+    },
+    *details({ type, payload, callback }, { put, call, select }) {
+      const { page } = yield call(details, payload);
+      if (callback) callback(page.list);
     },
     *queryReason({ type, payload, callback }, { put, call, select }) {
       const { page } = yield call(queryReason, payload);
       if (callback) callback(page);
+    },
+    *queryDouble({ type, payload, callback }, { put, call, select }) {
+      const { avgTime } = yield call(queryDouble, payload);
+      if (callback) callback(avgTime);
     },
     *query({ type, payload }, { put, call, select }) {
       //请求tree data

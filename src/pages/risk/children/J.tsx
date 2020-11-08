@@ -22,7 +22,7 @@ function J(props) {
   const { deptName, deptId, dispatch, sum, addYearData, ZD } = props;
   const [monthArith, setMonthArith] = useState({});
   const [list, setList] = useState([]);
-  const [detail, setDetail] = useState({});
+  const [detail, setDetail] = useState();
   const [total, setTotal] = useState(0);
 
   const [radio, setradio] = useState(ZD.arith[0].id);
@@ -50,7 +50,7 @@ function J(props) {
         setDetail(page.list.length > 0 && page.list[0]);
       },
     });
-  }, []);
+  }, [deptId]);
   const onChange = e => {
     setradio(e.target.value); //1 2 3 4
   };
@@ -75,9 +75,6 @@ function J(props) {
       },
     });
   };
-  console.log(detail);
-  console.log(ZD.arith);
-  console.log(ZD.arith[Number(detail.arithId)]);
 
   return (
     <>
@@ -122,23 +119,25 @@ function J(props) {
                   pageTurning(page);
                 },
               }}
-              renderItem={item => (
-                <List.Item onClick={() => setDetail(item)}>
-                  {item.appName +
-                    ZD.arith[detail.arithId - 1].value +
-                    item.appTypeName}
-                </List.Item>
-              )}
+              renderItem={item => {
+                return (
+                  <List.Item onClick={() => setDetail(item)}>
+                    {item.appName +
+                      ZD.arith[item.arithId - 1].value +
+                      item.appTypeName}
+                  </List.Item>
+                );
+              }}
             />
           </Col>
           <Col span={14} offset={1}>
             <div className={styles.content2}>
               <Row>
-                {detail.logDate},密码智能体调用
-                {ZD.arith[Number(detail.arithId) - 1].value}出错
+                {detail ? detail.logDate : ''},密码智能体调用
+                {ZD.arith[Number(detail ? detail.arithId : 1) - 1].value}出错
               </Row>
-              <Row>错误代码:{detail.appWarnCode}</Row>
-              <Row>错误原因:{detail.logMessage}</Row>
+              <Row>错误代码:{detail ? detail.appWarnCode : ''}</Row>
+              <Row>错误原因:{detail ? detail.logMessage : ''}</Row>
             </div>
           </Col>
         </Row>
