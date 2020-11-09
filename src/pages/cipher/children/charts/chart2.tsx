@@ -26,7 +26,6 @@ function Chart2(props) {
     },
   };
   const colors = ['#6394f9', '#62daaa'];
-  console.log(data);
   if (cond === 0) {
     while (data.length > 12) {
       console.log('init');
@@ -64,9 +63,9 @@ function Chart2(props) {
         });
       }}
     >
-      {/*  如需使用单轴 
+      {/*  如需使用单轴
         <Axis name="value" visible={true} />
-        <Axis name="number" visible={false} /> 
+        <Axis name="number" visible={false} />
         */}
       <Interval position="time*value" color={colors[0]} />
       <Line position="time*number" color={colors[1]} size={3} shape="smooth" />

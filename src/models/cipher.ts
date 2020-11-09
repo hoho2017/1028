@@ -9,6 +9,7 @@ import {
   queryZD,
   queryListCollect,
   queryFlist,
+  down
 } from '@/services/cipher';
 import { treeMake } from '@/utils/translateFunc.js';
 export interface CipherModelState {
@@ -30,6 +31,7 @@ export interface CipherModelType {
     queryTable: Effect;
     queryFlist: Effect;
     queryListCollect: Effect;
+    down:Effect;
   };
   reducers: {
     save: Reducer<CipherModelState>;
@@ -57,6 +59,11 @@ const CipherModel: CipherModelType = {
     *queryFlist({ type, payload, callback }, { put, call, select }) {
       const { data } = yield call(queryFlist, payload);
       if (callback) callback(data);
+    },
+    *down({ type, payload, callback }, { put, call, select }) {
+      const data = yield call(down, payload);
+      console.log(data)
+      // if (callback) callback(data);
     },
     *queryListCollect({ type, payload, callback }, { put, call, select }) {
       const { yearArith, monthArith, allYearTotal } = yield call(

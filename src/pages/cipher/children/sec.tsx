@@ -3,86 +3,25 @@ import styles from './index.less';
 import { Row, Col, Select, Table } from 'antd';
 
 const { Option } = Select;
-const columns = [
-  {
-    title: '密码应用控制点',
-    dataIndex: 'splitTypeDescOne',
-    key: 'splitTypeDescOne',
-    colSpan: 3,
-    render: (value, row, index) => {
-      const obj = {
-        children: value,
-        props: {},
-      };
-      obj.props.rowSpan = 100;
 
-      if (value === '技术要求' && index > 0) {
-        obj.props.rowSpan = 0;
-      }
-      return obj;
-    },
-  },
-  {
-    title: 'hide',
-    colSpan: 0,
-    dataIndex: 'splitTypeDescTwo',
-    key: 'splitTypeDescTwo',
-    render: (value, row, index) => {
-      const obj = {
-        children: value,
-        props: {},
-      };
-      obj.props.rowSpan = 1;
-      return obj;
-    },
-  },
-  {
-    title: 'hide',
-    colSpan: 0,
-    dataIndex: 'splitTypeDescThree',
-    render: (value, row, index) => {
-      const obj = {
-        children: value,
-        props: {},
-      };
-      obj.props.rowSpan = 1;
-      return obj;
-    },
-  },
-  {
-    title: 'levelMsg',
-    colSpan: 1,
-    dataIndex: 'levelMsg',
-    key: 'levelMsg',
-    render: (value, row, index) => {
-      const obj = {
-        children: value,
-        props: {},
-      };
-      obj.props.rowSpan = 1;
-      return obj;
-    },
-  },
-  {
-    title: 'resultType',
-    colSpan: 1,
-    dataIndex: 'resultType',
-    key: 'resultType',
-    render: text => <div>{text}</div>,
-  },
-  {
-    title: 'resultType',
-    colSpan: 1,
-    dataIndex: 'resultType',
-    key: 'resultType',
-    render: text => <div>{text}</div>,
-  },
-];
 
 function Sec(props) {
   const { yearData, dispatch, deptId } = props;
   const [tableData, setTableData] = useState([]);
   const [year, setYear] = useState(yearData[0]);
+  const [title, setTitle] = useState({});
+
+  useEffect(()=>{
+    dispatch({
+      type: 'cipher/queryTitle',
+      payload: {
+        deptId: 9,
+      },
+      callback: data => {
+        setTitle(data.list[0]);//appLevelName
+      },
+    });
+  },[])
   useEffect(() => {
     setYear(yearData[0]);
   }, [yearData]);
@@ -108,6 +47,87 @@ function Sec(props) {
     pageSize: 1000,
     hideOnSinglePage: true,
   };
+  const columns = [
+    {
+      title: '密码应用控制点',
+      dataIndex: 'splitTypeDescOne',
+      key: 'splitTypeDescOne',
+      colSpan: 3,
+      render: (value, row, index) => {
+        const obj = {
+          children: value,
+          props: {},
+        };
+        obj.props.rowSpan = 100;
+
+        if (value === '技术要求' && index > 0) {
+          obj.props.rowSpan = 0;
+        }
+        return obj;
+      },
+    },
+    {
+      title: 'hide',
+      colSpan: 0,
+      dataIndex: 'splitTypeDescTwo',
+      key: 'splitTypeDescTwo',
+      render: (value, row, index) => {
+        const obj = {
+          children: value,
+          props: {},
+        };
+        //splitTypeTwo
+        if (row.splitTypeTwo !== 0) {
+          obj.props.rowSpan = row.splitTypeTwo;
+        }else{
+          obj.props.rowSpan = 0;
+        }
+        return obj;
+      },
+    },
+    {
+      title: 'hide',
+      colSpan: 0,
+      dataIndex: 'splitTypeDescThree',
+      render: (value, row, index) => {
+        const obj = {
+          children: value,
+          props: {},
+        };
+        obj.props.rowSpan = 1;
+        return obj;
+      },
+    },
+    {
+      title: title.appLevelName,
+      colSpan: 1,
+      dataIndex: 'resultType',
+      key: 'resultType',
+      render: (value, row, index) => {
+        const obj = {
+          children: value,
+          props: {},
+        };
+        obj.props.rowSpan = 1;
+        return obj;
+      },
+    },
+    {
+      title: '监控结果',
+      colSpan: 1,
+      dataIndex: 'resultType',
+      key: 'resultType',
+      render: text => <div>{text}</div>,
+    },
+    {
+      title: '详细监控信息',
+      colSpan: 1,
+      dataIndex: 'levelMsg',
+      key: 'levelMsg',
+      render: text => <div>{text}</div>,
+    },
+  ];
+
   return (
     <>
       <div className={styles.content}>

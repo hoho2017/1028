@@ -6,6 +6,10 @@ export async function queryTree(params) {
   return requestRaw(`/sys/dept/list-app${getParamsStr(params)}`);
 }
 
+export async function down(params) {
+  return requestRaw(`/sys/subappassessmentsplit/download/${(Object.values(params)[0])}`);
+}
+
 export async function queryYear(params) {
   return request(
     `/sys/subappassessmentsplit/info/dept-sum-total${getParamsStr(params)}`,
