@@ -45,11 +45,12 @@ const RiskModel: RiskModelType = {
   },
   effects: {
     *login({ type, payload, callback }, { put, call, select }) {
-      const { cookie } = yield call(login, {
+      const data = yield call(login, {
         username: 'admin',
         password: 'admin',
       });
-      document.cookie = `JSESSIONID=79d1ad9c-7833-4cb6-b317-ea2c0a8ecaf3`;
+      document.cookie = `JSESSIONID=${data.JSESSIONID}`;
+
       if (callback) callback();
     },
     *details({ type, payload, callback }, { put, call, select }) {
