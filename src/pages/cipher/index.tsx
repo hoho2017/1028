@@ -12,7 +12,7 @@ interface PageProps extends ConnectProps {
 }
 
 const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
-  const { catalogue, treeData, treeList, ZD } = cipher; //二级目录
+  const { catalogue, treeData, treeList, ZD } = cipher;
 
   const [expandedKeys, setExpandedKeys] = useState([]);
   const [searchValue, setSearchValue] = useState('');
