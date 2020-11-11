@@ -60,7 +60,7 @@ function F(props) {
       type: 'risk/details',
       payload: {
         deptId: 9,
-        appTypes: 1,
+        appType: 1,
       },
       callback: list => {
         setDown(list);
@@ -70,7 +70,7 @@ function F(props) {
       type: 'risk/details',
       payload: {
         deptId: 9,
-        appTypes: 2,
+        appType: 2,
       },
       callback: list => {
         setStop(list);
@@ -89,7 +89,7 @@ function F(props) {
   }, []);
   return (
     <>
-      <Row style={{ width: '100%' }}>
+      <Row style={{ width: '100%', height: '100%' }}>
         <Col span={10} offset={1}>
           <div className={styles.content3}>
             <div className={styles.innerTitle3}>应用密评概况</div>
