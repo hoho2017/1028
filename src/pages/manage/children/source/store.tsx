@@ -18,83 +18,100 @@ const columnsApp = [
     title: '应用名称',
     dataIndex: 'appName',
     key: 'appName',
-  },{
+    align: 'center',
+  },
+  {
     title: '应用标识',
     dataIndex: 'appDesc',
+    align: 'center',
     key: 'appDesc',
-  },{
+  },
+  {
     title: '所属机构',
     dataIndex: 'parentDeptName',
+    align: 'center',
     key: 'parentDeptName',
-  },{
+  },
+  {
     title: '所属网络',
+    align: 'center',
     dataIndex: 'appTypeName',
     key: 'appTypeName',
-  }
-]
+  },
+];
 const columnsOrg = [
   {
+    align: 'center',
     title: '机构名称',
     dataIndex: 'name',
     key: 'name',
   },
   {
     title: '机构标识',
+    align: 'center',
     dataIndex: 'deptId',
     key: 'deptId',
   },
   {
     title: '上级机构',
     dataIndex: 'parentName',
+    align: 'center',
     key: 'parentName',
   },
-]
+];
 const columnsCalc = [
   {
     title: '算法名称',
+    align: 'center',
     dataIndex: 'name',
     key: 'name',
   },
   {
     title: '算法ID',
+    align: 'center',
     dataIndex: 'id',
     key: 'id',
   },
-]
+];
 const columnsThird = [
   {
     title: '系统名称',
     dataIndex: 'thirdPartyName',
+    align: 'center',
     key: 'thirdPartyName',
   },
   {
     title: '系统ID',
     dataIndex: 'id',
+    align: 'center',
     key: 'id',
   },
 
   {
     title: '所属位置',
+    align: 'center',
     dataIndex: 'modelPosition',
     key: 'modelPosition',
   },
   {
     title: '系统类别',
+    align: 'center',
     dataIndex: 'typeId',
     key: 'typeId',
   },
   {
+    align: 'center',
     title: '建设单位',
     dataIndex: 'parentDeptId',
     key: 'parentDeptId',
   },
   {
+    align: 'center',
     title: '系统型号',
     dataIndex: 'modelNumber',
     key: 'modelNumber',
   },
-
-]
+];
 
 export {
   appB,
@@ -110,5 +127,5 @@ export {
   columnsApp,
   columnsOrg,
   columnsCalc,
-  columnsThird
+  columnsThird,
 };

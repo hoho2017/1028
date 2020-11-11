@@ -78,9 +78,72 @@ const rowSelection = {
   }),
 };
 const Source: FC<PageProps> = ({ manage, dispatch }) => {
-  const [no, setNo] = useState(0);
-  const [selectionType, setSelectionType] = useState('checkbox');
+  // const {deptId} = props;
+  // console.log(deptId)
 
+  const { arith } = manage;
+  const [no, setNo] = useState(0);
+  const [listApp, setListApp] = useState([]);
+  const [listOrg, setListOrg] = useState([]);
+  const [listCalc, setListCalc] = useState([]);
+  const [listThird, setListThird] = useState([]);
+  const [selectionType, setSelectionType] = useState('checkbox');
+  const queryTApp = page => {
+    dispatch({
+      type: 'manage/queryTApp',
+      payload: {
+        deptId: 9,
+        limit: 10,
+        page: page,
+      },
+      callback: list => {
+        setListApp([...list]);
+      },
+    });
+  };
+  const queryTOrg = page => {
+    dispatch({
+      type: 'manage/queryTOrg',
+      payload: {
+        deptId: 9,
+        limit: 10,
+        page: page,
+      },
+      callback: list => {
+        setListOrg([...list]);
+      },
+    });
+  };
+  const queryTCalc = page => {
+    dispatch({
+      type: 'manage/queryTCalc',
+      payload: {
+        deptId: 9,
+      },
+      callback: list => {
+        setListCalc([...list]);
+      },
+    });
+  };
+  const queryTThird = page => {
+    dispatch({
+      type: 'manage/queryTThird',
+      payload: {
+        deptId: 9,
+        limit: 10,
+        page: page,
+      },
+      callback: list => {
+        setListThird([...list]);
+      },
+    });
+  };
+  useEffect(() => {
+    queryTApp(1);
+    queryTOrg(1);
+    queryTCalc();
+    queryTThird(1);
+  }, []);
   return (
     <>
       <div className={styles.content}>
@@ -88,8 +151,9 @@ const Source: FC<PageProps> = ({ manage, dispatch }) => {
           {titleArr.map((item, index) => {
             return (
               <Col
+                key={item.name}
                 onClick={() => setNo(index)}
-                span={index === 3 ? '5' : '4'}
+                span={index === 3 ? '6' : '5'}
                 offset={index === 0 ? '1' : '0'}
               >
                 <img
@@ -114,7 +178,7 @@ const Source: FC<PageProps> = ({ manage, dispatch }) => {
           if (no === index) {
             return Array.from('123').map(i => {
               return (
-                <Col span={5} offset={i === '1' ? 1 : 0}>
+                <Col key={i} span={5} offset={i === '1' ? 1 : 0}>
                   <div className={styles.content2}>
                     {item}
                     {i === '1' ? '注册' : i === '2' ? '变更' : '注销'}
@@ -126,17 +190,41 @@ const Source: FC<PageProps> = ({ manage, dispatch }) => {
         })}
       </Row>
       <Row style={{ marginTop: '20px' }}>
-        <Col span={17} offset={1}>
+        <Col span={22} offset={1}>
           <Table
-            width="100%"
             rowSelection={{
               columnTitle: '操作',
               type: 'radio',
               ...rowSelection,
             }}
             bordered={true}
-            columns={columns}
-            dataSource={data}
+            columns={
+              no === 0
+                ? columnsApp.concat(
+                    arith.map(item => {
+                      return {
+                        title: item.value,
+                        dataIndex: item.value.toLowerCase(),
+                        key: item.value.toLowerCase(),
+                        align: 'center',
+                      };
+                    }),
+                  )
+                : no === 1
+                ? columnsOrg
+                : no === 2
+                ? columnsCalc
+                : columnsThird
+            }
+            dataSource={
+              no === 0
+                ? listApp
+                : no === 1
+                ? listOrg
+                : no === 2
+                ? listCalc
+                : listThird
+            }
           />
         </Col>
       </Row>

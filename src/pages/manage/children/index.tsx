@@ -2,16 +2,17 @@ import { ConnectProps, connect, CipherModelState } from 'umi';
 import React, { FC, useEffect, useState } from 'react';
 import styles from './index.less';
 import { Row, Col } from 'antd';
-import Source from './source/index.tsx'
+import Source from './source/index.tsx';
 
 function Box(props) {
   const { deptId, deptName, index, dispatch, ZD } = props;
+
   const [year, setYear] = useState([]);
   const [allYearData, setAllYearData] = useState([]);
   const [sum, setSum] = useState({});
   useEffect(() => {
     dispatch({
-      type: 'cipher/queryY',
+      type: 'manage/queryY',
       payload: {
         deptId: 9,
       },
@@ -37,11 +38,7 @@ function Box(props) {
           <div className={styles.title}>{deptName}OA系统</div>
         </Col>
       </Row> */}
-      <div>
-        {
-          index===0?<Source/>:''
-        }
-      </div>
+      <div>{index === 0 ? <Source deptId={deptId} /> : ''}</div>
     </>
   );
 }
