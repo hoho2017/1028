@@ -1,7 +1,7 @@
 import { Effect, Reducer, Subscription, request } from 'umi';
 import { login } from '@/services/login';
 import {
-  queryTree,
+  queryTreeM,
   queryYear,
   queryTable,
   queryTitle,
@@ -89,7 +89,7 @@ const CipherModel: ManageModelType = {
       const localData = ['资源注册', '密评登记', '级联管理', '用户管理', '用户授权','系统日志'];
       // const localData = ['a', 'b', 'c'];
 
-      const { data } = yield call(queryTree);
+      const { data } = yield call(queryTreeM);
       const dataZD = yield call(queryZD);
 
       const treeList = data.map(item => {
