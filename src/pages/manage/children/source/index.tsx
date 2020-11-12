@@ -1,7 +1,22 @@
 import { ConnectProps, connect, ManageModelState } from 'umi';
 import React, { FC, useEffect, useState } from 'react';
 import styles from './index.less';
-import { Row, Col, Table, Radio, Divider } from 'antd';
+import {
+  Row,
+  Col,
+  Table,
+  Divider,
+  Form,
+  Input,
+  Button,
+  Radio,
+  Select,
+  Cascader,
+  DatePicker,
+  InputNumber,
+  TreeSelect,
+  Switch,
+} from 'antd';
 import {
   appB,
   appG,
@@ -22,48 +37,16 @@ interface PageProps extends ConnectProps {
   manage: ManageModelState;
 }
 
-const columns = [
-  {
-    title: 'Name',
-    align: 'center',
-    dataIndex: 'name',
-    render: text => <a>{text}</a>,
-  },
-  {
-    title: 'Age',
-    dataIndex: 'age',
-  },
-  {
-    title: 'Address',
-    dataIndex: 'address',
-  },
-];
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-  },
-  {
-    key: '4',
-    name: 'Disabled User',
-    age: 99,
-    address: 'Sidney No. 1 Lake Park',
-  },
-];
+const { Option } = Select;
+
+const layout = {
+  labelCol: { span: 8, offset: 1 },
+  wrapperCol: { span: 14, offset: 1 },
+};
+const tailLayout = {
+  wrapperCol: { offset: 0, span: 24 },
+};
+
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
     console.log(selectedRowKeys, selectedRows);
@@ -73,11 +56,9 @@ const rowSelection = {
     name: record.name,
   }),
 };
-const Source: FC<PageProps> = ( props) => {
-  // const {deptId} = props;
-  // console.log(deptId)
-  console.log(props)
-  const {manage , dispatch, deptId} = props
+const Source: FC<PageProps> = props => {
+  const { manage, dispatch, deptId } = props;
+  const [form] = Form.useForm();
   const { arith } = manage;
   const [no, setNo] = useState(0);
   const [listApp, setListApp] = useState([]);
@@ -94,7 +75,12 @@ const Source: FC<PageProps> = ( props) => {
         page: page,
       },
       callback: list => {
-        setListApp([...list]);
+        setListApp(
+          list.map(item => {
+            item.key = item.deptId;
+            return item;
+          }),
+        );
       },
     });
   };
@@ -107,7 +93,12 @@ const Source: FC<PageProps> = ( props) => {
         page: page,
       },
       callback: list => {
-        setListOrg([...list]);
+        setListOrg(
+          list.map(item => {
+            item.key = item.deptId;
+            return item;
+          }),
+        );
       },
     });
   };
@@ -118,11 +109,16 @@ const Source: FC<PageProps> = ( props) => {
         deptId: 9,
       },
       callback: list => {
-        setListCalc([...list]);
+        setListCalc(
+          list.map(item => {
+            item.key = item.deptId;
+            return item;
+          }),
+        );
       },
     });
   };
-  const queryTThird = (page:Number) => {
+  const queryTThird = (page: Number) => {
     dispatch({
       type: 'manage/queryTThird',
       payload: {
@@ -131,7 +127,12 @@ const Source: FC<PageProps> = ( props) => {
         page: page,
       },
       callback: list => {
-        setListThird([...list]);
+        setListThird(
+          list.map(item => {
+            item.key = item.deptId;
+            return item;
+          }),
+        );
       },
     });
   };
@@ -141,7 +142,14 @@ const Source: FC<PageProps> = ( props) => {
     queryTCalc(1);
     queryTThird(1);
   }, []);
-  console.log(listOrg)
+  const onFinish = values => {
+    console.log(values);
+  };
+
+  const onReset = () => {
+    form.resetFields();
+  };
+
   return (
     <>
       <div className={styles.content}>
@@ -178,8 +186,54 @@ const Source: FC<PageProps> = ( props) => {
               return (
                 <Col key={i} span={5} offset={i === '1' ? 1 : 0}>
                   <div className={styles.content2}>
-                    {item}
-                    {i === '1' ? '注册' : i === '2' ? '变更' : '注销'}
+                    <div className={styles.miniTitle}>
+                      {item}
+                      {i === '1' ? '注册' : i === '2' ? '变更' : '注销'}
+                    </div>{' '}
+                    <Form
+                      {...layout}
+                      size="small"
+                      form={form}
+                      name="control-hooks"
+                      onFinish={onFinish}
+                    >
+                      <Form.Item
+                        name="note"
+                        label="Note"
+                        rules={[{ required: true }]}
+                      >
+                        <Input />
+                      </Form.Item>
+                      <Form.Item
+                        name="note"
+                        label="Note"
+                        rules={[{ required: true }]}
+                      >
+                        <Input />
+                      </Form.Item>
+                      <Form.Item
+                        name="note"
+                        label="Note"
+                        rules={[{ required: true }]}
+                      >
+                        <Input />
+                      </Form.Item>
+                      <Form.Item
+                        name="note"
+                        label="Note"
+                        rules={[{ required: true }]}
+                      >
+                        <Input />
+                      </Form.Item>
+                      <Form.Item {...tailLayout}>
+                        <Button type="primary" htmlType="submit">
+                          Submit
+                        </Button>
+                        <Button htmlType="button" onClick={onReset}>
+                          Reset
+                        </Button>
+                      </Form.Item>
+                    </Form>
                   </div>
                 </Col>
               );
