@@ -66,21 +66,18 @@ const data = [
 ];
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
-    console.log(
-      `selectedRowKeys: ${selectedRowKeys}`,
-      'selectedRows: ',
-      selectedRows,
-    );
+    console.log(selectedRowKeys, selectedRows);
   },
   getCheckboxProps: record => ({
     disabled: false, // Column configuration not to be checked
     name: record.name,
   }),
 };
-const Source: FC<PageProps> = ({ manage, dispatch }) => {
+const Source: FC<PageProps> = ( props) => {
   // const {deptId} = props;
   // console.log(deptId)
-
+  console.log(props)
+  const {manage , dispatch, deptId} = props
   const { arith } = manage;
   const [no, setNo] = useState(0);
   const [listApp, setListApp] = useState([]);
@@ -125,7 +122,7 @@ const Source: FC<PageProps> = ({ manage, dispatch }) => {
       },
     });
   };
-  const queryTThird = page => {
+  const queryTThird = (page:Number) => {
     dispatch({
       type: 'manage/queryTThird',
       payload: {
@@ -141,9 +138,10 @@ const Source: FC<PageProps> = ({ manage, dispatch }) => {
   useEffect(() => {
     queryTApp(1);
     queryTOrg(1);
-    queryTCalc();
+    queryTCalc(1);
     queryTThird(1);
   }, []);
+  console.log(listOrg)
   return (
     <>
       <div className={styles.content}>
