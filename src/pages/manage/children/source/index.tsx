@@ -32,6 +32,7 @@ import {
   columnsOrg,
   columnsCalc,
   columnsThird,
+  formHead,
 } from './store';
 interface PageProps extends ConnectProps {
   manage: ManageModelState;
@@ -40,8 +41,8 @@ interface PageProps extends ConnectProps {
 const { Option } = Select;
 
 const layout = {
-  labelCol: { span: 8, offset: 1 },
-  wrapperCol: { span: 14, offset: 1 },
+  labelCol: { span: 10, offset: 0 },
+  wrapperCol: { span: 14, offset: 0 },
 };
 const tailLayout = {
   wrapperCol: { offset: 0, span: 24 },
@@ -59,12 +60,13 @@ const rowSelection = {
 const Source: FC<PageProps> = props => {
   const { manage, dispatch, deptId } = props;
   const [form] = Form.useForm();
-  const { arith } = manage;
+  const { arith, app_source_type } = manage;
   const [no, setNo] = useState(0);
   const [listApp, setListApp] = useState([]);
   const [listOrg, setListOrg] = useState([]);
   const [listCalc, setListCalc] = useState([]);
   const [listThird, setListThird] = useState([]);
+  const [showForm, setShowForm] = useState(0);
   const [selectionType, setSelectionType] = useState('checkbox');
   const queryTApp = page => {
     dispatch({
@@ -149,7 +151,9 @@ const Source: FC<PageProps> = props => {
   const onReset = () => {
     form.resetFields();
   };
-
+  const showFormFunc = i => {
+    setShowForm(showForm === 0 ? i : 0);
+  };
   return (
     <>
       <div className={styles.content}>
@@ -179,61 +183,60 @@ const Source: FC<PageProps> = props => {
           })}
         </Row>
       </div>
-      <Row>
+      <Row style={{position:'relative',zIndex:'3'}}>
         {operation.map((item, index) => {
           if (no === index) {
             return Array.from('123').map(i => {
               return (
                 <Col key={i} span={5} offset={i === '1' ? 1 : 0}>
                   <div className={styles.content2}>
-                    <div className={styles.miniTitle}>
+                    <div
+                      className={
+                        (i === '1' && showForm == i) ||
+                        (i === '2' && showForm == i)
+                          ? styles.miniTitle
+                          : styles.miniTitle2
+                      }
+                      onClick={() => showFormFunc(i)}
+                    >
                       {item}
                       {i === '1' ? '注册' : i === '2' ? '变更' : '注销'}
-                    </div>{' '}
-                    <Form
-                      {...layout}
-                      size="small"
-                      form={form}
-                      name="control-hooks"
-                      onFinish={onFinish}
-                    >
-                      <Form.Item
-                        name="note"
-                        label="Note"
-                        rules={[{ required: true }]}
+                    </div>
+                    {(i === '1' && showForm == i) ||
+                    (i === '2' && showForm == i) ? (
+                      <Form
+                        {...layout}
+                        size="small"
+                        form={form}
+                        name="control-hooks"
+                        onFinish={onFinish}
                       >
-                        <Input />
-                      </Form.Item>
-                      <Form.Item
-                        name="note"
-                        label="Note"
-                        rules={[{ required: true }]}
-                      >
-                        <Input />
-                      </Form.Item>
-                      <Form.Item
-                        name="note"
-                        label="Note"
-                        rules={[{ required: true }]}
-                      >
-                        <Input />
-                      </Form.Item>
-                      <Form.Item
-                        name="note"
-                        label="Note"
-                        rules={[{ required: true }]}
-                      >
-                        <Input />
-                      </Form.Item>
-                      <Form.Item {...tailLayout}>
-                        <Button type="primary" htmlType="submit">
-                          Submit
-                        </Button>
-                        <Button htmlType="button" onClick={onReset}>
-                          Reset
-                        </Button>
-                      </Form.Item>
-                    </Form>
+                        {formHead(arith, app_source_type)[no].map(item => {
+                          return (
+                            <Form.Item
+                              name={item.name}
+                              label={item.label}
+                              rules={[{ required: true }]}
+                            >
+                              {item.type === 'input' ? (
+                                <input />
+                              ) : item.type === 'Select' ? (
+                              <Select mode={item.mode?item.mode:''}>{item.options.map(item=>{
+                                return <Select.Option value={item.code}>{item.value}</Select.Option>})}</Select>
+                              ) : null}
+                            </Form.Item>
+                          );
+                        })}
+                        <Form.Item {...tailLayout}>
+                          <Button htmlType="button" onClick={onReset}>
+                            取消
+                          </Button>
+                          <Button type="primary" htmlType="submit">
+                            确认
+                          </Button>
+                        </Form.Item>
+                      </Form>
+                    ) : null}
                   </div>
                 </Col>
               );
@@ -241,7 +244,7 @@ const Source: FC<PageProps> = props => {
           }
         })}
       </Row>
-      <Row style={{ marginTop: '20px' }}>
+      <Row style={{position:'absolute', width:'68%', top:'250px'}}>
         <Col span={22} offset={1}>
           <Table
             rowSelection={{

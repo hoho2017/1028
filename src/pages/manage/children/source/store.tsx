@@ -112,6 +112,36 @@ const columnsThird = [
     key: 'modelNumber',
   },
 ];
+const formHead =(arith:object[],app_source_type:object[])=> {
+  return [
+  [
+    {
+      label: '所属机构',
+      name: 'parentDeptId',
+      type: 'input',
+    },{
+      label: '所属网络',
+      name: 'appType',
+      type: 'Select',
+      options:app_source_type
+    },{
+      label: '应用名称',
+      name: 'appName',
+      type: 'input',
+    },{
+      label: '应用ID',
+      name: 'uniqueAppId',
+      type: 'input',
+    },{
+      label: '使用算法',
+      name: 'arithList',
+      mode:'multiple',
+      type: 'Select',
+      options:arith
+
+    }
+  ],
+]};
 
 export {
   appB,
@@ -128,4 +158,5 @@ export {
   columnsOrg,
   columnsCalc,
   columnsThird,
+  formHead
 };

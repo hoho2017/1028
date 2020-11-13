@@ -141,6 +141,7 @@ const ManageModel: ManageModelType = {
           treeList,
           ZD: dataZD.data,
           arith: arith.data.page.list,
+          app_source_type:dataZD.data.app_source_type
         },
       });
     },
