@@ -17,8 +17,8 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
   const [expandedKeys, setExpandedKeys] = useState([]);
   const [searchValue, setSearchValue] = useState('');
   const [autoExpandParent, setAutoExpandParent] = useState(true);
-  const [deptId, setDeptId] = useState(1);
-  const [deptName, setDeptName] = useState('t');
+  const [deptId, setDeptId] = useState();
+  const [deptName, setDeptName] = useState();
   useEffect(() => {}, []);
   useEffect(() => {
     setExpandedKeys(treeList.map(item => item.name));
@@ -119,7 +119,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
                     enterButton
                   />
                 </div>
-                <div className="content" style={{paddingLeft:'268px'}}>
+                <div className="content" style={{ paddingLeft: '268px' }}>
                   <Box
                     ZD={ZD}
                     deptId={deptId}

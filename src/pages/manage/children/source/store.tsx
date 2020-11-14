@@ -112,36 +112,113 @@ const columnsThird = [
     key: 'modelNumber',
   },
 ];
-const formHead =(arith:object[],app_source_type:object[])=> {
+const formHead = (
+  arith: object[],
+  app_source_type: object[],
+  app_type_id: object[],
+) => {
   return [
-  [
-    {
-      label: '所属机构',
-      name: 'parentDeptId',
-      type: 'input',
-    },{
-      label: '所属网络',
-      name: 'appType',
-      type: 'Select',
-      options:app_source_type
-    },{
-      label: '应用名称',
-      name: 'appName',
-      type: 'input',
-    },{
-      label: '应用ID',
-      name: 'uniqueAppId',
-      type: 'input',
-    },{
-      label: '使用算法',
-      name: 'arithList',
-      mode:'multiple',
-      type: 'Select',
-      options:arith
-
-    }
-  ],
-]};
+    [
+      {
+        label: '所属机构',
+        name: 'parentDeptId',
+        type: 'input',
+        disabled: true,
+      },
+      {
+        label: '所属网络',
+        name: 'appType',
+        type: 'Select',
+        options: app_source_type,
+      },
+      {
+        label: '应用名称',
+        name: 'appName',
+        type: 'input',
+      },
+      {
+        label: '应用ID',
+        name: 'uniqueAppId',
+        type: 'input',
+        disabled: '2',
+      },
+      {
+        label: '使用算法',
+        name: 'arithList',
+        mode: 'multiple',
+        type: 'Select',
+        options: arith,
+      },
+    ],
+    [
+      {
+        label: '上级机构',
+        name: 'parentId',
+        type: 'input',
+        disabled: true,
+      },
+      {
+        label: '机构名称',
+        name: 'name',
+        type: 'input',
+      },
+      {
+        label: '机构ID',
+        name: 'deptId',
+        type: 'input',
+        disabled: '2',
+      },
+    ],
+    [
+      {
+        label: '算法名称',
+        name: 'name',
+        type: 'input',
+      },
+      {
+        label: '算法ID',
+        name: 'code',
+        type: 'input',
+        disabled: '2',
+      },
+    ],
+    [
+      {
+        label: '系统名称',
+        name: 'thirdPartyName',
+        type: 'input',
+      },
+      {
+        label: '系统ID',
+        name: 'id',
+        type: 'input',
+        disabled: '2',
+      },
+      {
+        label: '所属位置',
+        name: 'modelPosition',
+        type: 'input',
+      },
+      {
+        label: '系统类别',
+        name: 'typeId',
+        type: 'Select',
+        options: app_type_id,
+      },
+      {
+        label: '建设单位',
+        name: 'parentDeptId',
+        type: 'input',
+        disabled: true,
+      },
+      {
+        label: '设备型号',
+        name: 'modelNumber',
+        type: 'input',
+      },
+    ],
+  ];
+};
 
 export {
   appB,
@@ -158,5 +235,5 @@ export {
   columnsOrg,
   columnsCalc,
   columnsThird,
-  formHead
+  formHead,
 };

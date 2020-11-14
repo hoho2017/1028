@@ -26,3 +26,89 @@ export async function queryTThird(params) {
     method: 'POST',
   });
 }
+
+export async function appRegister(params) {
+  return request(`/sys/subapplication/save`, {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
+export async function orgRegister(params) {
+  return request(`/sys/dept/save`, {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
+export async function thirdRegister(params) {
+  return request(`/sys/subapptypeconfig/save`, {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
+export async function calcRegister(params) {
+  return request(`/sys/dict/arith-save`, {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
+
+export async function appModify(params) {
+  return request(`/sys/subapplication/update`, {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
+export async function calcModify(params) {
+  return request(`/sys/dict/update`, {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
+export async function orgModify(params) {
+  return request(`/sys/dept/update`, {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
+export async function thirdModify(params) {
+  return request(`/sys/subapptypeconfig/update`, {
+    method: 'POST',
+    body: {
+      ...params,
+    },
+  });
+}
+export async function calcDelete(params) {
+  return request(`/sys/dict/write-off${getParamsStr(params)}`, {
+    method: 'POST',
+  });
+}
+export async function appDelete(params) {
+  return request(`/sys/subapplication/write-off${getParamsStr(params)}`, {
+    method: 'POST',
+  });
+}
+export async function orgDelete(params) {
+  return request(`/sys/dept/write-off${getParamsStr(params)}`, {
+    method: 'POST',
+  });
+}
+export async function thirdDelete(params) {
+  return request(`/sys/subapptypeconfig/write-off${getParamsStr(params)}`, {
+    method: 'POST',
+  });
+}

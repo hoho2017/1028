@@ -38,7 +38,9 @@ function Box(props) {
           <div className={styles.title}>{deptName}OA系统</div>
         </Col>
       </Row> */}
-      <div>{index === 0 ? <Source deptId={deptId} /> : ''}</div>
+      <div>
+        {index === 0 ? <Source deptName={deptName} deptId={deptId} /> : ''}
+      </div>
     </>
   );
 }

@@ -16,6 +16,18 @@ import {
   queryTOrg,
   queryTCalc,
   queryTThird,
+  appRegister,
+  appModify,
+  appDelete,
+  orgDelete,
+  orgRegister,
+  orgModify,
+  calcRegister,
+  calcModify,
+  calcDelete,
+  thirdRegister,
+  thirdModify,
+  thirdDelete,
 } from '@/services/manage';
 import { treeMake } from '@/utils/translateFunc.js';
 export interface ManageModelState {
@@ -40,7 +52,19 @@ export interface ManageModelType {
     queryTOrg: Effect;
     queryTCalc: Effect;
     queryTThird: Effect;
+    appRegister: Effect;
+    appModify: Effect;
+    appDelete: Effect;
+    orgDelete: Effect;
+    orgRegister: Effect;
+    orgModify: Effect;
+    calcRegister: Effect;
+    calcModify: Effect;
+    calcDelete: Effect;
+    thirdRegister: Effect;
+    thirdModify: Effect;
     queryListCollect: Effect;
+    thirdDelete: Effect;
   };
   reducers: {
     save: Reducer<ManageModelState>;
@@ -64,6 +88,54 @@ const ManageModel: ManageModelType = {
       });
       document.cookie = `JSESSIONID=${data.JSESSIONID}`;
       if (callback) callback();
+    },
+    *thirdRegister({ type, payload, callback }, { put, call, select }) {
+      const data = yield call(thirdRegister, payload);
+      if (callback) callback(data);
+    },
+    *appRegister({ type, payload, callback }, { put, call, select }) {
+      const data = yield call(appRegister, payload);
+      if (callback) callback(data);
+    },
+    *orgRegister({ type, payload, callback }, { put, call, select }) {
+      const data = yield call(orgRegister, payload);
+      if (callback) callback(data);
+    },
+    *calcRegister({ type, payload, callback }, { put, call, select }) {
+      const data = yield call(calcRegister, payload);
+      if (callback) callback(data);
+    },
+    *appModify({ type, payload, callback }, { put, call, select }) {
+      const data = yield call(appModify, payload);
+      if (callback) callback(data);
+    },
+    *thirdDelete({ type, payload, callback }, { put, call, select }) {
+      const data = yield call(thirdDelete, payload);
+      if (callback) callback(data);
+    },
+    *thirdModify({ type, payload, callback }, { put, call, select }) {
+      const data = yield call(thirdModify, payload);
+      if (callback) callback(data);
+    },
+    *calcModify({ type, payload, callback }, { put, call, select }) {
+      const data = yield call(calcModify, payload);
+      if (callback) callback(data);
+    },
+    *orgModify({ type, payload, callback }, { put, call, select }) {
+      const data = yield call(orgModify, payload);
+      if (callback) callback(data);
+    },
+    *orgDelete({ type, payload, callback }, { put, call, select }) {
+      const data = yield call(orgDelete, payload);
+      if (callback) callback(data);
+    },
+    *calcDelete({ type, payload, callback }, { put, call, select }) {
+      const data = yield call(calcDelete, payload);
+      if (callback) callback(data);
+    },
+    *appDelete({ type, payload, callback }, { put, call, select }) {
+      const data = yield call(appDelete, payload);
+      if (callback) callback(data);
     },
     *queryFlist({ type, payload, callback }, { put, call, select }) {
       const { data } = yield call(queryFlist, payload);
@@ -93,19 +165,19 @@ const ManageModel: ManageModelType = {
     },
     *queryTApp({ type, payload, callback }, { put, call, select }) {
       const data = yield call(queryTApp, payload);
-      if (callback) callback(data.page.list);
+      if (callback) callback(data.page);
     },
     *queryTOrg({ type, payload, callback }, { put, call, select }) {
       const data = yield call(queryTOrg, payload);
-      if (callback) callback(data.page.list);
+      if (callback) callback(data.page);
     },
     *queryTCalc({ type, payload, callback }, { put, call, select }) {
       const data = yield call(queryTCalc, payload);
-      if (callback) callback(data.data.page.list);
+      if (callback) callback(data.data.page);
     },
     *queryTThird({ type, payload, callback }, { put, call, select }) {
       const data = yield call(queryTThird, payload);
-      if (callback) callback(data.page.list);
+      if (callback) callback(data.page);
     },
     *query({ type, payload }, { put, call, select }) {
       //请求tree data
@@ -128,6 +200,7 @@ const ManageModel: ManageModelType = {
         return item;
       });
       const treeData = treeMake(data);
+
       // const tableApp = yield call(queryTApp);
       // const tableOrg = yield call(queryTOrg);
       // const tableCalc = yield call(queryTCalc);
@@ -141,7 +214,8 @@ const ManageModel: ManageModelType = {
           treeList,
           ZD: dataZD.data,
           arith: arith.data.page.list,
-          app_source_type:dataZD.data.app_source_type
+          app_source_type: dataZD.data.app_source_type,
+          app_type_id: dataZD.data.app_type_id,
         },
       });
     },
