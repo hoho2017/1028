@@ -1,45 +1,33 @@
 import { ConnectProps, connect, ManageModelState } from 'umi';
 import React, { FC, useEffect, useState } from 'react';
-import styles from './index.less';
+import styles from './auth.less';
+import { treeMake2 } from '@/utils/translateFunc.js';
 import {
   Row,
   Col,
   Table,
-  Divider,
   Form,
-  Input,
   Button,
-  Radio,
   Select,
-  Cascader,
-  DatePicker,
-  InputNumber,
-  TreeSelect,
-  Switch,
   message,
+  Modal,
+  Tree,
 } from 'antd';
 import {
-  appB,
-  appG,
-  calcB,
-  calcG,
-  orgB,
-  orgG,
-  thirdB,
-  thirdG,
+  memberG,
+  memberB,
+  authB,
+  authG,
   titleArr,
   operation,
-  columnsApp,
-  columnsOrg,
-  columnsCalc,
-  columnsThird,
+  columnsRole,
   formHead,
+  columnsAuth,
+  columnsRoleJ,
 } from './store';
 interface PageProps extends ConnectProps {
   manage: ManageModelState;
 }
-
-const { Option } = Select;
 
 const layout = {
   labelCol: { span: 10, offset: 0 },
@@ -49,34 +37,42 @@ const tailLayout = {
   wrapperCol: { offset: 0, span: 24 },
 };
 
-const Source: FC<PageProps> = props => {
+const Auth: FC<PageProps> = props => {
   const { manage, dispatch, deptId, deptName } = props;
   const [form] = Form.useForm();
   const { arith, app_source_type, app_type_id } = manage;
   const [no, setNo] = useState(0);
   const [listApp, setListApp] = useState([]);
   const [listOrg, setListOrg] = useState([]);
-  const [listCalc, setListCalc] = useState([]);
-  const [listThird, setListThird] = useState([]);
   const [showForm, setShowForm] = useState('0');
   const [choose, setChoose] = useState({});
   const [total, setTotal] = useState(0);
   const [current, setCurrent] = useState(1);
+  const [showAuth, setShowAuth] = useState(false);
+  const [showTree, setShowTree] = useState(false);
+  const [choose2, setChoose2] = useState({});
+
+  const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
+  const [checkedKeys, setCheckedKeys] = useState<string[]>([]);
+  const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+  const [autoExpandParent, setAutoExpandParent] = useState<boolean>(true);
+  const [authObj, setAuthObj] = useState({});
   const [selectionType, setSelectionType] = useState('checkbox');
+  const [tree, setTree] = useState([]);
   const queryTApp = page => {
     dispatch({
-      type: 'manage/queryTApp',
+      type: 'manage/queryTRole',
       payload: {
         parentDeptId: deptId,
         limit: 10,
         page: page,
       },
       callback: data => {
-        const { list = [], totalCount = 0 } = data;
+        const { list, totalCount } = data;
         setTotal(totalCount);
         setListApp(
           list.map(item => {
-            item.key = item.deptId;
+            item.key = item.roleId;
             return item;
           }),
         );
@@ -85,14 +81,13 @@ const Source: FC<PageProps> = props => {
   };
   const queryTOrg = page => {
     dispatch({
-      type: 'manage/queryTOrg',
+      type: 'manage/queryTAuth',
       payload: {
-        parentId: deptId,
         limit: 10,
         page: page,
       },
       callback: data => {
-        const { list = [], totalCount = 0 } = data;
+        const { list, totalCount } = data;
         setTotal(totalCount);
 
         setListOrg(
@@ -104,51 +99,10 @@ const Source: FC<PageProps> = props => {
       },
     });
   };
-  const queryTCalc = page => {
-    dispatch({
-      type: 'manage/queryTCalc',
-      payload: {
-        deptId,
-      },
-      callback: data => {
-        const { list = [], totalCount = 0 } = data;
-        setTotal(totalCount);
 
-        setListCalc(
-          list.map(item => {
-            item.key = item.code;
-            return item;
-          }),
-        );
-      },
-    });
-  };
-  const queryTThird = (page: Number) => {
-    dispatch({
-      type: 'manage/queryTThird',
-      payload: {
-        deptId,
-        limit: 10,
-        page: page,
-      },
-      callback: data => {
-        const { list = [], totalCount = 0 } = data;
-        setTotal(totalCount);
-
-        setListThird(
-          list.map(item => {
-            item.key = item.id;
-            return item;
-          }),
-        );
-      },
-    });
-  };
   useEffect(() => {
     no === 0 && queryTApp(current);
     no === 1 && queryTOrg(current);
-    no === 2 && queryTCalc(current);
-    no === 3 && queryTThird(current);
   }, [deptId, no, current]); //no -> 0 1 2 3
   useEffect(() => {
     setCurrent(1);
@@ -162,14 +116,25 @@ const Source: FC<PageProps> = props => {
       name: record.name,
     }),
   };
+  const rowSelection2 = {
+    type: 'checkbox',
+    onChange: (selectedRowKeys, selectedRows) => {
+      setChoose2([...selectedRowKeys]);
+    },
+    getCheckboxProps: record => ({
+      disabled: false, // Column configuration not to be checked
+      name: record.name,
+    }),
+  };
   const onFinish = values => {
     if (no === 0) {
       if (showForm === '1') {
         //应用注册
-        values.arithList = values.arithList.toString();
-        values.parentDeptId = deptId;
+        values.deptId = 1;
+        values.deptIdList = [];
+        values.menuIdList = [];
         dispatch({
-          type: 'manage/appRegister',
+          type: 'manage/roleRegister',
           payload: values,
           callback: data => {
             if (data.code === 500) {
@@ -177,16 +142,17 @@ const Source: FC<PageProps> = props => {
             } else if (data.code === 0) {
               message.success('操作成功!');
               onReset();
+              queryTApp(current);
             }
           },
         });
       } else if (showForm === '2') {
         //应用变更
-        values.arithList = values.arithList.toString();
-        values.parentDeptId = deptId;
-        values.appId = choose.appId;
+        values.deptId = 1;
+        values.deptIdList = [];
+        values.menuIdList = [];
         dispatch({
-          type: 'manage/appModify',
+          type: 'manage/roleModify',
           payload: values,
           callback: data => {
             if (data.code === 500) {
@@ -194,119 +160,12 @@ const Source: FC<PageProps> = props => {
             } else if (data.code === 0) {
               message.success('操作成功!');
               onReset();
+              queryTApp(current);
             }
           },
         });
       }
       //重新查询
-      queryTApp(current);
-    } else if (no === 1) {
-      if (showForm === '1') {
-        //应用注册
-        // values.arithList = values.arithList.toString();
-        values.parentId = deptId;
-        dispatch({
-          type: 'manage/orgRegister',
-          payload: values,
-          callback: data => {
-            if (data.code === 500) {
-              message.error(data.msg);
-            } else if (data.code === 0) {
-              message.success('操作成功!');
-              onReset();
-            }
-          },
-        });
-      } else if (showForm === '2') {
-        //应用变更
-        values.parentId = deptId;
-        dispatch({
-          type: 'manage/orgModify',
-          payload: values,
-          callback: data => {
-            if (data.code === 500) {
-              message.error(data.msg);
-            } else if (data.code === 0) {
-              message.success('操作成功!');
-              onReset();
-            }
-          },
-        });
-      }
-      //重新查询
-      queryTOrg(current);
-    } else if (no === 2) {
-      if (showForm === '1') {
-        //应用注册
-        values.value = values.name;
-        dispatch({
-          type: 'manage/calcRegister',
-          payload: values,
-          callback: data => {
-            if (data.code === 500) {
-              message.error(data.msg);
-            } else if (data.code === 0) {
-              message.success('操作成功!');
-              onReset();
-            }
-          },
-        });
-      } else if (showForm === '2') {
-        //应用变更
-        values.value = values.name;
-        values.id = choose.id;
-        values.type = choose.type;
-        dispatch({
-          type: 'manage/calcModify',
-          payload: values,
-          callback: data => {
-            if (data.code === 500) {
-              message.error(data.msg);
-            } else if (data.code === 0) {
-              message.success('操作成功!');
-              onReset();
-            }
-          },
-        });
-      }
-      //重新查询
-      queryTCalc(current);
-    } else if (no === 3) {
-      if (showForm === '1') {
-        //应用注册
-        values.parentDeptId = deptId;
-        dispatch({
-          type: 'manage/thirdRegister',
-          payload: values,
-          callback: data => {
-            if (data.code === 500) {
-              message.error(data.msg);
-            } else if (data.code === 0) {
-              message.success('操作成功!');
-              onReset();
-              //重新查询
-              queryTThird(current);
-            }
-          },
-        });
-      } else if (showForm === '2') {
-        //应用变更
-        values.parentDeptId = deptId;
-        dispatch({
-          type: 'manage/thirdModify',
-          payload: values,
-          callback: data => {
-            if (data.code === 500) {
-              message.error(data.msg);
-            } else if (data.code === 0) {
-              message.success('操作成功!');
-              onReset();
-              //重新查询
-              queryTThird(current);
-            }
-          },
-        });
-      }
     }
   };
 
@@ -317,6 +176,7 @@ const Source: FC<PageProps> = props => {
   const showFormFunc = (i: string) => {
     if (
       (JSON.stringify(choose) === '{}' && i === '2') ||
+      (JSON.stringify(choose) === '{}' && i === '4') ||
       (JSON.stringify(choose) === '{}' && i === '3')
     ) {
       //勾选操作
@@ -331,19 +191,17 @@ const Source: FC<PageProps> = props => {
     if (no === 0) {
       if (i === '1') {
         // 注册设置所属结构
-        form.setFieldsValue({ parentDeptId: deptName });
       }
       if (i === '2') {
         // 变更设置所属结构
-        form.setFieldsValue({ parentDeptId: deptName });
-        form.setFieldsValue({ uniqueAppId: choose.uniqueAppId });
+        form.setFieldsValue({ roleId: choose.roleId });
       }
       if (i === '3') {
         //注销
         dispatch({
-          type: 'manage/appDelete',
+          type: 'manage/roleDelete',
           payload: {
-            appId: choose.appId,
+            id: choose.roleId,
           },
           callback: data => {
             if (data.code === 500) {
@@ -356,82 +214,17 @@ const Source: FC<PageProps> = props => {
           },
         });
       }
-    } else if (no === 1) {
-      if (i === '1') {
-        // 注册设置所属结构
-        form.setFieldsValue({ parentId: deptName });
-      }
-      if (i === '2') {
-        // 变更设置所属结构
-        form.setFieldsValue({ parentId: deptName });
-        form.setFieldsValue({ deptId: choose.deptId });
-      }
-      if (i === '3') {
-        //注销
+      if (i === '4') {
+        //授权
         dispatch({
-          type: 'manage/orgDelete',
-          payload: {
-            id: choose.deptId,
-          },
-          callback: data => {
-            if (data.code === 500) {
-              message.error(data.msg);
-            } else if (data.code === 0) {
-              message.success('操作成功!');
-              onReset();
-              queryTApp(current);
-            }
-          },
-        });
-      }
-    } else if (no === 2) {
-      if (i === '2') {
-        // 变更设置所属结构
-        form.setFieldsValue({ code: choose.code });
-      }
-      if (i === '3') {
-        //注销
-        dispatch({
-          type: 'manage/calcDelete',
+          type: 'manage/queryTree',
           payload: {
             id: choose.id,
           },
           callback: data => {
-            if (data.code === 500) {
-              message.error(data.msg);
-            } else if (data.code === 0) {
-              message.success('操作成功!');
-              onReset();
-              queryTCalc(current);
-            }
-          },
-        });
-      }
-    } else if (no === 3) {
-      if (i === '1') {
-        // 变更设置所属结构
-        form.setFieldsValue({ parentDeptId: deptName });
-      }
-      if (i === '2') {
-        // 变更设置所属结构
-        form.setFieldsValue({ parentDeptId: deptName });
-        form.setFieldsValue({ id: choose.id });
-      }
-      if (i === '3') {
-        //注销
-        dispatch({
-          type: 'manage/thirdDelete',
-          payload: {
-            id: choose.id,
-          },
-          callback: data => {
-            if (data.code === 500) {
-              message.error(data.msg);
-            } else if (data.code === 0) {
-              message.success('操作成功!');
-              onReset();
-              queryTThird(current);
-            }
+            //list
+            setTree(treeMake2(data));
+            setShowTree(true);
           },
         });
       }
@@ -439,6 +232,74 @@ const Source: FC<PageProps> = props => {
   };
   const changeCurrent = page => {
     setCurrent(page);
+  };
+  const handleCancel = () => {};
+  const handleOk = () => {
+    console.log(authObj);
+    // values.password = '123456';
+    // values.deptId = deptId;
+
+    dispatch({
+      type: 'manage/userModify',
+      payload: {
+        deptId: authObj.deptId,
+        password: '123456',
+        roleIdList: choose2,
+        username: authObj.username,
+        userId: authObj.userId,
+      },
+      callback: data => {
+        if (data.code === 500) {
+          message.error(data.msg);
+        } else if (data.code === 0) {
+          setShowAuth(false);
+          message.success('操作成功!');
+          onReset();
+          queryTOrg(current);
+        }
+      },
+    });
+  };
+  const showAuthFunc = record => {
+    setAuthObj({ ...record });
+    setShowAuth(true);
+  };
+  const onExpand = expandedKeys => {
+    setExpandedKeys(expandedKeys);
+    setAutoExpandParent(false);
+  };
+
+  const onCheck = checkedKeys => {
+    setCheckedKeys(checkedKeys); //checked
+  };
+
+  const onSelect = (selectedKeys, info) => {
+    setSelectedKeys(selectedKeys);
+  };
+  const roleAuth = () => {
+    // values.deptId = 1;
+    // values.deptIdList = [];
+    // values.menuIdList = [];
+    dispatch({
+      type: 'manage/roleModify',
+      payload: {
+        deptId: choose.deptId,
+        roleId: choose.roleId,
+        roleName: choose.roleName,
+        deptIdList: [],
+        menuIdList: checkedKeys,
+      },
+      callback: data => {
+        if (data.code === 500) {
+          message.error(data.msg);
+        } else if (data.code === 0) {
+          setShowTree(false);
+          message.success('操作成功!');
+          onReset();
+          queryTApp(current);
+        }
+      },
+    });
   };
   return (
     <>
@@ -475,10 +336,13 @@ const Source: FC<PageProps> = props => {
       <Row style={{ position: 'relative', zIndex: '3' }}>
         {operation.map((item, index) => {
           if (no === index) {
-            return Array.from('123').map(i => {
+            return Array.from('1234').map(i => {
               return (
                 <Col key={i} span={5} offset={i === '1' ? 1 : 0}>
-                  <div className={styles.content2}>
+                  <div
+                    className={styles.content2}
+                    style={{ display: no === 1 ? 'none' : 'block' }}
+                  >
                     <div
                       className={
                         (i === '1' && showForm === '1') ||
@@ -489,7 +353,13 @@ const Source: FC<PageProps> = props => {
                       onClick={() => showFormFunc(i)}
                     >
                       {item}
-                      {i === '1' ? '注册' : i === '2' ? '变更' : '注销'}
+                      {i === '1'
+                        ? '注册'
+                        : i === '2'
+                        ? '变更'
+                        : i === '3'
+                        ? '注销'
+                        : '授权'}
                     </div>
                     {(i === '1' && showForm === '1') ||
                     (i === '2' && showForm === '2') ? (
@@ -559,7 +429,7 @@ const Source: FC<PageProps> = props => {
         style={
           showForm === '0'
             ? { marginTop: '43px' }
-            : { position: 'absolute', width: '65.1%', top: '250px' }
+            : { position: 'absolute', width: '67%', top: '250px' }
         }
       >
         <Col span={22} offset={1}>
@@ -569,46 +439,98 @@ const Source: FC<PageProps> = props => {
               current,
               onChange: page => changeCurrent(page),
             }}
-            rowSelection={{
-              columnTitle: '操作',
-              type: 'radio',
-              ...rowSelection,
-            }}
+            rowSelection={
+              no === 0
+                ? {
+                    columnTitle: '操作',
+                    type: 'radio',
+                    ...rowSelection,
+                  }
+                : null
+            }
             bordered={true}
             columns={
               no === 0
-                ? columnsApp.concat(
-                    arith.map(item => {
-                      return {
-                        title: item.value,
-                        dataIndex: item.value.toLowerCase(),
-                        key: item.value.toLowerCase(),
-                        align: 'center',
-                      };
-                    }),
-                  )
-                : no === 1
-                ? columnsOrg
-                : no === 2
-                ? columnsCalc
-                : columnsThird
+                ? columnsRole
+                : columnsAuth.concat([
+                    {
+                      title: '操作',
+                      align: 'center',
+                      render: record => {
+                        return (
+                          <Button
+                            onClick={() => showAuthFunc(record)}
+                            type="default"
+                            shape="round"
+                            style={{ color: '#0085e8' }}
+                          >
+                            用户授权
+                          </Button>
+                        );
+                      },
+                    },
+                  ])
             }
-            dataSource={
-              no === 0
-                ? listApp
-                : no === 1
-                ? listOrg
-                : no === 2
-                ? listCalc
-                : listThird
-            }
+            dataSource={no === 0 ? listApp : listOrg}
           />
         </Col>
       </Row>
+      <Modal
+        bodyStyle={{ textAlign: 'center' }}
+        title={<div className={styles.modalTitle}>用户授权</div>}
+        visible={showAuth}
+        footer={[
+          <Button key="back" onClick={handleCancel}>
+            取消
+          </Button>,
+          <Button key="submit" type="primary" onClick={handleOk}>
+            确定
+          </Button>,
+        ]}
+      >
+        <Table
+          bordered={true}
+          pagination={{
+            hideOnSinglePage: true,
+          }}
+          rowSelection={{
+            columnTitle: '选择',
+            type: 'radio',
+            ...rowSelection2,
+          }}
+          columns={columnsRoleJ}
+          dataSource={listApp}
+        />
+      </Modal>
+      <Modal
+        visible={showTree}
+        bodyStyle={{ textAlign: 'center' }}
+        title={<div className={styles.modalTitle}>角色授权</div>}
+        footer={[
+          <Button key="back" onClick={() => setShowTree(false)}>
+            取消
+          </Button>,
+          <Button key="submit" type="primary" onClick={roleAuth}>
+            确定
+          </Button>,
+        ]}
+      >
+        <Tree
+          checkable
+          onExpand={onExpand}
+          expandedKeys={expandedKeys}
+          autoExpandParent={autoExpandParent}
+          onCheck={onCheck}
+          checkedKeys={checkedKeys}
+          onSelect={onSelect}
+          selectedKeys={selectedKeys}
+          treeData={tree}
+        />
+      </Modal>
     </>
   );
 };
 
 export default connect(({ manage }: { manage: ManageModelState }) => ({
   manage,
-}))(Source);
+}))(Auth);

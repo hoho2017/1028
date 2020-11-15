@@ -2,11 +2,14 @@ import { ConnectProps, connect, CipherModelState } from 'umi';
 import React, { FC, useEffect, useState } from 'react';
 import styles from './index.less';
 import { Row, Col } from 'antd';
-import Source from './source/index.tsx';
+import Source from './source/index';
+import User from './user/user';
+import Logs from './logs/logs';
+import Auth from './auth/auth';
+import Confi from './confidential/confi';
 
 function Box(props) {
   const { deptId, deptName, index, dispatch, ZD } = props;
-
   const [year, setYear] = useState([]);
   const [allYearData, setAllYearData] = useState([]);
   const [sum, setSum] = useState({});
@@ -39,7 +42,17 @@ function Box(props) {
         </Col>
       </Row> */}
       <div>
-        {index === 0 ? <Source deptName={deptName} deptId={deptId} /> : ''}
+        {index === 0 ? (
+          <Source deptName={deptName} deptId={deptId} />
+        ) : index === 3 ? (
+          <User deptName={deptName} deptId={deptId} />
+        ) : index === 5 ? (
+          <Logs />
+        ) : index === 4 ? (
+          <Auth />
+        ) : index === 1 ? (
+          <Confi deptName={deptName} deptId={deptId} />
+        ) : null}
       </div>
     </>
   );

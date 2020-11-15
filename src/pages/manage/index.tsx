@@ -101,7 +101,12 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
               <TabPane tab={item} key={index}>
                 <div
                   className={styles.tree}
-                  style={{ minHeight, height: '100%' }}
+                  // style={{ minHeight, height: '100%'}}
+                  style={{
+                    minHeight,
+                    height: '100%',
+                    display: index === 5 ? 'none' : 'block',
+                  }}
                 >
                   <Tree
                     showLine={{ showLeafIcon: false }}
@@ -119,13 +124,17 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
                     enterButton
                   />
                 </div>
-                <div className="content" style={{ paddingLeft: '268px' }}>
+                <div
+                  className="content"
+                  style={{ paddingLeft: index === 5 ? 0 : '268px' }}
+                >
+                  {/* <div className="content" style={{ paddingLeft:'268px' }}> */}
                   <Box
                     ZD={ZD}
                     deptId={deptId}
                     dispatch={dispatch}
                     deptName={deptName}
-                    index={index}
+                    index={4}
                   />
                 </div>
               </TabPane>

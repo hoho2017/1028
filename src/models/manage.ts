@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import { Effect, Reducer, Subscription, request } from 'umi';
 import { login } from '@/services/login';
 import {
@@ -28,6 +29,16 @@ import {
   thirdRegister,
   thirdModify,
   thirdDelete,
+  queryTUser,
+  queryTRole,
+  queryTAuth,
+  userSave,
+  userModify,
+  userDelete,
+  roleRegister,
+  roleModify,
+  roleDelete,
+  queryTree,
 } from '@/services/manage';
 import { treeMake } from '@/utils/translateFunc.js';
 export interface ManageModelState {
@@ -56,6 +67,7 @@ export interface ManageModelType {
     appModify: Effect;
     appDelete: Effect;
     orgDelete: Effect;
+    queryTAuth: Effect;
     orgRegister: Effect;
     orgModify: Effect;
     calcRegister: Effect;
@@ -64,7 +76,16 @@ export interface ManageModelType {
     thirdRegister: Effect;
     thirdModify: Effect;
     queryListCollect: Effect;
+    queryTUser: Effect;
     thirdDelete: Effect;
+    queryTRole: Effect;
+    userSave: Effect;
+    userDelete: Effect;
+    userModify: Effect;
+    roleRegister: Effect;
+    roleModify: Effect;
+    roleDelete: Effect;
+    queryTree: Effect;
   };
   reducers: {
     save: Reducer<ManageModelState>;
@@ -93,8 +114,16 @@ const ManageModel: ManageModelType = {
       const data = yield call(thirdRegister, payload);
       if (callback) callback(data);
     },
+    *roleRegister({ type, payload, callback }, { put, call, select }) {
+      const data = yield call(roleRegister, payload);
+      if (callback) callback(data);
+    },
     *appRegister({ type, payload, callback }, { put, call, select }) {
       const data = yield call(appRegister, payload);
+      if (callback) callback(data);
+    },
+    *userSave({ type, payload, callback }, { put, call, select }) {
+      const data = yield call(userSave, payload);
       if (callback) callback(data);
     },
     *orgRegister({ type, payload, callback }, { put, call, select }) {
@@ -103,6 +132,14 @@ const ManageModel: ManageModelType = {
     },
     *calcRegister({ type, payload, callback }, { put, call, select }) {
       const data = yield call(calcRegister, payload);
+      if (callback) callback(data);
+    },
+    *queryTUser({ type, payload, callback }, { put, call, select }) {
+      const data = yield call(queryTUser, payload);
+      if (callback) callback(data.data.page);
+    },
+    *userModify({ type, payload, callback }, { put, call, select }) {
+      const data = yield call(userModify, payload);
       if (callback) callback(data);
     },
     *appModify({ type, payload, callback }, { put, call, select }) {
@@ -121,8 +158,20 @@ const ManageModel: ManageModelType = {
       const data = yield call(calcModify, payload);
       if (callback) callback(data);
     },
+    *roleModify({ type, payload, callback }, { put, call, select }) {
+      const data = yield call(roleModify, payload);
+      if (callback) callback(data);
+    },
     *orgModify({ type, payload, callback }, { put, call, select }) {
       const data = yield call(orgModify, payload);
+      if (callback) callback(data);
+    },
+    *userDelete({ type, payload, callback }, { put, call, select }) {
+      const data = yield call(userDelete, payload);
+      if (callback) callback(data);
+    },
+    *roleDelete({ type, payload, callback }, { put, call, select }) {
+      const data = yield call(roleDelete, payload);
       if (callback) callback(data);
     },
     *orgDelete({ type, payload, callback }, { put, call, select }) {
@@ -163,13 +212,35 @@ const ManageModel: ManageModelType = {
       const { year, sum } = yield call(queryYear, payload);
       if (callback) callback(year, sum);
     },
+    *queryTAuth({ type, payload, callback }, { put, call, select }) {
+      const data = yield call(queryTAuth, payload);
+      if (callback) callback(data.data.page);
+    },
+    *queryTRole({ type, payload, callback }, { put, call, select }) {
+      const data = yield call(queryTRole, payload);
+      if (callback) callback(data.data.page);
+    },
     *queryTApp({ type, payload, callback }, { put, call, select }) {
       const data = yield call(queryTApp, payload);
       if (callback) callback(data.page);
     },
     *queryTOrg({ type, payload, callback }, { put, call, select }) {
       const data = yield call(queryTOrg, payload);
+      console.log(data);
+      if (data.code === 500) {
+        message.error(data.msg);
+        return false;
+      }
       if (callback) callback(data.page);
+    },
+    *queryTree({ type, payload, callback }, { put, call, select }) {
+      const data = yield call(queryTree, payload);
+      const tree = data.data;
+      const treedata = tree.map(item => {
+        item.key = item.menuId;
+        return item;
+      });
+      if (callback) callback(treedata);
     },
     *queryTCalc({ type, payload, callback }, { put, call, select }) {
       const data = yield call(queryTCalc, payload);
