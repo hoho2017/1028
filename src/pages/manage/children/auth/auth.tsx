@@ -233,9 +233,10 @@ const Auth: FC<PageProps> = props => {
   const changeCurrent = page => {
     setCurrent(page);
   };
-  const handleCancel = () => {};
+  const handleCancel = () => {
+    setShowAuth(false);
+  };
   const handleOk = () => {
-    console.log(authObj);
     // values.password = '123456';
     // values.deptId = deptId;
 
@@ -476,6 +477,7 @@ const Auth: FC<PageProps> = props => {
         </Col>
       </Row>
       <Modal
+        closable={false}
         bodyStyle={{ textAlign: 'center' }}
         title={<div className={styles.modalTitle}>用户授权</div>}
         visible={showAuth}

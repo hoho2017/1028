@@ -10,6 +10,15 @@ export async function queryArith(params) {
   return requestRaw(`/sys/dict/arith-list`);
 }
 
+export async function queryTable2(params) {
+  return requestRaw(
+    `/sys/subappassessmentsplit/info/by-year-deptId${getParamsStr(params)}`,
+    {
+      method: 'POST',
+    },
+  );
+}
+
 export async function queryTRole(params) {
   return requestRaw(`/sys/role/list${getParamsStr(params)}`);
 }
@@ -39,6 +48,16 @@ export async function queryTThird(params) {
   return request(`/sys/subapptypeconfig/list${getParamsStr(params)}`, {
     method: 'POST',
   });
+}
+
+export async function upload(payload) {
+  console.log(payload.file.get('file'))
+  const params = {deptId:payload.deptId, year:payload.year}
+  return request(`/sys/subappassessmentsplit/upload${getParamsStr(params)}`, {
+    method: 'POST',
+    body:payload.file,
+    headers:'1'
+  })
 }
 
 export async function userSave(params) {

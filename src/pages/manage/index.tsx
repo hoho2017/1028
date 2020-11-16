@@ -134,7 +134,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
                     deptId={deptId}
                     dispatch={dispatch}
                     deptName={deptName}
-                    index={4}
+                    index={index}
                   />
                 </div>
               </TabPane>

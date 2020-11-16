@@ -11,100 +11,195 @@ import {
   message,
   DatePicker,
   ConfigProvider,
+  Upload,
+  Modal,
 } from 'antd';
 import locale from 'antd/es/locale/zh_CN';
 import 'moment/locale/zh-cn';
 import moment from 'moment';
+import { InboxOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
-const columns = [
-  {
-    title: '密码应用控制点',
-    dataIndex: 'splitTypeDescOne',
-    key: 'splitTypeDescOne',
-    colSpan: 3,
-    render: (value, row, index) => {
-      const obj = {
-        children: value,
-        props: {},
-      };
-      obj.props.rowSpan = 100;
+const { Dragger } = Upload;
+interface PageProps extends ConnectProps {
+  manage: ManageModelState;
+}
 
-      if (value === '技术要求' && index > 0) {
-        obj.props.rowSpan = 0;
-      }
-      return obj;
-    },
-  },
-  {
-    title: 'hide',
-    colSpan: 0,
-    dataIndex: 'splitTypeDescTwo',
-    key: 'splitTypeDescTwo',
-    render: (value, row, index) => {
-      const obj = {
-        children: value,
-        props: {},
-      };
-      //splitTypeTwo
-      if (row.splitTypeTwo !== 0) {
-        obj.props.rowSpan = row.splitTypeTwo;
-      } else {
-        obj.props.rowSpan = 0;
-      }
-      return obj;
-    },
-  },
-  {
-    title: 'hide',
-    colSpan: 0,
-    dataIndex: 'splitTypeDescThree',
-    render: (value, row, index) => {
-      const obj = {
-        children: value,
-        props: {},
-      };
-      obj.props.rowSpan = 1;
-      return obj;
-    },
-  },
-  {
-    title: '第一级',
-    colSpan: 1,
-    dataIndex: 'resultType',
-    key: 'resultType',
-    render: (value, row, index) => {
-      const obj = {
-        children: value,
-        props: {},
-      };
-      obj.props.rowSpan = 1;
-      return obj;
-    },
-  },
-  {
-    title: '监控结果',
-    colSpan: 1,
-    dataIndex: 'resultType',
-    key: 'resultType',
-    render: text => <div>{text}</div>,
-  },
-  {
-    title: '详细监控信息',
-    colSpan: 1,
-    dataIndex: 'levelMsg',
-    key: 'levelMsg',
-    render: text => <div>{text}</div>,
-  },
-];
 const Confi: FC<PageProps> = props => {
-  const { deptId, deptName, manage } = props;
+  const { deptId, deptName, manage, dispatch } = props;
+  const [year, setYear] = useState([]);
+  const [yearClick, setYearClick] = useState(0);
   const [isAll, setIsAll] = useState(false);
+  const [title, setTitle] = useState(false);
+  const [importYear, setImportYear] = useState(0);
+  const [tableData, setTableData] = useState([]);
+  const [showTableData, setShowTableData] = useState(false);
+  const [fileList, setFileList] = useState([]);
+  useEffect(() => {
+    dispatch({
+      type: 'manage/queryY',
+      payload: {
+        deptId: 9,
+      },
+      callback: data => {
+        const year = Object.keys(data).map(item => {
+          const value = data[item].status;
+          const k = item.split('-')[0];
+          return { key: k, value };
+        });
+        const arr = [];
+        for (let i = Number(moment().year() - 19); i <= moment().year(); i++) {
+          const obj = {};
+          obj.k = i;
+          obj.color = 'black';
+          year.forEach(item => {
+            if (Number(item.key) === i) {
+              obj.color = item.value === 1 ? '#0FB723' : 'red';
+            }
+          });
+          arr.push(obj);
+        }
+        setYear([...arr]);
+      },
+    });
+    dispatch({
+      type: 'manage/queryTitle',
+      payload: {
+        deptId: 9,
+      },
+      callback: data => {
+        setTitle(data.list[0]); //appLevelName
+      },
+    });
+  }, [deptId]);
 
   const pagination = {
     current: 1,
     pageSize: 1000,
     hideOnSinglePage: true,
+  };
+  const columns = [
+    {
+      title: '密码应用控制点',
+      dataIndex: 'splitTypeDescOne',
+      key: 'splitTypeDescOne',
+      colSpan: 3,
+      render: (value, row, index) => {
+        const obj = {
+          children: value,
+          props: {},
+        };
+        obj.props.rowSpan = 100;
+
+        if (value === '技术要求' && index > 0) {
+          obj.props.rowSpan = 0;
+        }
+        return obj;
+      },
+    },
+    {
+      title: 'hide',
+      colSpan: 0,
+      dataIndex: 'splitTypeDescTwo',
+      key: 'splitTypeDescTwo',
+      render: (value, row, index) => {
+        const obj = {
+          children: value,
+          props: {},
+        };
+        //splitTypeTwo
+        if (row.splitTypeTwo !== 0) {
+          obj.props.rowSpan = row.splitTypeTwo;
+        } else {
+          obj.props.rowSpan = 0;
+        }
+        return obj;
+      },
+    },
+    {
+      title: 'hide',
+      colSpan: 0,
+      dataIndex: 'splitTypeDescThree',
+      render: (value, row, index) => {
+        const obj = {
+          children: value,
+          props: {},
+        };
+        obj.props.rowSpan = 1;
+        return obj;
+      },
+    },
+    {
+      title: title.appLevelName,
+      colSpan: 1,
+      dataIndex: 'resultType',
+      key: 'resultType',
+      render: (value, row, index) => {
+        const obj = {
+          children: value,
+          props: {},
+        };
+        obj.props.rowSpan = 1;
+        return obj;
+      },
+    },
+    {
+      title: '监控结果',
+      colSpan: 1,
+      dataIndex: 'resultType',
+      key: 'resultType',
+      render: text => <div>{text}</div>,
+    },
+    {
+      title: '详细监控信息',
+      colSpan: 1,
+      dataIndex: 'levelMsg',
+      key: 'levelMsg',
+      render: text => <div>{text}</div>,
+    },
+  ];
+  const showTable = year => {
+    if (year === yearClick) {
+      setShowTableData(false);
+      setYearClick(0);
+      return false;
+    }
+    setYearClick(year);
+    dispatch({
+      type: 'manage/queryTable2',
+      payload: {
+        year,
+        deptId: 9,
+      },
+      callback: data => {
+        setTableData([...data.data.data]);
+        setShowTableData(true);
+      },
+    });
+  };
+  const props2 = {
+    name: 'file',
+    multiple: false,
+    beforeUpload: fileC => {
+      console.log(fileC)
+      setFileList([fileC]);
+      const formData = new FormData();
+      formData.append('file', fileC);
+      console.log(JSON.stringify(formData))
+      dispatch({
+        type: 'manage/upload',
+        payload: {
+          file: formData,
+          deptId:9,
+          year:importYear === 0?2020:importYear,
+        },
+
+        callback: () => {},
+      });
+
+      return false;
+    },
+    fileList,
   };
   return (
     <>
@@ -113,7 +208,7 @@ const Confi: FC<PageProps> = props => {
           {deptName}OA系统 &emsp; 密评登记结果
         </span>
       </div>
-      <div className={styles.content}>
+      <div className={styles.content} style={{ paddingBottom: '20px' }}>
         <div className={styles.title2}>历年登记情况</div>
         <Row style={{ marginTop: '15px' }}>
           <Col span={1} offset={7}>
@@ -138,132 +233,116 @@ const Confi: FC<PageProps> = props => {
         <Row>
           <Col span={20} offset={1}>
             <div className={styles.yearbox2}>
-              <Row className={styles.yearbox}>
+              <Row className={styles.yearbox} style={{ marginTop: '20px' }}>
                 <Col span={2}>
                   <span className={styles.head}>年份</span>
                 </Col>
-                <Col span={2}>
-                  <span className={styles.yearNum}>2011</span>
-                </Col>
-                <Col span={2}>
-                  <span className={styles.yearNum}>2011</span>
-                </Col>
-                <Col span={2}>
-                  <span className={styles.yearNum}>2011</span>
-                </Col>
-                <Col span={2}>
-                  {' '}
-                  <span className={styles.yearNum}>2011</span>
-                </Col>
-                <Col span={2}>
-                  <span className={styles.yearNum}>2011</span>
-                </Col>
-                <Col span={2}>
-                  <span className={styles.yearNum}>2011</span>
-                </Col>
-                <Col span={2}>
-                  <span className={styles.yearNum}>2011</span>
-                </Col>
-                <Col span={2}>
-                  <span className={styles.yearNum}>2011</span>
-                </Col>
-                <Col span={2}>
-                  <span className={styles.yearNum}>2011</span>
-                </Col>
-                <Col span={2}>
-                  <span className={styles.yearNum}>2011</span>
-                </Col>
+                {year.slice(10, 20).map(item => {
+                  return (
+                    <Col span={2} key={item.k}>
+                      <span
+                        className={styles.yearNum}
+                        style={{
+                          color: yearClick == item.k ? '#fff' : item.color,
+                          backgroundColor:
+                            yearClick == item.k ? '#0085e8' : '#fff',
+                        }}
+                        onClick={() =>
+                          item.color === '#0FB723' ? showTable(item.k) : null
+                        }
+                      >
+                        {item.k}
+                      </span>
+                    </Col>
+                  );
+                })}
               </Row>
-              <Row>
-                <Col span={2} offset={2}>
-                  <span className={styles.yearNum}>2011</span>
-                </Col>
-                <Col span={2}>
-                  <span className={styles.yearNum}>2011</span>
-                </Col>
-                <Col span={2}>
-                  <span className={styles.yearNum}>2011</span>
-                </Col>
-                <Col span={2}>
-                  {' '}
-                  <span className={styles.yearNum}>2011</span>
-                </Col>
-                <Col span={2}>
-                  <span className={styles.yearNum}>2011</span>
-                </Col>
-                <Col span={2}>
-                  <span className={styles.yearNum}>2011</span>
-                </Col>
-                <Col span={2}>
-                  <span className={styles.yearNum}>2011</span>
-                </Col>
-                <Col span={2}>
-                  <span className={styles.yearNum}>2011</span>
-                </Col>
-                <Col span={2}>
-                  <span className={styles.yearNum}>2011</span>
-                </Col>
-                <Col span={2}>
-                  <span className={styles.yearNum}>2011</span>
-                </Col>
+              <Row style={{ display: isAll ? 'flex' : 'none' }}>
+                {year.slice(0, 10).map((item, index) => {
+                  return (
+                    <Col span={2} offset={index === 0 ? 2 : 0} key={item.k}>
+                      <span
+                        className={styles.yearNum}
+                        style={{
+                          color: yearClick == item.k ? '#fff' : item.color,
+                          backgroundColor:
+                            yearClick == item.k ? '#0085e8' : '#fff',
+                        }}
+                        onClick={() =>
+                          item.color === '#0FB723' ? showTable(item.k) : null
+                        }
+                      >
+                        {item.k}
+                      </span>
+                    </Col>
+                  );
+                })}
               </Row>
-              <Row>
-                <Col span={2} offset={2}>
-                  <span className={styles.yearNum}>2011</span>
-                </Col>
-                <Col span={2}>
-                  <span className={styles.yearNum}>2011</span>
-                </Col>
-                <Col span={2}>
-                  <span className={styles.yearNum}>2011</span>
-                </Col>
-                <Col span={2}>
-                  {' '}
-                  <span className={styles.yearNum}>2011</span>
-                </Col>
-                <Col span={2}>
-                  <span className={styles.yearNum}>2011</span>
-                </Col>
-                <Col span={2}>
-                  <span className={styles.yearNum}>2011</span>
-                </Col>
-                <Col span={2}>
-                  <span className={styles.yearNum}>2011</span>
-                </Col>
-                <Col span={2}>
-                  <span className={styles.yearNum}>2011</span>
-                </Col>
-                <Col span={2}>
-                  <span className={styles.yearNum}>2011</span>
-                </Col>
-                <Col span={2}>
-                  <span className={styles.yearNum}>2011</span>
-                </Col>
+              <Row style={{ display: isAll ? 'flex' : 'none' }}>
+                {year.slice(10, 20).map((item, index) => {
+                  return (
+                    <Col span={2} offset={index === 0 ? 2 : 0} key={item.k}>
+                      <span
+                        className={styles.yearNum}
+                        style={{
+                          color: yearClick == item.k ? '#fff' : item.color,
+                          backgroundColor:
+                            yearClick == item.k ? '#0085e8' : '#fff',
+                        }}
+                        onClick={() =>
+                          item.color === '#0FB723' ? showTable(item.k) : null
+                        }
+                      >
+                        {item.k}
+                      </span>
+                    </Col>
+                  );
+                })}
               </Row>
             </div>
           </Col>
           <Col offset={1}>
-            <div className={styles.all}>全</div>
+            <div
+              onClick={() => setIsAll(!isAll)}
+              className={isAll ? styles.all : styles.noall}
+              style={{ marginTop: '20px' }}
+            >
+              全
+            </div>
           </Col>
         </Row>
-        {/* <Table
-            style={{ width: '100%', marginTop: '2%', padding: '3%' }}
-            columns={columns}
-            dataSource={tableData}
-            pagination={pagination}
-            bordered
-          /> */}
+        <Table
+          style={{
+            width: '100%',
+            marginTop: '2%',
+            padding: '3%',
+            display: showTableData ? 'inline-block' : 'none',
+          }}
+          columns={columns}
+          dataSource={tableData}
+          pagination={pagination}
+          bordered
+        />
       </div>
       <div className={styles.content}>
         <div className={styles.title2}>新增登记</div>
         <Row>
           <Col offset={1}>
             <span style={{ padding: '5px' }}>导入登记信息</span>
-            <Select size="small" defaultValue="lucy" style={{ width: 70 }}>
-              <Option value="jack">Jack</Option>
-              <Option value="lucy">Lucy</Option>
-              <Option value="Yiminghe">yiminghe</Option>
-            </Select>{' '}
+            <Select
+              size="small"
+              defaultValue="2020"
+              onChange={() => setImportYear(value)}
+              style={{ width: 70 }}
+            >
+              {year.map(item => {
+                return (
+                  <Option key={item.k} value={item.k}>
+                    {item.k}
+                  </Option>
+                );
+              })}
+            </Select>
           </Col>
           <Col offset={5}>
             <Button style={{ color: '#0085e8' }} size="small" shape="round">
@@ -282,6 +361,26 @@ const Confi: FC<PageProps> = props => {
           </Col>
         </Row>
       </div>
+      <Modal
+        closable={false}
+        visible={true}
+        bodyStyle={{ textAlign: 'center' }}
+        footer={[
+          <Button key="back" onClick={() => {}}>
+            取消
+          </Button>,
+          <Button key="submit" type="primary" onClick={() => {}}>
+            确定
+          </Button>,
+        ]}
+      >
+        <Dragger {...props2}>
+          <p className="ant-upload-drag-icon">
+            <InboxOutlined />
+          </p>
+          <p className="ant-upload-text">点击或拖入文件上传</p>
+        </Dragger>
+      </Modal>
     </>
   );
 };

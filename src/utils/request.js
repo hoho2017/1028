@@ -44,7 +44,8 @@ export function requestRaw(url, option = { method: 'GET' }) {
     newOptions.method === 'PUT' ||
     newOptions.method === 'DELETE'
   ) {
-    if (!(newOptions.body instanceof FormData)) {
+    console.log((newOptions.headers))
+    if (newOptions.headers !== '1') {
       newOptions.headers = {
         ...newOptions.headers,
         Accept: 'application/json',
@@ -56,7 +57,10 @@ export function requestRaw(url, option = { method: 'GET' }) {
       newOptions.headers = {
         ...newOptions.headers,
         Accept: 'application/json',
+        'Content-Type': "multipart/form-data;boundary=----WebKitFormBoundary3eeB9DbaBq6TH4yo"
       };
+
+      console.log(newOptions.body.get('file'))
     }
   }
 

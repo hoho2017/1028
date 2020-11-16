@@ -39,6 +39,8 @@ import {
   roleModify,
   roleDelete,
   queryTree,
+  queryTable2,
+  upload
 } from '@/services/manage';
 import { treeMake } from '@/utils/translateFunc.js';
 export interface ManageModelState {
@@ -85,7 +87,9 @@ export interface ManageModelType {
     roleRegister: Effect;
     roleModify: Effect;
     roleDelete: Effect;
+    queryTable2: Effect;
     queryTree: Effect;
+    upload: Effect;
   };
   reducers: {
     save: Reducer<ManageModelState>;
@@ -166,6 +170,10 @@ const ManageModel: ManageModelType = {
       const data = yield call(orgModify, payload);
       if (callback) callback(data);
     },
+    *queryTable2({ type, payload, callback }, { put, call, select }) {
+      const data = yield call(queryTable2, payload);
+      if (callback) callback(data);
+    },
     *userDelete({ type, payload, callback }, { put, call, select }) {
       const data = yield call(userDelete, payload);
       if (callback) callback(data);
@@ -209,8 +217,15 @@ const ManageModel: ManageModelType = {
       if (callback) callback(page);
     },
     *queryY({ type, payload, callback }, { put, call, select }) {
-      const { year, sum } = yield call(queryYear, payload);
-      if (callback) callback(year, sum);
+      const data = yield call(queryYear, payload);
+      if(data.code === 500){
+        return false
+      }
+      if (callback) callback(data.year);
+    },
+    *upload({ type, payload,params, callback }, { put, call, select }) {
+      const data = yield call(upload, payload);
+      if (callback) callback(data.data.page);
     },
     *queryTAuth({ type, payload, callback }, { put, call, select }) {
       const data = yield call(queryTAuth, payload);
@@ -226,7 +241,6 @@ const ManageModel: ManageModelType = {
     },
     *queryTOrg({ type, payload, callback }, { put, call, select }) {
       const data = yield call(queryTOrg, payload);
-      console.log(data);
       if (data.code === 500) {
         message.error(data.msg);
         return false;
