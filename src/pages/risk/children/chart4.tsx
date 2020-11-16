@@ -70,7 +70,17 @@ function Chart4(props) {
     >
       <Tooltip shared={true} showCrosshairs />
       <Legend visible={false} />
-      <Axis name="dates" {...axisConfig} />
+      <Axis
+        name="dates"
+        {...axisConfig}
+        label={{
+          offset: 10,
+          formatter(text, item, index) {
+            let arr = text.split(' ');
+            return `${text}月`;
+          },
+        }}
+      />
       <Axis name="first" {...axisConfig} label={{ offset: 10 }} />
       <LineAdvance
         area

@@ -19,7 +19,7 @@ function Box(props) {
         style={{ display: index === 0 ? 'none' : 'block' }}
       >
         <Col span={15}>
-          <div className={styles.title}>{deptName}OA系统</div>
+          <div className={styles.title}>{deptName}</div>
         </Col>
       </Row>
       <Row style={{ marginBottom: '4%' }}>

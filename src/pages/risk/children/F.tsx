@@ -115,7 +115,7 @@ function F(props) {
           </div>
         </Col>
         <Col span={10} style={{ height: '100%' }}>
-          <div className={styles.content3}>
+          <div className={styles.content3} style={{ padding: ' 0 0 3% 0' }}>
             <div
               className={styles.innerTitle3}
               style={{ marginBottom: '1rem' }}
@@ -143,7 +143,7 @@ function F(props) {
               className={styles.innerTitle3}
               style={{ marginBottom: '1rem' }}
             >
-              密码算法调用趋势预警
+              密码算法调用停止预警
             </div>
             {down.map(item => {
               const txt = (item.appName + item.appTypeName).split('停止');
@@ -164,7 +164,7 @@ function F(props) {
               className={styles.innerTitle3}
               style={{ marginBottom: '1rem' }}
             >
-              密码算法调用趋势预警
+              密码算法调用故障预警
             </div>
             {down.map(item => {
               const txt = (item.appName + item.appTypeName).includes('故障')

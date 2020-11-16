@@ -1,4 +1,4 @@
-import { Chart, Tooltip, Legend, Point, Line, Interval } from 'bizcharts';
+import { Chart, Tooltip, Legend, Point, Line, Interval, Axis } from 'bizcharts';
 import React, { FC, useEffect, useState } from 'react';
 
 function Chart2(props) {
@@ -63,10 +63,25 @@ function Chart2(props) {
         });
       }}
     >
-      {/*  如需使用单轴
-        <Axis name="value" visible={true} />
-        <Axis name="number" visible={false} />
-        */}
+      <Axis
+        name="number"
+        visible={false}
+        label={{
+          formatter(text, item, index) {
+            return `${text}月`;
+          },
+        }}
+      />
+      <Axis
+        name="time"
+        visible={true}
+        label={{
+          formatter(text, item, index) {
+            return `${text}月`;
+          },
+        }}
+      />
+
       <Interval position="time*value" color={colors[0]} />
       <Line position="time*number" color={colors[1]} size={3} shape="smooth" />
       <Point position="time*number" color={colors[1]} size={3} shape="circle" />

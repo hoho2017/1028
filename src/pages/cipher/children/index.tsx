@@ -9,6 +9,7 @@ import Third from './third.tsx';
 function Box(props) {
   const { deptId, deptName, index, dispatch, ZD } = props;
   const [year, setYear] = useState([]);
+  const [yearType, setYearType] = useState([]);
   const [allYearData, setAllYearData] = useState([]);
   const [sum, setSum] = useState({});
   useEffect(() => {
@@ -24,9 +25,15 @@ function Box(props) {
           }),
         );
         setSum({ ...sum });
+        console.log(y);
         setYear(
           Object.keys(y).map(item => {
             return item.split('-')[0];
+          }),
+        );
+        setYearType(
+          Object.values(y).map(item => {
+            return item.assessmentType === 1 ? '风评' : '密评';
           }),
         );
       },
@@ -36,7 +43,7 @@ function Box(props) {
     <>
       <Row className={styles.pt20}>
         <Col span={8}>
-          <div className={styles.title}>{deptName}OA系统</div>
+          <div className={styles.title}>{deptName}</div>
         </Col>
         <Col span={4} offset={4}>
           <div
@@ -74,7 +81,12 @@ function Box(props) {
             deptId={deptId}
           />
         ) : index === 1 ? (
-          <Sec yearData={year} dispatch={dispatch} deptId={deptId} />
+          <Sec
+            yearData={year}
+            yearType={yearType}
+            dispatch={dispatch}
+            deptId={deptId}
+          />
         ) : (
           <Third deptId={deptId} ZD={ZD} dispatch={dispatch} />
         )}

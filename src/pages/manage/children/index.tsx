@@ -17,7 +17,7 @@ function Box(props) {
     dispatch({
       type: 'manage/queryY',
       payload: {
-        deptId:9
+        deptId: 9,
       },
       callback: (y, sum) => {
         setAllYearData(
@@ -38,7 +38,7 @@ function Box(props) {
     <>
       {/* <Row className={styles.pt20}>
         <Col span={8}>
-          <div className={styles.title}>{deptName}OA系统</div>
+          <div className={styles.title}>{deptName}</div>
         </Col>
       </Row> */}
       <div>

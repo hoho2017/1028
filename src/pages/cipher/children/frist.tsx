@@ -61,44 +61,46 @@ function Frist(props) {
     });
   }, []);
   const handleChangeL = value => {
-    setValue2(value.split('*')[0])
-    setLeft(value.split('*')[1])
+    setValue2(value.split('*')[0]);
+    setLeft(value.split('*')[1]);
   };
   const handleChangeR = value => {
-    setValue1(value.split('*')[0])
-    setRight(value.split('*')[1])
+    setValue1(value.split('*')[0]);
+    setRight(value.split('*')[1]);
   };
   useEffect(() => {
     const v1 = addYearData.filter(item => {
       return item.assessmentType === 1;
     });
     v1.length > 0 && setValue1(v1[0].year);
-    v1.length > 0 &&setLeft(v1[0].id);
+    v1.length > 0 && setLeft(v1[0].id);
     const v2 = addYearData.filter(item => {
       return item.assessmentType === 2;
     });
     v2.length > 0 && setValue2(v2[0].year);
-    v2.length > 0 &&setRight(v2[0].id);
+    v2.length > 0 && setRight(v2[0].id);
   }, [addYearData]);
-  const down =(zm)=>{
-    if(zm === 'L'){//use left
+  const down = zm => {
+    if (zm === 'L') {
+      //use left
       dispatch({
-        type:'cipher/down',
-          payload:{
-            left
-          }
-      })
-    }else{// use right
+        type: 'cipher/down',
+        payload: {
+          left,
+        },
+      });
+    } else {
+      // use right
       dispatch({
-        type:'cipher/down',
-        payload:{
-          right
-        }
-      })
+        type: 'cipher/down',
+        payload: {
+          right,
+        },
+      });
     }
-  }
+  };
   return (
-    <>
+    <div className="first">
       <div
         className={styles.content}
         style={{ padding: '15px', borderRadius: '40px', marginBottom: '2%' }}
@@ -240,10 +242,9 @@ function Frist(props) {
                     >
                       {addYearData.map(item => {
                         if (item.assessmentType === 2) {
-
                           let year = item.assessmentDate.split('-')[0];
                           return (
-                            <Option key={item.id} value={year+'*'+item.key}>
+                            <Option key={item.id} value={year + '*' + item.key}>
                               {year}
                             </Option>
                           );
@@ -254,7 +255,7 @@ function Frist(props) {
                       className={styles.dbtn}
                       type="primary"
                       shape="circle"
-                      onClick={()=>down('L')}
+                      onClick={() => down('L')}
                       icon={<DownloadOutlined />}
                     />
                   </div>
@@ -271,7 +272,7 @@ function Frist(props) {
                         if (item.assessmentType === 1) {
                           let year = item.assessmentDate.split('-')[0];
                           return (
-                            <Option key={year} value={year+'*'+item.key}>
+                            <Option key={year} value={year + '*' + item.key}>
                               {year}
                             </Option>
                           );
@@ -282,7 +283,7 @@ function Frist(props) {
                       className={styles.dbtn}
                       type="primary"
                       shape="circle"
-                      onClick={()=>down('R')}
+                      onClick={() => down('R')}
                       icon={<DownloadOutlined />}
                     />
                   </div>
@@ -292,7 +293,7 @@ function Frist(props) {
           </Col>
         </Row>
       </div>
-    </>
+    </div>
   );
 }
 

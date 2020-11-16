@@ -132,12 +132,19 @@ function J(props) {
           </Col>
           <Col span={14} offset={1}>
             <div className={styles.content2}>
-              <Row>
-                {detail ? detail.logDate : ''},密码智能体调用
-                {ZD.arith[Number(detail ? detail.arithId : 1) - 1].value}出错
-              </Row>
-              <Row>错误代码:{detail ? detail.appWarnCode : ''}</Row>
-              <Row>错误原因:{detail ? detail.logMessage : ''}</Row>
+              {detail ? (
+                <>
+                  <Row>
+                    {detail ? detail.logDate : ''},密码智能体调用
+                    {ZD.arith[Number(detail ? detail.arithId : 1) - 1].value}
+                    出错
+                  </Row>
+                  <Row>错误代码:{detail ? detail.appWarnCode : ''}</Row>
+                  <Row>错误原因:{detail ? detail.logMessage : ''}</Row>
+                </>
+              ) : (
+                '无数据'
+              )}
             </div>
           </Col>
         </Row>

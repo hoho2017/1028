@@ -17,7 +17,8 @@ import {
 import locale from 'antd/es/locale/zh_CN';
 import 'moment/locale/zh-cn';
 import moment from 'moment';
-import { InboxOutlined } from '@ant-design/icons';
+import { InboxOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import { check } from 'prettier';
 
 const { Option } = Select;
 const { Dragger } = Upload;
@@ -31,9 +32,13 @@ const Confi: FC<PageProps> = props => {
   const [yearClick, setYearClick] = useState(0);
   const [isAll, setIsAll] = useState(false);
   const [title, setTitle] = useState(false);
+  const [showConf, setShowConf] = useState(false);
+  const [showUpload, setShowUpload] = useState(false);
   const [importYear, setImportYear] = useState(0);
   const [tableData, setTableData] = useState([]);
   const [showTableData, setShowTableData] = useState(false);
+  const [uuid, setUuid] = useState('');
+  const [showCheckFile, setShowCheckFile] = useState(false);
   const [fileList, setFileList] = useState([]);
   useEffect(() => {
     dispatch({
@@ -153,8 +158,8 @@ const Confi: FC<PageProps> = props => {
     {
       title: '详细监控信息',
       colSpan: 1,
-      dataIndex: 'levelMsg',
-      key: 'levelMsg',
+      dataIndex: 'resultTypeDesc',
+      key: 'resultTypeDesc',
       render: text => <div>{text}</div>,
     },
   ];
@@ -181,25 +186,54 @@ const Confi: FC<PageProps> = props => {
     name: 'file',
     multiple: false,
     beforeUpload: fileC => {
-      console.log(fileC)
       setFileList([fileC]);
       const formData = new FormData();
       formData.append('file', fileC);
-      console.log(JSON.stringify(formData))
       dispatch({
         type: 'manage/upload',
-        payload: {
-          file: formData,
-          deptId:9,
-          year:importYear === 0?2020:importYear,
+        payload: { file: formData, year: importYear, deptId: 9 },
+        callback: data => {
+          if (data.code === 0) {
+            setUuid(data.uuid);
+          }
         },
-
-        callback: () => {},
       });
-
       return false;
     },
     fileList,
+  };
+  const checkFile = () => {
+    if (uuid !== '') {
+      dispatch({
+        type: 'manage/checkFile',
+        payload: {
+          uuid,
+        },
+        callback: data => {
+          if (data.code === 0) {
+            setTableData([...data.data]);
+            setShowCheckFile(true);
+          }
+        },
+      });
+    } else {
+      message.info('请先上传文件！');
+    }
+  };
+  const confirmUp = () => {
+    dispatch({
+      type: 'manage/confirmUp',
+      payload: {
+        uuid,
+      },
+      callback: data => {
+        if (data.code === 0) {
+          message.success('文件上传成功！');
+          setUuid('');
+          setShowConf(false);
+        }
+      },
+    });
   };
   return (
     <>
@@ -332,7 +366,7 @@ const Confi: FC<PageProps> = props => {
             <Select
               size="small"
               defaultValue="2020"
-              onChange={() => setImportYear(value)}
+              onChange={value => setImportYear(value)}
               style={{ width: 70 }}
             >
               {year.map(item => {
@@ -345,31 +379,76 @@ const Confi: FC<PageProps> = props => {
             </Select>
           </Col>
           <Col offset={5}>
-            <Button style={{ color: '#0085e8' }} size="small" shape="round">
+            <Button
+              style={{ color: '#0085e8' }}
+              onClick={() => setShowUpload(true)}
+              size="small"
+              shape="round"
+            >
               导入文件
             </Button>
           </Col>
           <Col offset={1}>
-            <Button style={{ color: '#0085e8' }} size="small" shape="round">
+            <Button
+              style={{ color: '#0085e8' }}
+              onClick={() => checkFile()}
+              size="small"
+              shape="round"
+            >
               查看导入文件
             </Button>
           </Col>
           <Col offset={1}>
-            <Button style={{ color: '#0085e8' }} size="small" shape="round">
+            <Button
+              style={{ color: '#0085e8' }}
+              onClick={() => {
+                if (uuid !== '') {
+                  setShowConf(true);
+                } else {
+                  message.info('请先上传文件！');
+                }
+              }}
+              size="small"
+              shape="round"
+            >
               确定导入
             </Button>
           </Col>
         </Row>
+        <Row>
+          <Table
+            style={{
+              width: '100%',
+              marginTop: '2%',
+              padding: '3%',
+              display: showCheckFile ? 'inline-block' : 'none',
+            }}
+            columns={columns}
+            dataSource={tableData}
+            pagination={pagination}
+            bordered
+          />
+        </Row>
       </div>
       <Modal
         closable={false}
-        visible={true}
+        visible={showUpload}
         bodyStyle={{ textAlign: 'center' }}
         footer={[
-          <Button key="back" onClick={() => {}}>
+          <Button
+            key="back"
+            onClick={() => {
+              setShowUpload(false);
+              setFileList([]);
+            }}
+          >
             取消
           </Button>,
-          <Button key="submit" type="primary" onClick={() => {}}>
+          <Button
+            key="submit"
+            type="primary"
+            onClick={() => setShowUpload(false)}
+          >
             确定
           </Button>,
         ]}
@@ -380,6 +459,32 @@ const Confi: FC<PageProps> = props => {
           </p>
           <p className="ant-upload-text">点击或拖入文件上传</p>
         </Dragger>
+      </Modal>
+      <Modal
+        centered={true}
+        bodyStyle={{ textAlign: 'center' }}
+        title=""
+        visible={showConf}
+        onOk={() => {}}
+        onCancel={() => {}}
+        closable={false}
+        footer={[
+          <Button
+            key="back"
+            onClick={() => {
+              setShowConf(false);
+            }}
+          >
+            取消
+          </Button>,
+          <Button key="submit" type="primary" onClick={() => confirmUp()}>
+            确定
+          </Button>,
+        ]}
+      >
+        <p style={{ fontSize: '1rem', fontWeight: '600' }}>
+          请确定导入数据无误,一旦确认无法修改!
+        </p>
       </Modal>
     </>
   );

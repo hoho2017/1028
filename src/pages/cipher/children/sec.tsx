@@ -4,24 +4,24 @@ import { Row, Col, Select, Table } from 'antd';
 
 const { Option } = Select;
 
-
 function Sec(props) {
-  const { yearData, dispatch, deptId } = props;
+  const { yearData, yearType, dispatch, deptId } = props;
   const [tableData, setTableData] = useState([]);
+  const [index, setIndex] = useState(0);
   const [year, setYear] = useState(yearData[0]);
   const [title, setTitle] = useState({});
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch({
       type: 'cipher/queryTitle',
       payload: {
         deptId: 9,
       },
       callback: data => {
-        setTitle(data.list[0]);//appLevelName
+        setTitle(data.list[0]); //appLevelName
       },
     });
-  },[])
+  }, []);
   useEffect(() => {
     setYear(yearData[0]);
   }, [yearData]);
@@ -41,6 +41,13 @@ function Sec(props) {
   }, [year]);
   const handleChange = value => {
     setYear(value);
+    let i = 0;
+    yearData.forEach((item, index) => {
+      if (item === value) {
+        i = index;
+      }
+    });
+    setIndex(i);
   };
   const pagination = {
     current: 1,
@@ -79,7 +86,7 @@ function Sec(props) {
         //splitTypeTwo
         if (row.splitTypeTwo !== 0) {
           obj.props.rowSpan = row.splitTypeTwo;
-        }else{
+        } else {
           obj.props.rowSpan = 0;
         }
         return obj;
@@ -122,18 +129,19 @@ function Sec(props) {
     {
       title: '详细监控信息',
       colSpan: 1,
-      dataIndex: 'levelMsg',
-      key: 'levelMsg',
+      dataIndex: 'resultTypeDesc',
+      key: 'resultTypeDesc',
       render: text => <div>{text}</div>,
     },
   ];
-
   return (
     <>
       <div className={styles.content}>
         <Row>
           <Col span={5}>
-            <div className={styles.innerTitle}>{year}年风评详情</div>
+            <div className={styles.innerTitle}>
+              {year}年{yearType[index]}详情
+            </div>
           </Col>
           <Col offset={15}>
             <Select

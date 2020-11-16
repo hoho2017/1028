@@ -38,6 +38,23 @@ export async function queryTAuth(params) {
 export async function queryTUser(params) {
   return requestRaw(`/sys/user/list${getParamsStr(params)}`);
 }
+
+export async function confirmUp(params) {
+  return request(
+    `/sys/subappassessmentsplit/confirmImport${getParamsStr(params)}`,
+    {
+      method: 'POST',
+    },
+  );
+}
+export async function checkFile(params) {
+  return request(
+    `/sys/subappassessmentsplit/info/by-uuid${getParamsStr(params)}`,
+    {
+      method: 'POST',
+    },
+  );
+}
 export async function queryTOrg(params) {
   return request(`/sys/dept/list-page${getParamsStr(params)}`, {
     method: 'POST',
@@ -50,14 +67,13 @@ export async function queryTThird(params) {
   });
 }
 
-export async function upload(payload) {
-  console.log(payload.file.get('file'))
-  const params = {deptId:payload.deptId, year:payload.year}
-  return request(`/sys/subappassessmentsplit/upload${getParamsStr(params)}`, {
+export async function upload(params) {
+  const u = { deptId: params.deptId, year: params.year };
+  return request(`/sys/subappassessmentsplit/upload${getParamsStr(u)}`, {
     method: 'POST',
-    body:payload.file,
-    headers:'1'
-  })
+    body: params.file,
+    headers: '1',
+  });
 }
 
 export async function userSave(params) {

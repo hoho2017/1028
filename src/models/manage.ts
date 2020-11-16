@@ -40,7 +40,9 @@ import {
   roleDelete,
   queryTree,
   queryTable2,
-  upload
+  upload,
+  checkFile,
+  confirmUp,
 } from '@/services/manage';
 import { treeMake } from '@/utils/translateFunc.js';
 export interface ManageModelState {
@@ -90,6 +92,8 @@ export interface ManageModelType {
     queryTable2: Effect;
     queryTree: Effect;
     upload: Effect;
+    checkFile: Effect;
+    confirmUp: Effect;
   };
   reducers: {
     save: Reducer<ManageModelState>;
@@ -141,6 +145,10 @@ const ManageModel: ManageModelType = {
     *queryTUser({ type, payload, callback }, { put, call, select }) {
       const data = yield call(queryTUser, payload);
       if (callback) callback(data.data.page);
+    },
+    *confirmUp({ type, payload, callback }, { put, call, select }) {
+      const data = yield call(confirmUp, payload);
+      if (callback) callback(data);
     },
     *userModify({ type, payload, callback }, { put, call, select }) {
       const data = yield call(userModify, payload);
@@ -218,14 +226,18 @@ const ManageModel: ManageModelType = {
     },
     *queryY({ type, payload, callback }, { put, call, select }) {
       const data = yield call(queryYear, payload);
-      if(data.code === 500){
-        return false
+      if (data.code === 500) {
+        return false;
       }
       if (callback) callback(data.year);
     },
-    *upload({ type, payload,params, callback }, { put, call, select }) {
+    *checkFile({ type, payload, callback }, { put, call, select }) {
+      const data = yield call(checkFile, payload);
+      if (callback) callback(data);
+    },
+    *upload({ type, payload, params, callback }, { put, call, select }) {
       const data = yield call(upload, payload);
-      if (callback) callback(data.data.page);
+      if (callback) callback(data);
     },
     *queryTAuth({ type, payload, callback }, { put, call, select }) {
       const data = yield call(queryTAuth, payload);

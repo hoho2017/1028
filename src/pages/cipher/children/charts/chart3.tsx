@@ -6,7 +6,7 @@ import {
   Axis,
   Coordinate,
   Interaction,
-  PieChart
+  PieChart,
 } from 'bizcharts';
 
 function Chart3(props) {
@@ -27,8 +27,8 @@ function Chart3(props) {
     zd.forEach(item2 => {
       data.push({
         type: item2.value,
-        count: percent[item2.code]?percent[item2.code]:0,
-        value:percent[item2.code]?(percent[item2.code] / sum).toFixed(2):0,
+        count: percent[item2.code] ? percent[item2.code] : 0,
+        value: percent[item2.code] ? (percent[item2.code] / sum).toFixed(2) : 0,
       });
     });
     setData(data);
@@ -70,6 +70,14 @@ function Chart3(props) {
       radius={0.8}
       angleField="value"
       colorField="type"
+      tooltip={{
+        formatter: (angleField, colorField) => {
+          return {
+            name: colorField,
+            value: (angleField * 100).toFixed(2) + '%',
+          };
+        },
+      }}
       label={{
         visible: false,
         type: 'outer',
