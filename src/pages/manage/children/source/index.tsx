@@ -557,11 +557,12 @@ const Source: FC<PageProps> = props => {
         })}
       </Row>
       <Row
-        style={
-          showForm === '0'
-            ? { marginTop: '43px' }
-            : { position: 'absolute', width: '65.1%', top: '250px' }
-        }
+        // style={
+        //   showForm === '0'
+        //     ? { marginTop: '43px' }
+        //     : { position: 'absolute', width: '65.1%', top: '250px' }
+        // }
+        style={{position:'fixed',top:'250px',width:'67%'}}
       >
         <Col span={22} offset={1}>
           <Table
