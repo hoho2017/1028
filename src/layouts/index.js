@@ -73,7 +73,7 @@ function BasicLayout(props) {
             {children}
           </div>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>123</Footer>
+        <Footer style={{ textAlign: 'center' }}></Footer>
       </Layout>
     </Layout>
   );
