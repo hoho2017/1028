@@ -152,7 +152,8 @@ const Source: FC<PageProps> = props => {
   }, [deptId, no, current]); //no -> 0 1 2 3
   useEffect(() => {
     setCurrent(1);
-  }, [no]);
+    setChoose({})
+  }, [no,deptId]);
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       setChoose({ ...Object.values(selectedRows)[0] });
@@ -584,6 +585,9 @@ const Source: FC<PageProps> = props => {
                         dataIndex: item.value.toLowerCase(),
                         key: item.value.toLowerCase(),
                         align: 'center',
+                        render:(key)=>{
+                          return key?'是':'否'
+                        }
                       };
                     }),
                   )

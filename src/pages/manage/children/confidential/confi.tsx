@@ -137,8 +137,8 @@ const Confi: FC<PageProps> = props => {
     {
       title: title.appLevelName,
       colSpan: 1,
-      dataIndex: 'resultType',
-      key: 'resultType',
+      dataIndex: 'levelMsg',
+      key: 'levelMsg',
       render: (value, row, index) => {
         const obj = {
           children: value,
@@ -195,6 +195,9 @@ const Confi: FC<PageProps> = props => {
         callback: data => {
           if (data.code === 0) {
             setUuid(data.uuid);
+          }else{
+            message.warn(data.msg)
+            setFileList([])
           }
         },
       });
@@ -231,6 +234,7 @@ const Confi: FC<PageProps> = props => {
           message.success('文件上传成功！');
           setUuid('');
           setShowConf(false);
+          setShowCheckFile(false);
         }
       },
     });
@@ -473,6 +477,7 @@ const Confi: FC<PageProps> = props => {
             key="back"
             onClick={() => {
               setShowConf(false);
+              setShowCheckFile(false);
             }}
           >
             取消

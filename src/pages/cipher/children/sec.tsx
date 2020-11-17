@@ -108,8 +108,8 @@ function Sec(props) {
     {
       title: title.appLevelName,
       colSpan: 1,
-      dataIndex: 'resultType',
-      key: 'resultType',
+      dataIndex: 'levelMsg',
+      key: 'levelMsg',
       render: (value, row, index) => {
         const obj = {
           children: value,

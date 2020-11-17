@@ -77,7 +77,7 @@ function Chart2(props) {
         visible={true}
         label={{
           formatter(text, item, index) {
-            return `${text}月`;
+            return `${text.includes('-')?text.split('-')[1]:text}月`;
           },
         }}
       />
