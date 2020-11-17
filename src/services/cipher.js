@@ -11,7 +11,9 @@ export async function queryTreeM(params) {
 }
 
 export async function down(params) {
-  return requestRaw(`/sys/subappassessmentsplit/download/${(Object.values(params)[0])}`);
+  return requestRaw(`/sys/subappassessmentsplit/download/${(Object.values(params)[0])}`,{
+    headers:'2'
+  });
 }
 
 export async function queryYear(params) {

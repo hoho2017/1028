@@ -62,8 +62,6 @@ const CipherModel: CipherModelType = {
     },
     *down({ type, payload, callback }, { put, call, select }) {
       const data = yield call(down, payload);
-      console.log(data)
-      // if (callback) callback(data);
     },
     *queryListCollect({ type, payload, callback }, { put, call, select }) {
       const { yearArith, monthArith, allYearTotal } = yield call(

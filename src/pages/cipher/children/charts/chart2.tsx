@@ -28,8 +28,6 @@ function Chart2(props) {
   const colors = ['#6394f9', '#62daaa'];
   if (cond === 0) {
     while (data.length > 12) {
-      console.log('init');
-
       data.shift();
     }
   }

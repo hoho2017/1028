@@ -36,7 +36,6 @@ const User: FC<PageProps> = props => {
         page: page,
       },
       callback: data => {
-        console.log(data);
         const { list, totalCount } = data;
         setTotal(totalCount);
         setListApp(
@@ -129,7 +128,6 @@ const User: FC<PageProps> = props => {
       form.setFieldsValue({ deptId: deptName });
     }
     if (i === '2') {
-      console.log(choose);
       // 变更设置所属结构
       form.setFieldsValue({ deptId: deptName });
       form.setFieldsValue({ userId: choose.userId });

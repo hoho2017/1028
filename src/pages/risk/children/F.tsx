@@ -124,7 +124,6 @@ function F(props) {
             </div>
             {down.map(item => {
               const txt = (item.appName + item.appTypeName).split('下降');
-              console.log(txt);
               return (
                 <div style={{ padding: '2px' }}>
                   {txt[0]}
@@ -147,7 +146,6 @@ function F(props) {
             </div>
             {down.map(item => {
               const txt = (item.appName + item.appTypeName).split('停止');
-              console.log(txt);
               return (
                 <div style={{ padding: '2px' }}>
                   {txt[0]}
@@ -170,7 +168,6 @@ function F(props) {
               const txt = (item.appName + item.appTypeName).includes('故障')
                 ? (item.appName + item.appTypeName).split('故障')
                 : (item.appName + item.appTypeName).split('延时');
-              console.log(txt);
               return (
                 <div style={{ padding: '2px' }}>
                   {txt[0]} ·

@@ -51,7 +51,7 @@ export function requestRaw(url, option = { method: 'GET' }) {
         'Content-Type': 'application/json; charset=utf-8',
       };
       newOptions.body = JSON.stringify(newOptions.body);
-    } else {
+    } else if (newOptions.headers === '1') {
       // newOptions.body is FormData
       newOptions.headers = {
         ...newOptions.headers,
@@ -59,6 +59,21 @@ export function requestRaw(url, option = { method: 'GET' }) {
         // 'Content-Type': "multipart/form-data;boundary=----WebKitFormBoundary3eeB9DbaBq6TH4yo"
       };
     }
+  }
+  if (newOptions.headers === '2') {
+    delete newOptions.headers
+    return fetch(url, newOptions).then(res =>
+      res.blob().then(blob => {
+        const url = window.URL || window.webkitURL || window.moxURL;
+        const downloadHref = url.createObjectURL(blob);
+        let downloadLink = document.createElement('a');
+        downloadLink.style.display = 'none';
+        downloadLink.href = downloadHref;
+        downloadLink.download = '报告.xlsx';
+        downloadLink.click();
+        window.URL.revokeObjectURL(downloadHref);
+      }),
+    );
   }
 
   // add token to header

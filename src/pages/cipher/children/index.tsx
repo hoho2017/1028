@@ -25,7 +25,6 @@ function Box(props) {
           }),
         );
         setSum({ ...sum });
-        console.log(y);
         setYear(
           Object.keys(y).map(item => {
             return item.split('-')[0];
