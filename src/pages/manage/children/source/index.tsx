@@ -1,5 +1,5 @@
 import { ConnectProps, connect, ManageModelState } from 'umi';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState, useRef } from 'react';
 import styles from './index.less';
 import {
   Row,
@@ -63,6 +63,7 @@ const Source: FC<PageProps> = props => {
   const [total, setTotal] = useState(0);
   const [current, setCurrent] = useState(1);
   const [selectionType, setSelectionType] = useState('checkbox');
+  const tableRef = useRef();
   const queryTApp = page => {
     dispatch({
       type: 'manage/queryTApp',
@@ -557,12 +558,8 @@ const Source: FC<PageProps> = props => {
         })}
       </Row>
       <Row
-        // style={
-        //   showForm === '0'
-        //     ? { marginTop: '43px' }
-        //     : { position: 'absolute', width: '65.1%', top: '250px' }
-        // }
-        style={{position:'fixed',top:'250px',width:'67%'}}
+        ref={tableRef}
+        style={{position:'absolute',top:'250px',width:'67%'}}
       >
         <Col span={22} offset={1}>
           <Table
