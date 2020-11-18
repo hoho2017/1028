@@ -61,7 +61,7 @@ function Sec(props) {
     dispatch({
       type: 'cipher/queryListCollect',
       payload: {
-        deptId: 9,
+        deptId,
         start: '2008-01-01 00:00:00',
         end: '2022-01-01 00:00:00',
       },
@@ -89,7 +89,7 @@ function Sec(props) {
       //箭头 图
       type: 'cipher/queryFlist',
       payload: {
-        deptId: 9,
+        deptId,
         start: '2008-01-01 00:00:00',
         end: '2022-01-01 00:00:00',
       },

@@ -73,7 +73,7 @@ function BasicLayout(props) {
             {children}
           </div>
         </Content>
-        <Footer style={{ textAlign: 'center' }}></Footer>
+        <Footer style={{ textAlign: 'center' }}>Copyright © 2011-2020</Footer>
       </Layout>
     </Layout>
   );

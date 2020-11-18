@@ -1,5 +1,5 @@
 import { ConnectProps, connect, ManageModelState } from 'umi';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState, useRef } from 'react';
 import styles from './auth.less';
 import { treeMake2 } from '@/utils/translateFunc.js';
 import {
@@ -51,7 +51,8 @@ const Auth: FC<PageProps> = props => {
   const [showAuth, setShowAuth] = useState(false);
   const [showTree, setShowTree] = useState(false);
   const [choose2, setChoose2] = useState({});
-
+  const tableRef = useRef();
+  const boxRef = useRef();
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const [checkedKeys, setCheckedKeys] = useState<string[]>([]);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
@@ -76,6 +77,12 @@ const Auth: FC<PageProps> = props => {
             return item;
           }),
         );
+        setTimeout(()=>{
+          if(boxRef){
+            boxRef.current.style.height=(tableRef.current.offsetHeight+170)+'px'
+          }
+        },10)
+
       },
     });
   };
@@ -96,6 +103,11 @@ const Auth: FC<PageProps> = props => {
             return item;
           }),
         );
+        setTimeout(()=>{
+          if(boxRef){
+            boxRef.current.style.height=(tableRef.current.offsetHeight+170)+'px'
+          }
+        },10)
       },
     });
   };
@@ -106,6 +118,8 @@ const Auth: FC<PageProps> = props => {
   }, [deptId, no, current]); //no -> 0 1 2 3
   useEffect(() => {
     setCurrent(1);
+    setListOrg([])
+    setListApp([])
   }, [no]);
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -302,8 +316,26 @@ const Auth: FC<PageProps> = props => {
       },
     });
   };
+  const columnsAuth2 = columnsAuth.concat([
+    {
+      title: '操作',
+      align: 'center',
+      render: record => {
+        return (
+          <Button
+            onClick={() => showAuthFunc(record)}
+            type="default"
+            shape="round"
+            style={{ color: '#0085e8' }}
+          >
+            用户授权
+          </Button>
+        );
+      },
+    },
+  ]);
   return (
-    <>
+    <div ref={boxRef}>
       <div className={styles.content}>
         <Row>
           {titleArr.map((item, index) => {
@@ -427,53 +459,40 @@ const Auth: FC<PageProps> = props => {
         })}
       </Row>
       <Row
-        style={
-          showForm === '0'
-            ? { marginTop: '43px' }
-            : { position: 'absolute', width: '67%', top: '250px' }
-        }
+        ref={tableRef}
+         style={{ position: 'absolute', top:no===0? '250px':'200px', width: '67%' }}
       >
         <Col span={22} offset={1}>
-          <Table
-            pagination={{
-              total,
-              current,
-              onChange: page => changeCurrent(page),
-            }}
-            rowSelection={
-              no === 0
-                ? {
-                    columnTitle: '操作',
-                    type: 'radio',
-                    ...rowSelection,
-                  }
-                : null
-            }
-            bordered={true}
-            columns={
-              no === 0
-                ? columnsRole
-                : columnsAuth.concat([
-                    {
-                      title: '操作',
-                      align: 'center',
-                      render: record => {
-                        return (
-                          <Button
-                            onClick={() => showAuthFunc(record)}
-                            type="default"
-                            shape="round"
-                            style={{ color: '#0085e8' }}
-                          >
-                            用户授权
-                          </Button>
-                        );
-                      },
-                    },
-                  ])
-            }
-            dataSource={no === 0 ? listApp : listOrg}
-          />
+          {no === 0 ? (
+            <Table
+              pagination={{
+                total,
+                pageSize:10,
+                current,
+                onChange: page => changeCurrent(page),
+              }}
+              rowSelection={{
+                columnTitle: '操作',
+                type: 'radio',
+                ...rowSelection,
+              }}
+              bordered={true}
+              columns={columnsRole}
+              dataSource={ listApp  }
+            />
+          ) : (
+            <Table
+              pagination={{
+                total,
+                pageSize:10,
+                current,
+                onChange: page => changeCurrent(page),
+              }}
+              bordered={true}
+              columns={columnsAuth2}
+              dataSource={listOrg}
+            />
+          )}
         </Col>
       </Row>
       <Modal
@@ -505,6 +524,7 @@ const Auth: FC<PageProps> = props => {
         />
       </Modal>
       <Modal
+      closable={false}
         visible={showTree}
         bodyStyle={{ textAlign: 'center' }}
         title={<div className={styles.modalTitle}>角色授权</div>}
@@ -529,7 +549,7 @@ const Auth: FC<PageProps> = props => {
           treeData={tree}
         />
       </Modal>
-    </>
+    </div>
   );
 };
 

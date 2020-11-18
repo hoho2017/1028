@@ -25,7 +25,7 @@ function Frist(props) {
     dispatch({
       type: 'cipher/queryTitle',
       payload: {
-        deptId: 9,
+        deptId,
       },
       callback: data => {
         setTitle(data.list[0]);
@@ -34,7 +34,7 @@ function Frist(props) {
     dispatch({
       type: 'cipher/queryTitle',
       payload: {
-        deptId: 9,
+        deptId,
       },
       callback: data => {
         setTitle(data.list[0]);
@@ -43,7 +43,7 @@ function Frist(props) {
     dispatch({
       type: 'cipher/queryDouble',
       payload: {
-        deptId: 9,
+        deptId,
       },
       callback: (allMonthTotal, percent, monthArith) => {
         setMonthArith(monthArith);

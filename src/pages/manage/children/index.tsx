@@ -17,7 +17,7 @@ function Box(props) {
     dispatch({
       type: 'manage/queryY',
       payload: {
-        deptId: 9,
+        deptId,
       },
       callback: (y, sum) => {
         setAllYearData(

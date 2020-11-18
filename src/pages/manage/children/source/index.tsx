@@ -64,6 +64,7 @@ const Source: FC<PageProps> = props => {
   const [current, setCurrent] = useState(1);
   const [selectionType, setSelectionType] = useState('checkbox');
   const tableRef = useRef();
+  const boxRef = useRef();
   const queryTApp = page => {
     dispatch({
       type: 'manage/queryTApp',
@@ -81,6 +82,11 @@ const Source: FC<PageProps> = props => {
             return item;
           }),
         );
+        setTimeout(()=>{
+          if(boxRef){
+            boxRef.current.style.height=(tableRef.current.offsetHeight+170)+'px'
+          }
+        },10)
       },
     });
   };
@@ -102,6 +108,11 @@ const Source: FC<PageProps> = props => {
             return item;
           }),
         );
+        setTimeout(()=>{
+          if(boxRef){
+            boxRef.current.style.height=(tableRef.current.offsetHeight+170)+'px'
+          }
+        },10)
       },
     });
   };
@@ -121,6 +132,11 @@ const Source: FC<PageProps> = props => {
             return item;
           }),
         );
+        setTimeout(()=>{
+          if(boxRef){
+            boxRef.current.style.height=(tableRef.current.offsetHeight+170)+'px'
+          }
+        },10)
       },
     });
   };
@@ -142,14 +158,19 @@ const Source: FC<PageProps> = props => {
             return item;
           }),
         );
+        setTimeout(()=>{
+          if(boxRef){
+            boxRef.current.style.height=(tableRef.current.offsetHeight+170)+'px'
+          }
+        },10)
       },
     });
   };
   useEffect(() => {
-    no === 0 && queryTApp(current);
-    no === 1 && queryTOrg(current);
-    no === 2 && queryTCalc(current);
-    no === 3 && queryTThird(current);
+      no === 0 && queryTApp(current);
+      no === 1 && queryTOrg(current);
+      no === 2 && queryTCalc(current);
+      no === 3 && queryTThird(current);
   }, [deptId, no, current]); //no -> 0 1 2 3
   useEffect(() => {
     setCurrent(1);
@@ -217,6 +238,7 @@ const Source: FC<PageProps> = props => {
             } else if (data.code === 0) {
               message.success('操作成功!');
               onReset();
+              queryTOrg(current);
             }
           },
         });
@@ -232,12 +254,12 @@ const Source: FC<PageProps> = props => {
             } else if (data.code === 0) {
               message.success('操作成功!');
               onReset();
+              queryTOrg(current);
             }
           },
         });
       }
       //重新查询
-      queryTOrg(current);
     } else if (no === 2) {
       if (showForm === '1') {
         //应用注册
@@ -251,6 +273,7 @@ const Source: FC<PageProps> = props => {
             } else if (data.code === 0) {
               message.success('操作成功!');
               onReset();
+              queryTCalc(current);
             }
           },
         });
@@ -268,12 +291,12 @@ const Source: FC<PageProps> = props => {
             } else if (data.code === 0) {
               message.success('操作成功!');
               onReset();
+              queryTCalc(current);
             }
           },
         });
       }
       //重新查询
-      queryTCalc(current);
     } else if (no === 3) {
       if (showForm === '1') {
         //应用注册
@@ -444,8 +467,8 @@ const Source: FC<PageProps> = props => {
     setCurrent(page);
   };
   return (
-    <>
-      <div className={styles.content}>
+    <div ref={boxRef}>
+      <div className={styles.content} >
         <Row>
           {titleArr.map((item, index) => {
             return (
@@ -560,7 +583,7 @@ const Source: FC<PageProps> = props => {
       </Row>
       <Row
         ref={tableRef}
-        style={{position:'absolute',top:'250px',width:'67%'}}
+        style={{ position: 'absolute', top: '250px', width: '67%' }}
       >
         <Col span={22} offset={1}>
           <Table
@@ -608,7 +631,7 @@ const Source: FC<PageProps> = props => {
           />
         </Col>
       </Row>
-    </>
+    </div>
   );
 };
 

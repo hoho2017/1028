@@ -15,7 +15,7 @@ function Sec(props) {
     dispatch({
       type: 'cipher/queryTitle',
       payload: {
-        deptId: 9,
+        deptId,
       },
       callback: data => {
         setTitle(data.list[0]); //appLevelName
@@ -31,7 +31,7 @@ function Sec(props) {
         type: 'cipher/queryTable',
         payload: {
           year,
-          deptId: 9,
+          deptId,
         },
         callback: data => {
           setTableData(data);

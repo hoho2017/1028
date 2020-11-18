@@ -30,7 +30,7 @@ function J(props) {
     dispatch({
       type: 'cipher/queryDouble',
       payload: {
-        deptId: 9,
+        deptId,
       },
       callback: (allMonthTotal, percent, monthArith) => {
         setMonthArith(monthArith);
@@ -40,7 +40,7 @@ function J(props) {
     dispatch({
       type: 'risk/queryReason',
       payload: {
-        deptId: 9,
+        deptId,
         limit: 5,
         page: 1,
       },
@@ -65,7 +65,7 @@ function J(props) {
     dispatch({
       type: 'risk/queryReason',
       payload: {
-        deptId: 9,
+        deptId,
         limit: 5,
         page: num,
       },

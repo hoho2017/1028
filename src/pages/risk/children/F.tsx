@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState, useRef } from 'react';
 import styles from './index.less';
 import {
   Row,
@@ -33,11 +33,13 @@ function F(props) {
   const [down, setDown] = useState([]);
   const [stop, setStop] = useState([]);
   const [wrong, setWrong] = useState([]);
+  const [height, setHeight] = useState(360);
+  const standardRef = useRef()
   useEffect(() => {
     dispatch({
       type: 'risk/queryDouble',
       payload: {
-        deptId: 9,
+        deptId,
       },
       callback: avgTime => {
         let obj = {};
@@ -54,6 +56,11 @@ function F(props) {
         });
         setAvg(obj);
         setMax(max);
+        setTimeout(()=>{
+          if(standardRef){
+            setHeight(standardRef.current.offsetHight)
+          }
+        })
       },
     });
     dispatch({
@@ -62,6 +69,7 @@ function F(props) {
         appType: 1,
       },
       callback: list => {
+        console.log(list)
         setDown(list);
       },
     });
@@ -87,14 +95,14 @@ function F(props) {
   return (
     <>
       <Row style={{ width: '100%', height: '100%' }}>
-        <Col span={10} offset={1}>
-          <div className={styles.content3}>
+        <Col span={10} offset={1} ref={standardRef}>
+          <div className={styles.content3} style={{paddingBottom:'30px'}}>
             <div className={styles.innerTitle3}>应用密评概况</div>
             {avg &&
               Object.keys(avg).map((item, index) => {
                 let percent = (avg[item] / max) * 100;
                 return (
-                  <Row style={{ padding: '20px' }}>
+                  <Row style={{ padding: '20px' }} key={item+index}>
                     <Col>
                       <div className={styles.sb}>{item}平均处理时长 </div>
                     </Col>
@@ -111,18 +119,17 @@ function F(props) {
               })}
           </div>
         </Col>
-        <Col span={10} style={{ height: '100%' }}>
+        <Col span={10} >
           <div className={styles.content3} style={{ padding: ' 0 0 3% 0' }}>
             <div
               className={styles.innerTitle3}
-              style={{ marginBottom: '1rem' }}
             >
               密码算法调用趋势预警
             </div>
-            {down.map(item => {
+            {down.map((item , index) => {
               const txt = (item.appName + item.appTypeName).split('下降');
               return (
-                <div style={{ padding: '2px' }}>
+                <div style={{ padding: '2px' }} key={item.appName+index}>
                   {txt[0]}
                   <span style={{ color: '#1CC30A' }}>下降</span>
                   {txt[1]}
@@ -133,18 +140,17 @@ function F(props) {
         </Col>
       </Row>
       <Row style={{ width: '100%' }}>
-        <Col span={10} style={{ height: '100%' }} offset={1}>
+        <Col span={10} style={{ height: height+'px' }} offset={1}>
           <div className={styles.content3}>
             <div
               className={styles.innerTitle3}
-              style={{ marginBottom: '1rem' }}
             >
               密码算法调用停止预警
             </div>
-            {down.map(item => {
+            {stop.map((item, index) => {
               const txt = (item.appName + item.appTypeName).split('停止');
               return (
-                <div style={{ padding: '2px' }}>
+                <div style={{ padding: '2px' }} key={item.appName+index}>
                   {txt[0]}
                   <span style={{ color: '#DF2B22' }}>停止</span>
                   {txt[1]}
@@ -153,21 +159,20 @@ function F(props) {
             })}
           </div>
         </Col>
-        <Col span={10} style={{ height: '100%' }}>
+        <Col span={10} style={{ height: height+'px' }}>
           <div className={styles.content3}>
             <div
               className={styles.innerTitle3}
-              style={{ marginBottom: '1rem' }}
             >
               密码算法调用故障预警
             </div>
-            {down.map(item => {
+            {wrong.map((item, index) => {
               const txt = (item.appName + item.appTypeName).includes('故障')
                 ? (item.appName + item.appTypeName).split('故障')
                 : (item.appName + item.appTypeName).split('延时');
               return (
-                <div style={{ padding: '2px' }}>
-                  {txt[0]} ·
+                <div style={{ padding: '2px' }} key={item.appName+index}>
+                  {txt[0]}
                   {(item.appName + item.appTypeName).includes('故障') ? (
                     <span style={{ color: '#DF2B22' }}>故障</span>
                   ) : (

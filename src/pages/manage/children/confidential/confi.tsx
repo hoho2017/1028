@@ -44,7 +44,7 @@ const Confi: FC<PageProps> = props => {
     dispatch({
       type: 'manage/queryY',
       payload: {
-        deptId: 9,
+        deptId,
       },
       callback: data => {
         const year = Object.keys(data).map(item => {
@@ -70,7 +70,7 @@ const Confi: FC<PageProps> = props => {
     dispatch({
       type: 'manage/queryTitle',
       payload: {
-        deptId: 9,
+        deptId,
       },
       callback: data => {
         setTitle(data.list[0]); //appLevelName
@@ -174,7 +174,7 @@ const Confi: FC<PageProps> = props => {
       type: 'manage/queryTable2',
       payload: {
         year,
-        deptId: 9,
+        deptId,
       },
       callback: data => {
         setTableData([...data.data.data]);
@@ -191,7 +191,7 @@ const Confi: FC<PageProps> = props => {
       formData.append('file', fileC);
       dispatch({
         type: 'manage/upload',
-        payload: { file: formData, year: importYear, deptId: 9 },
+        payload: { file: formData, year: importYear, deptId },
         callback: data => {
           if (data.code === 0) {
             setUuid(data.uuid);

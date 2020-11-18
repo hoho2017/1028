@@ -16,7 +16,7 @@ function Box(props) {
     dispatch({
       type: 'cipher/queryY',
       payload: {
-        deptId: 9,
+        deptId,
       },
       callback: (y, sum) => {
         setAllYearData(
