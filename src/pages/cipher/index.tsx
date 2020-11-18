@@ -13,19 +13,26 @@ interface PageProps extends ConnectProps {
 
 const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
   const { catalogue, treeData, treeList, ZD } = cipher;
-
   const [expandedKeys, setExpandedKeys] = useState([]);
   const [searchValue, setSearchValue] = useState('');
   const [autoExpandParent, setAutoExpandParent] = useState(true);
-  const [deptId, setDeptId] = useState(1);
-  const [deptName, setDeptName] = useState('t');
+  const [deptId, setDeptId] = useState();
+  const [deptName, setDeptName] = useState();
   useEffect(() => {}, []);
   useEffect(() => {
     setExpandedKeys(treeList.map(item => item.name));
+    // setDeptId(treeList[1]?treeList[1].deptId:'')
+    // setDeptName(treeList[1]?treeList[1].name:'')
+    treeList.forEach((item)=>{
+      if(item.type === 99){
+        setDeptId(item.deptId)
+        setDeptName(item.name)
+      }
+    })
   }, [treeList]);
 
   const onSelect = (selectedKeys: any, info: any) => {
-    let deptId = 1;
+    let deptId;
     treeList.forEach(item => {
       if (item.name === selectedKeys[0]) {
         deptId = item.deptId;
@@ -92,6 +99,9 @@ const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
     setExpandedKeys(expandedKeys);
     setAutoExpandParent(false);
   };
+  if(deptId === '') {
+    return ''
+  }
   return (
     <>
       <div className="tabs">

@@ -124,6 +124,7 @@ const Auth: FC<PageProps> = props => {
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       setChoose({ ...Object.values(selectedRows)[0] });
+      setCheckedKeys(Object.values(selectedRows)[0].menuIdList!==null?Object.values(selectedRows)[0].menuIdList:[])
     },
     getCheckboxProps: record => ({
       disabled: false, // Column configuration not to be checked
@@ -209,6 +210,7 @@ const Auth: FC<PageProps> = props => {
       if (i === '2') {
         // 变更设置所属结构
         form.setFieldsValue({ roleId: choose.roleId });
+        form.setFieldsValue({ roleName: choose.roleName });
       }
       if (i === '3') {
         //注销
@@ -334,6 +336,7 @@ const Auth: FC<PageProps> = props => {
       },
     },
   ]);
+  console.log(choose)
   return (
     <div ref={boxRef}>
       <div className={styles.content}>

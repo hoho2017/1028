@@ -26,7 +26,7 @@ const User: FC<PageProps> = props => {
   const [choose, setChoose] = useState({});
   const [total, setTotal] = useState(0);
   const [current, setCurrent] = useState(1);
-  const [selectionType, setSelectionType] = useState('checkbox');
+  const [selectionType, setSelectionType] = useState('c heckbox');
   const queryTUser = page => {
     dispatch({
       type: 'manage/queryTUser',
@@ -129,8 +129,9 @@ const User: FC<PageProps> = props => {
     }
     if (i === '2') {
       // 变更设置所属结构
-      form.setFieldsValue({ deptId: deptName });
+      form.setFieldsValue({ deptId: choose.deptName });
       form.setFieldsValue({ userId: choose.userId });
+      form.setFieldsValue({ username: choose.username });
     }
     if (i === '3') {
       //注销

@@ -82,7 +82,7 @@ const CipherModel: CipherModelType = {
       if (callback) callback(page);
     },
     *queryY({ type, payload, callback }, { put, call, select }) {
-      const { year, sum } = yield call(queryYear, payload);
+      const { year={}, sum={} } = yield call(queryYear, payload);
       if (callback) callback(year, sum);
     },
     *queryTable({ type, payload, callback }, { put, call, select }) {

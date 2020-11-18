@@ -83,7 +83,7 @@ const Source: FC<PageProps> = props => {
           }),
         );
         setTimeout(()=>{
-          if(boxRef){
+          if(boxRef.current !==null){
             boxRef.current.style.height=(tableRef.current.offsetHeight+170)+'px'
           }
         },10)
@@ -361,8 +361,12 @@ const Source: FC<PageProps> = props => {
       }
       if (i === '2') {
         // 变更设置所属结构
-        form.setFieldsValue({ parentDeptId: deptName });
+        form.setFieldsValue({ parentDeptId: choose.parentDeptName });
         form.setFieldsValue({ uniqueAppId: choose.uniqueAppId });
+
+        form.setFieldsValue({ appType: choose.appTypeName });
+        form.setFieldsValue({ appName: choose.appName });
+        form.setFieldsValue({ arithList: choose.arithList.split(',') });
       }
       if (i === '3') {
         //注销
@@ -389,8 +393,9 @@ const Source: FC<PageProps> = props => {
       }
       if (i === '2') {
         // 变更设置所属结构
-        form.setFieldsValue({ parentId: deptName });
+        form.setFieldsValue({ parentId: choose.parentName });
         form.setFieldsValue({ deptId: choose.deptId });
+        form.setFieldsValue({ name: choose.name });
       }
       if (i === '3') {
         //注销
@@ -413,6 +418,7 @@ const Source: FC<PageProps> = props => {
     } else if (no === 2) {
       if (i === '2') {
         // 变更设置所属结构
+        form.setFieldsValue({ name: choose.name });
         form.setFieldsValue({ code: choose.code });
       }
       if (i === '3') {
@@ -440,8 +446,13 @@ const Source: FC<PageProps> = props => {
       }
       if (i === '2') {
         // 变更设置所属结构
-        form.setFieldsValue({ parentDeptId: deptName });
+        form.setFieldsValue({ parentDeptId:choose.parentDeptId });
         form.setFieldsValue({ id: choose.id });
+
+        form.setFieldsValue({ thirdPartyName: choose.thirdPartyName });
+        form.setFieldsValue({ modelPosition: choose.modelPosition });
+        form.setFieldsValue({ typeId: choose.typeId });
+        form.setFieldsValue({ modelNumber: choose.modelNumber });
       }
       if (i === '3') {
         //注销

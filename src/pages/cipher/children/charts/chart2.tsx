@@ -3,7 +3,7 @@ import React, { FC, useEffect, useState } from 'react';
 
 function Chart2(props) {
   const { allMonthTotal, td, cond } = props;
-
+  
   let data = [];
   if (td) {
     td.forEach(item => {

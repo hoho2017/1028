@@ -11,6 +11,9 @@ import {
 
 function Chart3(props) {
   const { zd, percent } = props;
+  if(percent === undefined){
+    return null
+  }
   if (JSON.stringify(percent) === '{}') {
     return false;
   }

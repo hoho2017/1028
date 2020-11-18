@@ -39,6 +39,9 @@ const axisConfig = {
 
 function Chart4(props) {
   const { monthArith, zd } = props;
+  if(monthArith === undefined){
+    return null
+  }
   let datas = Object.keys(monthArith).map(item => item.split('-')[1]);
   let data = [];
   Object.values(monthArith).forEach((item, index) => {
