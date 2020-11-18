@@ -164,8 +164,8 @@ const User: FC<PageProps> = props => {
     },
     {
       title: '用户标识',
-      dataIndex: 'status',
-      key: 'status',
+      dataIndex: 'userId',
+      key: 'userId',
       align: 'center',
     },
     {

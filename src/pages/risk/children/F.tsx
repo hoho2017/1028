@@ -59,7 +59,6 @@ function F(props) {
     dispatch({
       type: 'risk/details',
       payload: {
-        deptId: 9,
         appType: 1,
       },
       callback: list => {
@@ -69,7 +68,6 @@ function F(props) {
     dispatch({
       type: 'risk/details',
       payload: {
-        deptId: 9,
         appType: 2,
       },
       callback: list => {
@@ -79,8 +77,7 @@ function F(props) {
     dispatch({
       type: 'risk/details',
       payload: {
-        deptId: 9,
-        appTypes: '1,2',
+        appTypes: '3,4',
       },
       callback: list => {
         setWrong(list);

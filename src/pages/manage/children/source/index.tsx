@@ -153,8 +153,8 @@ const Source: FC<PageProps> = props => {
   }, [deptId, no, current]); //no -> 0 1 2 3
   useEffect(() => {
     setCurrent(1);
-    setChoose({})
-  }, [no,deptId]);
+    setChoose({});
+  }, [no, deptId]);
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       setChoose({ ...Object.values(selectedRows)[0] });
@@ -179,6 +179,7 @@ const Source: FC<PageProps> = props => {
             } else if (data.code === 0) {
               message.success('操作成功!');
               onReset();
+              queryTApp(current);
             }
           },
         });
@@ -196,12 +197,12 @@ const Source: FC<PageProps> = props => {
             } else if (data.code === 0) {
               message.success('操作成功!');
               onReset();
+              queryTApp(current);
             }
           },
         });
       }
       //重新查询
-      queryTApp(current);
     } else if (no === 1) {
       if (showForm === '1') {
         //应用注册
@@ -583,9 +584,9 @@ const Source: FC<PageProps> = props => {
                         dataIndex: item.value.toLowerCase(),
                         key: item.value.toLowerCase(),
                         align: 'center',
-                        render:(key)=>{
-                          return key?'是':'否'
-                        }
+                        render: key => {
+                          return key ? '是' : '否';
+                        },
                       };
                     }),
                   )

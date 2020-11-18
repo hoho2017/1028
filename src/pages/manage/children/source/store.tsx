@@ -22,9 +22,9 @@ const columnsApp = [
   },
   {
     title: '应用标识',
-    dataIndex: 'appDesc',
+    dataIndex: 'uniqueAppId',
     align: 'center',
-    key: 'appDesc',
+    key: 'uniqueAppId',
   },
   {
     title: '所属机构',
@@ -137,7 +137,7 @@ const formHead = (
         type: 'input',
       },
       {
-        label: '应用ID',
+        label: '应用标识',
         name: 'uniqueAppId',
         type: 'input',
         disabled: '2',
