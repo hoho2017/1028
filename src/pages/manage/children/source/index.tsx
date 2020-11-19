@@ -82,11 +82,12 @@ const Source: FC<PageProps> = props => {
             return item;
           }),
         );
-        setTimeout(()=>{
-          if(boxRef.current !==null){
-            boxRef.current.style.height=(tableRef.current.offsetHeight+170)+'px'
+        setTimeout(() => {
+          if (boxRef.current !== null) {
+            boxRef.current.style.minHeight =
+              tableRef.current.offsetHeight + 170 + 'px';
           }
-        },10)
+        }, 10);
       },
     });
   };
@@ -108,11 +109,12 @@ const Source: FC<PageProps> = props => {
             return item;
           }),
         );
-        setTimeout(()=>{
-          if(boxRef){
-            boxRef.current.style.height=(tableRef.current.offsetHeight+170)+'px'
+        setTimeout(() => {
+          if (boxRef) {
+            boxRef.current.style.height =
+              tableRef.current.offsetHeight + 170 + 'px';
           }
-        },10)
+        }, 10);
       },
     });
   };
@@ -132,11 +134,12 @@ const Source: FC<PageProps> = props => {
             return item;
           }),
         );
-        setTimeout(()=>{
-          if(boxRef){
-            boxRef.current.style.height=(tableRef.current.offsetHeight+170)+'px'
+        setTimeout(() => {
+          if (boxRef) {
+            boxRef.current.style.height =
+              tableRef.current.offsetHeight + 170 + 'px';
           }
-        },10)
+        }, 10);
       },
     });
   };
@@ -158,19 +161,20 @@ const Source: FC<PageProps> = props => {
             return item;
           }),
         );
-        setTimeout(()=>{
-          if(boxRef){
-            boxRef.current.style.height=(tableRef.current.offsetHeight+170)+'px'
+        setTimeout(() => {
+          if (boxRef) {
+            boxRef.current.style.height =
+              tableRef.current.offsetHeight + 170 + 'px';
           }
-        },10)
+        }, 10);
       },
     });
   };
   useEffect(() => {
-      no === 0 && queryTApp(current);
-      no === 1 && queryTOrg(current);
-      no === 2 && queryTCalc(current);
-      no === 3 && queryTThird(current);
+    no === 0 && queryTApp(current);
+    no === 1 && queryTOrg(current);
+    no === 2 && queryTCalc(current);
+    no === 3 && queryTThird(current);
   }, [deptId, no, current]); //no -> 0 1 2 3
   useEffect(() => {
     setCurrent(1);
@@ -446,7 +450,7 @@ const Source: FC<PageProps> = props => {
       }
       if (i === '2') {
         // 变更设置所属结构
-        form.setFieldsValue({ parentDeptId:choose.parentDeptId });
+        form.setFieldsValue({ parentDeptId: choose.parentDeptId });
         form.setFieldsValue({ id: choose.id });
 
         form.setFieldsValue({ thirdPartyName: choose.thirdPartyName });
@@ -479,7 +483,7 @@ const Source: FC<PageProps> = props => {
   };
   return (
     <div ref={boxRef}>
-      <div className={styles.content} >
+      <div className={styles.content}>
         <Row>
           {titleArr.map((item, index) => {
             return (
@@ -594,7 +598,7 @@ const Source: FC<PageProps> = props => {
       </Row>
       <Row
         ref={tableRef}
-        style={{ position: 'absolute', top: '250px', width: '67%' }}
+        style={{ position: 'absolute', top: '15rem', width: '65%' }}
       >
         <Col span={22} offset={1}>
           <Table

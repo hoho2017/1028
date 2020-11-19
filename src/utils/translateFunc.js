@@ -59,10 +59,12 @@ export function treeMake2(data) {
       }
     }
   }
-  // console.log(tempArr)
-  // console.log(JSON.stringify(data))
-  // tempArr.sort().forEach((item, index) => {
-  //   data.splice(item - index, 1);
-  // });
-  return data.slice(0, 1);
+  tempArr
+    .sort((a, b) => {
+      return a - b;
+    })
+    .forEach((item, index) => {
+      data.splice(item - index, 1);
+    });
+  return data;
 }

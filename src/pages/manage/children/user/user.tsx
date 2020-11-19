@@ -1,5 +1,5 @@
 import { ConnectProps, connect, ManageModelState } from 'umi';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState, useRef } from 'react';
 import styles from './user.less';
 import { Row, Col, Table, Form, Button, Select, message } from 'antd';
 interface PageProps extends ConnectProps {
@@ -26,7 +26,9 @@ const User: FC<PageProps> = props => {
   const [choose, setChoose] = useState({});
   const [total, setTotal] = useState(0);
   const [current, setCurrent] = useState(1);
-  const [selectionType, setSelectionType] = useState('c heckbox');
+  const [selectionType, setSelectionType] = useState('checkbox');
+  const tableRef = useRef();
+  const boxRef = useRef();
   const queryTUser = page => {
     dispatch({
       type: 'manage/queryTUser',
@@ -44,6 +46,12 @@ const User: FC<PageProps> = props => {
             return item;
           }),
         );
+        setTimeout(() => {
+          if (boxRef.current !== undefined) {
+            boxRef.current.style.minHeight =
+              tableRef.current.offsetHeight + 170 + 'px';
+          }
+        }, 10);
       },
     });
   };
@@ -277,11 +285,8 @@ const User: FC<PageProps> = props => {
         })}
       </Row>
       <Row
-        style={
-          showForm === '0'
-            ? { marginTop: '43px' }
-            : { position: 'absolute', width: '65.1%', top: '180px' }
-        }
+        ref={tableRef}
+        style={{ position: 'absolute', top: '15rem', width: '65%' }}
       >
         <Col span={22} offset={1}>
           <Table

@@ -77,12 +77,12 @@ const Auth: FC<PageProps> = props => {
             return item;
           }),
         );
-        setTimeout(()=>{
-          if(boxRef){
-            boxRef.current.style.height=(tableRef.current.offsetHeight+170)+'px'
+        setTimeout(() => {
+          if (boxRef) {
+            boxRef.current.style.height =
+              tableRef.current.offsetHeight + 170 + 'px';
           }
-        },10)
-
+        }, 10);
       },
     });
   };
@@ -103,11 +103,12 @@ const Auth: FC<PageProps> = props => {
             return item;
           }),
         );
-        setTimeout(()=>{
-          if(boxRef){
-            boxRef.current.style.height=(tableRef.current.offsetHeight+170)+'px'
+        setTimeout(() => {
+          if (boxRef) {
+            boxRef.current.style.height =
+              tableRef.current.offsetHeight + 170 + 'px';
           }
-        },10)
+        }, 10);
       },
     });
   };
@@ -118,13 +119,17 @@ const Auth: FC<PageProps> = props => {
   }, [deptId, no, current]); //no -> 0 1 2 3
   useEffect(() => {
     setCurrent(1);
-    setListOrg([])
-    setListApp([])
+    setListOrg([]);
+    setListApp([]);
   }, [no]);
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       setChoose({ ...Object.values(selectedRows)[0] });
-      setCheckedKeys(Object.values(selectedRows)[0].menuIdList!==null?Object.values(selectedRows)[0].menuIdList:[])
+      setCheckedKeys(
+        Object.values(selectedRows)[0].menuIdList !== null
+          ? Object.values(selectedRows)[0].menuIdList
+          : [],
+      );
     },
     getCheckboxProps: record => ({
       disabled: false, // Column configuration not to be checked
@@ -336,7 +341,6 @@ const Auth: FC<PageProps> = props => {
       },
     },
   ]);
-  console.log(choose)
   return (
     <div ref={boxRef}>
       <div className={styles.content}>
@@ -463,14 +467,18 @@ const Auth: FC<PageProps> = props => {
       </Row>
       <Row
         ref={tableRef}
-         style={{ position: 'absolute', top:no===0? '250px':'200px', width: '67%' }}
+        style={{
+          position: 'absolute',
+          top: no === 0 ? '250px' : '200px',
+          width: '67%',
+        }}
       >
         <Col span={22} offset={1}>
           {no === 0 ? (
             <Table
               pagination={{
                 total,
-                pageSize:10,
+                pageSize: 10,
                 current,
                 onChange: page => changeCurrent(page),
               }}
@@ -481,13 +489,13 @@ const Auth: FC<PageProps> = props => {
               }}
               bordered={true}
               columns={columnsRole}
-              dataSource={ listApp  }
+              dataSource={listApp}
             />
           ) : (
             <Table
               pagination={{
                 total,
-                pageSize:10,
+                pageSize: 10,
                 current,
                 onChange: page => changeCurrent(page),
               }}
@@ -527,7 +535,7 @@ const Auth: FC<PageProps> = props => {
         />
       </Modal>
       <Modal
-      closable={false}
+        closable={false}
         visible={showTree}
         bodyStyle={{ textAlign: 'center' }}
         title={<div className={styles.modalTitle}>角色授权</div>}
