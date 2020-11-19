@@ -50,7 +50,7 @@ const tailLayout = {
 };
 
 const Source: FC<PageProps> = props => {
-  const { manage, dispatch, deptId, deptName } = props;
+  const { manage, dispatch, deptId, deptName,resetTreeData } = props;
   const [form] = Form.useForm();
   const { arith, app_source_type, app_type_id } = manage;
   const [no, setNo] = useState(0);
@@ -175,6 +175,7 @@ const Source: FC<PageProps> = props => {
   useEffect(() => {
     setCurrent(1);
     setChoose({});
+    resetTreeData(0, no)
   }, [no, deptId]);
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {

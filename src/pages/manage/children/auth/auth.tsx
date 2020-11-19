@@ -36,9 +36,8 @@ const layout = {
 const tailLayout = {
   wrapperCol: { offset: 0, span: 24 },
 };
-
 const Auth: FC<PageProps> = props => {
-  const { manage, dispatch, deptId, deptName } = props;
+  const { manage, dispatch, deptId, deptName, resetTreeData } = props;
   const [form] = Form.useForm();
   const { arith, app_source_type, app_type_id } = manage;
   const [no, setNo] = useState(0);
@@ -115,6 +114,7 @@ const Auth: FC<PageProps> = props => {
   useEffect(() => {
     no === 0 && queryTApp(current);
     no === 1 && queryTOrg(current);
+    resetTreeData(4, no)
   }, [deptId, no, current]); //no -> 0 1 2 3
   useEffect(() => {
     setCurrent(1);

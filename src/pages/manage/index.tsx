@@ -3,6 +3,7 @@ import React, { FC, useEffect, useState } from 'react';
 import styles from './index.less';
 import Box from './children/index.tsx';
 import { Tabs, Tree, Input } from 'antd';
+import { treeMake } from '@/utils/translateFunc.js';
 
 const { TabPane } = Tabs;
 const { Search } = Input;
@@ -19,11 +20,36 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
   const [autoExpandParent, setAutoExpandParent] = useState(true);
   const [deptId, setDeptId] = useState();
   const [deptName, setDeptName] = useState();
+  const [treeD, setTreeD] = useState([])
   useEffect(() => {}, []);
   useEffect(() => {
     setExpandedKeys(treeList.map(item => item.name));
   }, [treeList]);
+  const resetTreeData = (index, no=0) => {//inex 0->source 1->mp 3->user 4->auth
+    if(index === 0){
+      if(no === 1){
+        setTreeD(treeMake(treeData.filter(item=>{
+          return [1,2,3].includes(item.type)
+        }), [3]))
+      }else{
+        setTreeD(treeMake(treeData.filter(item=>{
+          return [1,2,3,4].includes(item.type)
+        }), [4]))
+      }
+    }else if(index === 1){
+      setTreeD(treeMake(treeData, [99]))
+    }else if(index === 3){
+      setTreeD(treeMake(treeData.filter(item=>{
+        return [1,2,3,4].includes(item.type)
+      })))
+    }else if(index === 4){
+      setTreeD(treeMake(treeData.filter(item=>{
+        return [1,2,3,4,99].includes(item.type)
+      })))
+    }
 
+
+  }
   const onSelect = (selectedKeys: any, info: any) => {
     let deptId = 1;
     treeList.forEach(item => {
@@ -115,7 +141,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
                     expandedKeys={expandedKeys}
                     autoExpandParent={autoExpandParent}
                     onSelect={onSelect}
-                    treeData={loop(treeData)}
+                    treeData={loop(treeD)}
                   />
                   <Search
                     style={{ marginBottom: 8 }}
@@ -130,6 +156,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
                 >
                   {/* <div className="content" style={{ paddingLeft:'268px' }}> */}
                   <Box
+                    resetTreeData={resetTreeData}
                     ZD={ZD}
                     deptId={deptId}
                     dispatch={dispatch}

@@ -27,7 +27,7 @@ interface PageProps extends ConnectProps {
 }
 
 const Confi: FC<PageProps> = props => {
-  const { deptId, deptName, manage, dispatch } = props;
+  const { deptId, deptName, manage, dispatch, resetTreeData } = props;
   const [year, setYear] = useState([]);
   const [yearClick, setYearClick] = useState(0);
   const [isAll, setIsAll] = useState(false);
@@ -41,6 +41,7 @@ const Confi: FC<PageProps> = props => {
   const [showCheckFile, setShowCheckFile] = useState(false);
   const [fileList, setFileList] = useState([]);
   useEffect(() => {
+    resetTreeData(1,0)
     dispatch({
       type: 'manage/queryY',
       payload: {
