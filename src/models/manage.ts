@@ -296,7 +296,7 @@ const ManageModel: ManageModelType = {
         item.key = item.name;
         return item;
       });
-      const treeData = treeMake(data);
+      const treeData = (data);
 
       // const tableApp = yield call(queryTApp);
       // const tableOrg = yield call(queryTOrg);

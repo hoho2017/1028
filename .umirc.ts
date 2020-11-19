@@ -5,7 +5,7 @@ export default defineConfig({
   antd: {},
   proxy: {
     '/sys/': {
-      target: 'http://49.232.45.79:8280/renren-admin/',
+      target: 'http://49.232.45.79:8280/',
       changeOrigin: true,
       pathRewrite: { '^/api/': '' },
     },

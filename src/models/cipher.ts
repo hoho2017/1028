@@ -102,7 +102,7 @@ const CipherModel: CipherModelType = {
         item.key = item.name;
         return item;
       });
-      const treeData = treeMake(data);
+      const treeData = treeMake(data, [99]);
 
       yield put({
         type: 'save',

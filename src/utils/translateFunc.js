@@ -1,6 +1,10 @@
-export function treeMake(data) {
+export function treeMake(data, arr, arr2) {
   let tempArr = [];
   for (let i = 0; i < data.length; i++) {
+    if(!arr.includes(data[i].type)){
+      data[i].disabled = true
+      data[i].selectable = false
+    }
     if (data[i].title === undefined) {
       data[i].title = data[i].name;
       data[i].key = data[i].name;

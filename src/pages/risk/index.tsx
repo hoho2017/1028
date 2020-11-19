@@ -80,12 +80,14 @@ const Risk: FC<PageProps> = ({ risk, dispatch }) => {
           <span>{item.title}</span>
         );
       if (item.children) {
-        return { title, key: item.key, children: loop(item.children) };
+        return { title, key: item.key, children: loop(item.children) ,
+          disabled:item.disabled};
       }
 
       return {
         title,
         key: item.key,
+        disabled:item.disabled
       };
     });
   const onExpand = expandedKeys => {

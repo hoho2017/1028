@@ -9,7 +9,7 @@ import Auth from './auth/auth';
 import Confi from './confidential/confi';
 
 function Box(props) {
-  const { deptId, deptName, index, dispatch, ZD } = props;
+  const { deptId, deptName, index, dispatch, ZD, resetTreeData } = props;
   const [year, setYear] = useState([]);
   const [allYearData, setAllYearData] = useState([]);
   const [sum, setSum] = useState({});
@@ -43,15 +43,15 @@ function Box(props) {
       </Row> */}
       <div>
         {index === 0 ? (
-          <Source deptName={deptName} deptId={deptId} />
+          <Source deptName={deptName} deptId={deptId} resetTreeData={resetTreeData} />
         ) : index === 3 ? (
-          <User deptName={deptName} deptId={deptId} />
+          <User deptName={deptName} deptId={deptId} resetTreeData={resetTreeData} />
         ) : index === 5 ? (
           <Logs />
         ) : index === 4 ? (
-          <Auth />
+          <Auth resetTreeData={resetTreeData} />
         ) : index === 1 ? (
-          <Confi deptName={deptName} deptId={deptId} />
+          <Confi deptName={deptName} deptId={deptId} resetTreeData={resetTreeData} />
         ) : null}
       </div>
     </>

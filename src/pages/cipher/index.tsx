@@ -87,12 +87,13 @@ const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
           <span>{item.title}</span>
         );
       if (item.children) {
-        return { title, key: item.key, children: loop(item.children) };
+        return { title, key: item.key, children: loop(item.children), disabled:item.disabled };
       }
 
       return {
         title,
         key: item.key,
+        disabled:item.disabled,
       };
     });
   const onExpand = expandedKeys => {
@@ -102,6 +103,8 @@ const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
   if(deptId === '') {
     return ''
   }
+  console.log(loop(treeData))
+  console.log((treeData))
   return (
     <>
       <div className="tabs">
