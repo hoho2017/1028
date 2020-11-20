@@ -7,7 +7,7 @@ export async function queryTree(params) {
 }
 
 export async function queryTreeM(params) {
-  return requestRaw(`/sys/dept/list-no-app${getParamsStr(params)}`);
+  return requestRaw(`/sys/dept/list${getParamsStr(params)}`);
 }
 
 export async function down(params) {

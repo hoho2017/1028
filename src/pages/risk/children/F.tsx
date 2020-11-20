@@ -69,7 +69,6 @@ function F(props) {
         appType: 1,
       },
       callback: list => {
-        console.log(list)
         setDown(list);
       },
     });

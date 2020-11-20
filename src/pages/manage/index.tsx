@@ -1,9 +1,10 @@
 import { ConnectProps, connect, ManageModelState } from 'umi';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState, useRef } from 'react';
 import styles from './index.less';
 import Box from './children/index.tsx';
 import { Tabs, Tree, Input } from 'antd';
 import { treeMake } from '@/utils/translateFunc.js';
+import _ from 'lodash';
 
 const { TabPane } = Tabs;
 const { Search } = Input;
@@ -14,42 +15,61 @@ interface PageProps extends ConnectProps {
 
 const Manage: FC<PageProps> = ({ manage, dispatch }) => {
   const { catalogue, treeData, treeList, ZD } = manage;
-
+  const child = useRef({})
   const [expandedKeys, setExpandedKeys] = useState([]);
   const [searchValue, setSearchValue] = useState('');
   const [autoExpandParent, setAutoExpandParent] = useState(true);
   const [deptId, setDeptId] = useState();
   const [deptName, setDeptName] = useState();
-  const [treeD, setTreeD] = useState([])
+  const [treeD, setTreeD] = useState([]);
+  const [index, setIndex] = useState(0)
   useEffect(() => {}, []);
   useEffect(() => {
     setExpandedKeys(treeList.map(item => item.name));
   }, [treeList]);
-  const resetTreeData = (index, no=0) => {//inex 0->source 1->mp 3->user 4->auth
-    if(index === 0){
-      if(no === 1){
-        setTreeD(treeMake(treeData.filter(item=>{
-          return [1,2,3].includes(item.type)
-        }), [3]))
-      }else{
-        setTreeD(treeMake(treeData.filter(item=>{
-          return [1,2,3,4].includes(item.type)
-        }), [4]))
+  const resetTreeData = (index, no = 0) => {
+    //inex 0->source 1->mp 3->user 4->auth
+    let data = _.cloneDeep(treeData);
+    if (index === 0) {
+      if (no === 1) {
+        setTreeD(
+          treeMake(
+            data.filter(item => {
+              return [1, 2, 3].includes(item.type);
+            }),
+            [3],
+          ),
+        );
+      } else {
+        setTreeD(
+          treeMake(
+            data.filter(item => {
+              return [1, 2, 3, 4].includes(item.type);
+            }),
+            [4],
+          ),
+        );
       }
-    }else if(index === 1){
-      setTreeD(treeMake(treeData, [99]))
-    }else if(index === 3){
-      setTreeD(treeMake(treeData.filter(item=>{
-        return [1,2,3,4].includes(item.type)
-      })))
-    }else if(index === 4){
-      setTreeD(treeMake(treeData.filter(item=>{
-        return [1,2,3,4,99].includes(item.type)
-      })))
+    } else if (index === 1) {
+      setTreeD(treeMake(data, [99]));
+    } else if (index === 3) {
+      setTreeD(
+        treeMake(
+          data.filter(
+            item => {
+              return [1, 2, 3, 4].includes(item.type);
+            },
+            [1, 2, 3, 4],
+          ),
+        ),
+      );
+    } else if (index === 4) {
+      setTreeD(treeMake(data, [1, 2, 3, 4, 99]));
     }
-
-
-  }
+  };
+  useEffect(()=>{
+    resetTreeData(index)
+  }, [index])
   const onSelect = (selectedKeys: any, info: any) => {
     let deptId = 1;
     treeList.forEach(item => {
@@ -106,12 +126,18 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
           <span>{item.title}</span>
         );
       if (item.children) {
-        return { title, key: item.key, children: loop(item.children) };
+        return {
+          title,
+          key: item.key,
+          children: loop(item.children),
+          disabled: item.disabled,
+        };
       }
 
       return {
         title,
         key: item.key,
+        disabled: item.disabled,
       };
     });
   const onExpand = expandedKeys => {
@@ -121,7 +147,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
   return (
     <>
       <div className="tabs">
-        <Tabs tabPosition="left" size="large" style={{ minHeight }}>
+        <Tabs tabPosition="left" size="large" style={{ minHeight }} onChange={(index)=>{setIndex(index)}}>
           {catalogue.map((item, index) => {
             return (
               <TabPane tab={item} key={index}>
@@ -158,6 +184,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
                   <Box
                     resetTreeData={resetTreeData}
                     ZD={ZD}
+                    child={child}
                     deptId={deptId}
                     dispatch={dispatch}
                     deptName={deptName}

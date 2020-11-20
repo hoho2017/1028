@@ -20,7 +20,6 @@ const checkStatus = (response, reqOptions) => {
  * @return {Promise<object>}  An object containing either "data" or "err"
  */
 export default function request(url, option = { method: 'GET' }) {
-  console.log(url);
   // url = 'http://localhost:80/'+url
   return requestRaw(url, option).then(result => {
     return result.data;

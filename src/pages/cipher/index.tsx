@@ -103,8 +103,7 @@ const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
   if(deptId === '') {
     return ''
   }
-  console.log(loop(treeData))
-  console.log((treeData))
+
   return (
     <>
       <div className="tabs">

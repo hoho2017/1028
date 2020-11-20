@@ -7,9 +7,10 @@ import User from './user/user';
 import Logs from './logs/logs';
 import Auth from './auth/auth';
 import Confi from './confidential/confi';
+import { findIndex } from 'lodash';
 
 function Box(props) {
-  const { deptId, deptName, index, dispatch, ZD, resetTreeData } = props;
+  const { deptId, deptName, index, dispatch, ZD, resetTreeData, child } = props;
   const [year, setYear] = useState([]);
   const [allYearData, setAllYearData] = useState([]);
   const [sum, setSum] = useState({});
@@ -34,6 +35,7 @@ function Box(props) {
       },
     });
   }, [deptId]);
+
   return (
     <>
       {/* <Row className={styles.pt20}>
@@ -51,7 +53,7 @@ function Box(props) {
         ) : index === 4 ? (
           <Auth resetTreeData={resetTreeData} />
         ) : index === 1 ? (
-          <Confi deptName={deptName} deptId={deptId} resetTreeData={resetTreeData} />
+          <Confi child={child} index={index} deptName={deptName} deptId={deptId} resetTreeData={resetTreeData} />
         ) : null}
       </div>
     </>

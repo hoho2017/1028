@@ -27,7 +27,7 @@ interface PageProps extends ConnectProps {
 }
 
 const Confi: FC<PageProps> = props => {
-  const { deptId, deptName, manage, dispatch, resetTreeData } = props;
+  const { deptId, deptName, manage, dispatch, resetTreeData, index, child } = props;
   const [year, setYear] = useState([]);
   const [yearClick, setYearClick] = useState(0);
   const [isAll, setIsAll] = useState(false);
@@ -40,8 +40,13 @@ const Confi: FC<PageProps> = props => {
   const [uuid, setUuid] = useState('');
   const [showCheckFile, setShowCheckFile] = useState(false);
   const [fileList, setFileList] = useState([]);
-  useEffect(() => {
+  const resetTree  = () => {
     resetTreeData(1,0)
+  }
+  useEffect(()=>{
+    child.current.innerFn = resetTree
+  }, [child])
+  useEffect(() => {
     dispatch({
       type: 'manage/queryY',
       payload: {
@@ -136,7 +141,7 @@ const Confi: FC<PageProps> = props => {
       },
     },
     {
-      title: title.appLevelName,
+      title: title?title.appLevelName:'',
       colSpan: 1,
       dataIndex: 'levelMsg',
       key: 'levelMsg',
@@ -271,7 +276,7 @@ const Confi: FC<PageProps> = props => {
         </Row>
         <Row>
           <Col span={20} offset={1}>
-            <div className={styles.yearbox2}>
+            <div   className={isAll ? styles.yearbox2 : styles.yearbox3} >
               <Row className={styles.yearbox} style={{ marginTop: '20px' }}>
                 <Col span={2}>
                   <span className={styles.head}>年份</span>
