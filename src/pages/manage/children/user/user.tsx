@@ -51,7 +51,7 @@ const User: FC<PageProps> = props => {
             boxRef.current.style.minHeight =
               tableRef.current.offsetHeight + 170 + 'px';
           }
-        }, 10);
+        }, 30);
       },
     });
   };
@@ -205,7 +205,7 @@ const User: FC<PageProps> = props => {
     },
   ];
   return (
-    <>
+    <div  ref={boxRef}>
       <Row style={{ position: 'relative', zIndex: '3', marginTop: '20px' }}>
         {operation.map((item, index) => {
           if (no === index) {
@@ -287,7 +287,7 @@ const User: FC<PageProps> = props => {
       </Row>
       <Row
         ref={tableRef}
-        style={{ position: 'absolute', top: '15rem', width: '65%' }}
+        style={{ position: 'absolute', top: '10rem', width: '65%' }}
       >
         <Col span={22} offset={1}>
           <Table
@@ -307,7 +307,7 @@ const User: FC<PageProps> = props => {
           />
         </Col>
       </Row>
-    </>
+    </div>
   );
 };
 

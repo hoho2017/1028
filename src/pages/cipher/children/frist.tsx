@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import styles from './index.less';
-import { Row, Col, Select, Table, Button } from 'antd';
+import { Row, Col, Select, Table, Button, Empty  } from 'antd';
 import Home from './img/home.png';
 import Inter from './img/inter.png';
 import V from './img/v.png';
@@ -59,7 +59,7 @@ function Frist(props) {
         );
       },
     });
-  }, []);
+  }, [deptId]);
   const handleChangeL = value => {
     setValue2(value.split('*')[0]);
     setLeft(value.split('*')[1]);
@@ -139,7 +139,9 @@ function Frist(props) {
               style={{ padding: '15px', borderRadius: '40px', height: '100%' }}
             >
               <div className={styles.innerTitle}>应用密评概况</div>
-              <Chart1 sum={sum} />
+
+              {JSON.stringify(sum) === '{}'?<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />:<Chart1 sum={sum} />}
+
               <Row style={{ fontSize: '12px' }}>
                 {addYearData.map(item => {
                   return (
@@ -232,7 +234,7 @@ function Frist(props) {
                 <Col span={5}>
                   <div className={styles.innerTitle}>报告下载</div>
                 </Col>
-                <Col span={9} offset={1}>
+                {JSON.stringify(addYearData) === '{}'?<><Col span={9} offset={1}>
                   <div>
                     <span style={{ fontWeight: '600' }}>密码测评报告</span>
                     <Select
@@ -287,7 +289,7 @@ function Frist(props) {
                       icon={<DownloadOutlined />}
                     />
                   </div>
-                </Col>
+                </Col></>:<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
               </Row>
             </div>
           </Col>

@@ -18,7 +18,6 @@ const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
   const [autoExpandParent, setAutoExpandParent] = useState(true);
   const [deptId, setDeptId] = useState();
   const [deptName, setDeptName] = useState();
-  useEffect(() => {}, []);
   useEffect(() => {
     setExpandedKeys(treeList.map(item => item.name));
     // setDeptId(treeList[1]?treeList[1].deptId:'')

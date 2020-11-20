@@ -17,13 +17,22 @@ const Risk: FC<PageProps> = ({ risk, dispatch }) => {
   const [expandedKeys, setExpandedKeys] = useState([]);
   const [searchValue, setSearchValue] = useState('');
   const [autoExpandParent, setAutoExpandParent] = useState(true);
-  const [deptId, setDeptId] = useState(1);
-  const [deptName, setDeptName] = useState('t');
-  useEffect(() => {}, []);
+  const [deptId, setDeptId] = useState();
+  const [deptName, setDeptName] = useState();
   useEffect(() => {
     setExpandedKeys(treeList.map(item => item.name));
   }, [treeList]);
-
+  useEffect(() => {
+    setExpandedKeys(treeList.map(item => item.name));
+    // setDeptId(treeList[1]?treeList[1].deptId:'')
+    // setDeptName(treeList[1]?treeList[1].name:'')
+    treeList.forEach((item)=>{
+      if(item.type === 99){
+        setDeptId(item.deptId)
+        setDeptName(item.name)
+      }
+    })
+  }, [treeList]);
   const onSelect = (selectedKeys: any, info: any) => {
     let deptId = 1;
     treeList.forEach(item => {

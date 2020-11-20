@@ -155,7 +155,6 @@ function Sec(props) {
     });
     setylines({ ...obj });
   }, [yearArith]);
-
   return (
     <>
       <div

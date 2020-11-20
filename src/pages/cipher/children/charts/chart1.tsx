@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Chart, Point, Line, Area, Axis, Tooltip, Coordinate } from 'bizcharts';
 import DataSet from '@antv/data-set';
+import {Empty} from 'antd'
+
 function Chart1(props) {
   const { sum } = props;
+if(JSON.stringify(sum) === '{}'){
+  return  <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+}
   let data = [];
   Object.keys(sum).forEach(item => {
     data.push({ item: item.substring(0, 2), value: sum[item] });

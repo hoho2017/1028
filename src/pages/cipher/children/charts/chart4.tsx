@@ -15,6 +15,7 @@ import {
   Util,
   LineAdvance,
 } from 'bizcharts';
+import {Empty} from 'antd'
 
 const { Line } = Guide;
 
@@ -39,8 +40,8 @@ const axisConfig = {
 
 function Chart4(props) {
   const { monthArith, zd } = props;
-  if(monthArith === undefined){
-    return null
+  if(JSON.stringify(monthArith) === '{}'){
+    return  <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
   }
   let datas = Object.keys(monthArith).map(item => item.split('-')[1]);
   let data = [];

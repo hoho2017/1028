@@ -1,9 +1,12 @@
 import { Chart, Tooltip, Legend, Point, Line, Interval, Axis } from 'bizcharts';
 import React, { FC, useEffect, useState } from 'react';
+import {Empty} from 'antd'
 
 function Chart2(props) {
   const { allMonthTotal, td, cond } = props;
-  
+  if(allMonthTotal!== undefined&&allMonthTotal.length === 0 || allMonthTotal === undefined){
+    return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+  }
   let data = [];
   if (td) {
     td.forEach(item => {
@@ -31,7 +34,6 @@ function Chart2(props) {
       data.shift();
     }
   }
-
   return (
     <Chart
       scale={scale}

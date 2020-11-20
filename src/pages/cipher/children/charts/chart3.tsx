@@ -8,11 +8,12 @@ import {
   Interaction,
   PieChart,
 } from 'bizcharts';
+import {Empty} from 'antd'
 
 function Chart3(props) {
   const { zd, percent } = props;
-  if(percent === undefined){
-    return null
+  if(Object.values(percent)[0] === null){
+    return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
   }
   if (JSON.stringify(percent) === '{}') {
     return false;

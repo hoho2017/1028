@@ -38,6 +38,7 @@ function Box(props) {
       },
     });
   }, [deptId]);
+ 
   return (
     <>
       <Row className={styles.pt20}>
