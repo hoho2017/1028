@@ -38,7 +38,7 @@ function Sec(props) {
         },
       });
     }
-  }, [year]);
+  }, [year,deptId]);
   const handleChange = value => {
     setYear(value);
     let i = 0;

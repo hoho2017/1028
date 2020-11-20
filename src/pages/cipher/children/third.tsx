@@ -97,7 +97,7 @@ function Sec(props) {
         setflist({ ...data });
       },
     });
-  }, []);
+  }, [deptId]);
 
   const pagination = {
     current: 1,
