@@ -23,7 +23,17 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
   const [deptName, setDeptName] = useState();
   const [treeD, setTreeD] = useState([]);
   const [index, setIndex] = useState(0)
-  useEffect(() => {}, []);
+  useEffect(() => {
+    setExpandedKeys(treeList.map(item => item.name));
+    // setDeptId(treeList[1]?treeList[1].deptId:'')
+    // setDeptName(treeList[1]?treeList[1].name:'')
+    treeList.forEach((item)=>{
+      if(item.type === 99){
+        setDeptId(item.deptId)
+        setDeptName(item.name)
+      }
+    })
+  }, [treeList]);
   useEffect(() => {
     setExpandedKeys(treeList.map(item => item.name));
   }, [treeList]);

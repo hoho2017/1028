@@ -34,7 +34,7 @@ const Confi: FC<PageProps> = props => {
   const [title, setTitle] = useState(false);
   const [showConf, setShowConf] = useState(false);
   const [showUpload, setShowUpload] = useState(false);
-  const [importYear, setImportYear] = useState(0);
+  const [importYear, setImportYear] = useState(2020);
   const [tableData, setTableData] = useState([]);
   const [showTableData, setShowTableData] = useState(false);
   const [uuid, setUuid] = useState('');
@@ -46,7 +46,7 @@ const Confi: FC<PageProps> = props => {
   useEffect(()=>{
     child.current.innerFn = resetTree
   }, [child])
-  useEffect(() => {
+  const queryInit = () => {
     dispatch({
       type: 'manage/queryY',
       payload: {
@@ -82,6 +82,9 @@ const Confi: FC<PageProps> = props => {
         setTitle(data.list[0]); //appLevelName
       },
     });
+  }
+  useEffect(() => {
+    queryInit()
   }, [deptId]);
 
   const pagination = {
@@ -241,6 +244,7 @@ const Confi: FC<PageProps> = props => {
           setUuid('');
           setShowConf(false);
           setShowCheckFile(false);
+          queryInit()
         }
       },
     });
