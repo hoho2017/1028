@@ -113,7 +113,7 @@ function Frist(props) {
           <Col offset={2} span={6}>
             <div className={styles.innerTitle}>
               <img src={Home} className={styles.homeImg} />
-              所属机构:<span style={{ color: '#000' }}>{title?title.appName:''}</span>
+              所属机构:<span style={{ color: '#000' }}>{title?title.parentDeptName:''}</span>
             </div>
           </Col>
           <Col span={6}>
