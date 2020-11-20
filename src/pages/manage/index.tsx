@@ -29,6 +29,8 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
   }, [treeList]);
   const resetTreeData = (index, no = 0) => {
     //inex 0->source 1->mp 3->user 4->auth
+
+    index  =  Number(index)
     let data = _.cloneDeep(treeData);
     if (index === 0) {
       if (no === 1) {
@@ -51,6 +53,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
         );
       }
     } else if (index === 1) {
+      console.log(data)
       setTreeD(treeMake(data, [99]));
     } else if (index === 3) {
       setTreeD(
