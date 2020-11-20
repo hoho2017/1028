@@ -28,6 +28,7 @@ function Frist(props) {
         deptId,
       },
       callback: data => {
+        console.log(data)
         setTitle(data.list[0]);
       },
     });
@@ -112,21 +113,21 @@ function Frist(props) {
           <Col offset={2} span={6}>
             <div className={styles.innerTitle}>
               <img src={Home} className={styles.homeImg} />
-              所属机构:<span style={{ color: '#000' }}>{title.appName}</span>
+              所属机构:<span style={{ color: '#000' }}>{title?title.appName:''}</span>
             </div>
           </Col>
           <Col span={6}>
             <div className={styles.innerTitle}>
               <img src={Inter} className={styles.homeImg} />
               所属网络:
-              <span style={{ color: '#000' }}>{title.appTypeName}</span>
+              <span style={{ color: '#000' }}>{title?title.appTypeName:''}</span>
             </div>
           </Col>
           <Col span={6}>
             <div className={styles.innerTitle}>
               <img src={V} className={styles.homeImg} />
               安全等级:
-              <span style={{ color: '#000' }}>{title.appLevelName}</span>
+              <span style={{ color: '#000' }}>{title?title.appLevelName:''}</span>
             </div>
           </Col>
         </Row>
