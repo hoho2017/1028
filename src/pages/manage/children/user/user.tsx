@@ -14,7 +14,7 @@ const tailLayout = {
 };
 
 const User: FC<PageProps> = props => {
-  const { manage, dispatch, deptId, deptName, resetTreeData } = props;
+  const { manage, dispatch, deptId, deptName } = props;
   const [form] = Form.useForm();
   const { arith, app_source_type, app_type_id } = manage;
   const [no, setNo] = useState(0);
@@ -61,7 +61,6 @@ const User: FC<PageProps> = props => {
   }, [current, deptId]); //no -> 0 1 2 3
   useEffect(() => {
     setCurrent(1);
-    resetTreeData(3, no)
   }, [no]);
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -205,7 +204,7 @@ const User: FC<PageProps> = props => {
     },
   ];
   return (
-    <div  ref={boxRef}>
+    <div ref={boxRef}>
       <Row style={{ position: 'relative', zIndex: '3', marginTop: '20px' }}>
         {operation.map((item, index) => {
           if (no === index) {

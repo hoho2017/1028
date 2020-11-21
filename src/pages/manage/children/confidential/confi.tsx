@@ -27,7 +27,7 @@ interface PageProps extends ConnectProps {
 }
 
 const Confi: FC<PageProps> = props => {
-  const { deptId, deptName, manage, dispatch, resetTreeData, index, child } = props;
+  const { deptId, deptName, manage, dispatch, index, child } = props;
   const [year, setYear] = useState([]);
   const [yearClick, setYearClick] = useState(0);
   const [isAll, setIsAll] = useState(false);
@@ -40,12 +40,7 @@ const Confi: FC<PageProps> = props => {
   const [uuid, setUuid] = useState('');
   const [showCheckFile, setShowCheckFile] = useState(false);
   const [fileList, setFileList] = useState([]);
-  const resetTree  = () => {
-    resetTreeData(1,0)
-  }
-  useEffect(()=>{
-    child.current.innerFn = resetTree
-  }, [child])
+
   const queryInit = () => {
     dispatch({
       type: 'manage/queryY',
@@ -82,9 +77,9 @@ const Confi: FC<PageProps> = props => {
         setTitle(data.list[0]); //appLevelName
       },
     });
-  }
+  };
   useEffect(() => {
-    queryInit()
+    queryInit();
   }, [deptId]);
 
   const pagination = {
@@ -144,7 +139,7 @@ const Confi: FC<PageProps> = props => {
       },
     },
     {
-      title: title?title.appLevelName:'',
+      title: title ? title.appLevelName : '',
       colSpan: 1,
       dataIndex: 'levelMsg',
       key: 'levelMsg',
@@ -204,9 +199,9 @@ const Confi: FC<PageProps> = props => {
         callback: data => {
           if (data.code === 0) {
             setUuid(data.uuid);
-          }else{
-            message.warn(data.msg)
-            setFileList([])
+          } else {
+            message.warn(data.msg);
+            setFileList([]);
           }
         },
       });
@@ -244,7 +239,7 @@ const Confi: FC<PageProps> = props => {
           setUuid('');
           setShowConf(false);
           setShowCheckFile(false);
-          queryInit()
+          queryInit();
         }
       },
     });
@@ -252,9 +247,7 @@ const Confi: FC<PageProps> = props => {
   return (
     <>
       <div style={{ marginTop: '1rem' }}>
-        <span className={styles.title}>
-          {deptName}OA系统 &emsp; 密评登记结果
-        </span>
+        <span className={styles.title}>{deptName} &emsp; 密评登记结果</span>
       </div>
       <div className={styles.content} style={{ paddingBottom: '20px' }}>
         <div className={styles.title2}>历年登记情况</div>
@@ -280,7 +273,7 @@ const Confi: FC<PageProps> = props => {
         </Row>
         <Row>
           <Col span={20} offset={1}>
-            <div   className={isAll ? styles.yearbox2 : styles.yearbox3} >
+            <div className={isAll ? styles.yearbox2 : styles.yearbox3}>
               <Row className={styles.yearbox} style={{ marginTop: '20px' }}>
                 <Col span={2}>
                   <span className={styles.head}>年份</span>

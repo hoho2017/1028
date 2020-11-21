@@ -15,32 +15,32 @@ interface PageProps extends ConnectProps {
 
 const Manage: FC<PageProps> = ({ manage, dispatch }) => {
   const { catalogue, treeData, treeList, ZD } = manage;
-  const child = useRef({})
+  const child = useRef({});
   const [expandedKeys, setExpandedKeys] = useState([]);
   const [searchValue, setSearchValue] = useState('');
   const [autoExpandParent, setAutoExpandParent] = useState(true);
   const [deptId, setDeptId] = useState();
   const [deptName, setDeptName] = useState();
   const [treeD, setTreeD] = useState([]);
-  const [index, setIndex] = useState(0)
+  const [indexS, setIndexS] = useState();
   useEffect(() => {
     setExpandedKeys(treeList.map(item => item.name));
     // setDeptId(treeList[1]?treeList[1].deptId:'')
     // setDeptName(treeList[1]?treeList[1].name:'')
-    treeList.forEach((item)=>{
-      if(item.type === 99){
-        setDeptId(item.deptId)
-        setDeptName(item.name)
+    treeList.forEach(item => {
+      if (item.type === 99) {
+        setDeptId(item.deptId);
+        setDeptName(item.name);
       }
-    })
+    });
   }, [treeList]);
   useEffect(() => {
     setExpandedKeys(treeList.map(item => item.name));
   }, [treeList]);
-  const resetTreeData = (index, no = 0) => {
+  const resetTreeData = (index = 0, no = 0) => {
     //inex 0->source 1->mp 3->user 4->auth
-
-    index  =  Number(index)
+    console.log(index);
+    index = Number(index);
     let data = _.cloneDeep(treeData);
     if (index === 0) {
       if (no === 1) {
@@ -63,7 +63,6 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
         );
       }
     } else if (index === 1) {
-      console.log(data)
       setTreeD(treeMake(data, [99]));
     } else if (index === 3) {
       setTreeD(
@@ -80,9 +79,9 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
       setTreeD(treeMake(data, [1, 2, 3, 4, 99]));
     }
   };
-  useEffect(()=>{
-    resetTreeData(index)
-  }, [index])
+  useEffect(() => {
+    resetTreeData(indexS);
+  }, [indexS]);
   const onSelect = (selectedKeys: any, info: any) => {
     let deptId = 1;
     treeList.forEach(item => {
@@ -160,7 +159,15 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
   return (
     <>
       <div className="tabs">
-        <Tabs tabPosition="left" size="large" style={{ minHeight }} onChange={(index)=>{setIndex(index)}}>
+        <Tabs
+          tabPosition="left"
+          size="large"
+          style={{ minHeight }}
+          onChange={index => {
+            console.log(index);
+            setIndexS(index);
+          }}
+        >
           {catalogue.map((item, index) => {
             return (
               <TabPane tab={item} key={index}>
@@ -195,7 +202,6 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
                 >
                   {/* <div className="content" style={{ paddingLeft:'268px' }}> */}
                   <Box
-                    resetTreeData={resetTreeData}
                     ZD={ZD}
                     child={child}
                     deptId={deptId}
