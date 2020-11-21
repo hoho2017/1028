@@ -22,7 +22,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
   const [deptId, setDeptId] = useState();
   const [deptName, setDeptName] = useState();
   const [treeD, setTreeD] = useState([]);
-  const [indexS, setIndexS] = useState();
+  const [indexS, setIndexS] = useState(0);
   useEffect(() => {
     setExpandedKeys(treeList.map(item => item.name));
     // setDeptId(treeList[1]?treeList[1].deptId:'')
@@ -37,9 +37,19 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
   useEffect(() => {
     setExpandedKeys(treeList.map(item => item.name));
   }, [treeList]);
+  useEffect(() => {
+    let data = _.cloneDeep(treeData);
+    setTreeD(
+      treeMake(
+        data.filter(item => {
+          return [1, 2, 3, 4].includes(item.type);
+        }),
+        [4],
+      ),
+    );
+  }, [treeData]);
   const resetTreeData = (index = 0, no = 0) => {
     //inex 0->source 1->mp 3->user 4->auth
-    console.log(index);
     index = Number(index);
     let data = _.cloneDeep(treeData);
     if (index === 0) {
@@ -162,7 +172,6 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
           size="large"
           style={{ minHeight }}
           onChange={index => {
-            console.log(index);
             setIndexS(index);
           }}
         >

@@ -35,7 +35,6 @@ function Sec(props) {
           deptId,
         },
         callback: data => {
-          console.log(data);
           setTableData(data);
           setTitle(data[0]);
         },

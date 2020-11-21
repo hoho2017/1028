@@ -90,7 +90,7 @@ function J(props) {
         >
           {ZD.arith.map(item => {
             return (
-              <Radio className={styles.radio} value={item.id}>
+              <Radio className={styles.radio} key={item.id} value={item.id}>
                 <span>{item.value}</span>
               </Radio>
             );
