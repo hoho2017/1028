@@ -68,15 +68,6 @@ const Confi: FC<PageProps> = props => {
         setYear([...arr]);
       },
     });
-    dispatch({
-      type: 'manage/queryTitle',
-      payload: {
-        deptId,
-      },
-      callback: data => {
-        setTitle(data.list[0]); //appLevelName
-      },
-    });
   };
   useEffect(() => {
     queryInit();
@@ -139,8 +130,9 @@ const Confi: FC<PageProps> = props => {
       },
     },
     {
-      title: title ? title.appLevelName : '',
+      title: '第' + title.appLevel + '级',
       colSpan: 1,
+      width: '70px',
       dataIndex: 'levelMsg',
       key: 'levelMsg',
       render: (value, row, index) => {
@@ -182,6 +174,7 @@ const Confi: FC<PageProps> = props => {
       },
       callback: data => {
         setTableData([...data.data.data]);
+        setTitle(data.data.data[0]);
         setShowTableData(true);
       },
     });
@@ -219,6 +212,7 @@ const Confi: FC<PageProps> = props => {
         callback: data => {
           if (data.code === 0) {
             setTableData([...data.data]);
+            setTitle(data.data[0]);
             setShowCheckFile(true);
           }
         },
