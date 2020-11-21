@@ -1,12 +1,13 @@
 import { Chart, Tooltip, Legend, Point, Line, Interval, Axis } from 'bizcharts';
 import React, { FC, useEffect, useState } from 'react';
-import {Empty} from 'antd'
+import { Empty } from 'antd';
 
 function Chart2(props) {
   const { allMonthTotal, td, cond } = props;
-  if(allMonthTotal!== undefined&&allMonthTotal.length === 0 || allMonthTotal === undefined){
-    return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-  }
+  // console.log(allMonthTotal)
+  // if(allMonthTotal!== undefined&&allMonthTotal.length === 0 || allMonthTotal === undefined){
+  //   return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+  // }
   let data = [];
   if (td) {
     td.forEach(item => {
@@ -77,7 +78,7 @@ function Chart2(props) {
         visible={true}
         label={{
           formatter(text, item, index) {
-            return `${text.includes('-')?text.split('-')[1]:text}月`;
+            return `${text.includes('-') ? text.split('-')[1] : text}月`;
           },
         }}
       />
