@@ -67,12 +67,10 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
     } else if (index === 3) {
       setTreeD(
         treeMake(
-          data.filter(
-            item => {
-              return [1, 2, 3, 4].includes(item.type);
-            },
-            [1, 2, 3, 4],
-          ),
+          data.filter(item => {
+            return [1, 2, 3, 4].includes(item.type);
+          }),
+          [1, 2, 3, 4],
         ),
       );
     } else if (index === 4) {
