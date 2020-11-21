@@ -11,17 +11,18 @@ function Sec(props) {
   const [year, setYear] = useState(yearData[0]);
   const [title, setTitle] = useState({});
 
-  useEffect(() => {
-    dispatch({
-      type: 'cipher/queryTitle',
-      payload: {
-        deptId,
-      },
-      callback: data => {
-        setTitle(data.list[0]); //appLevelName
-      },
-    });
-  }, []);
+  // useEffect(() => {
+  //   dispatch({
+  //     type: 'cipher/queryTitle',
+  //     payload: {
+  //       deptId,
+  //     },
+  //     callback: data => {
+  //       console.log(data)
+  //       //appLevelName
+  //     },
+  //   });
+  // }, []);
   useEffect(() => {
     setYear(yearData[0]);
   }, [yearData]);
@@ -34,11 +35,13 @@ function Sec(props) {
           deptId,
         },
         callback: data => {
+          console.log(data);
           setTableData(data);
+          setTitle(data[0]);
         },
       });
     }
-  }, [year,deptId]);
+  }, [year, deptId]);
   const handleChange = value => {
     setYear(value);
     let i = 0;
@@ -106,7 +109,7 @@ function Sec(props) {
       },
     },
     {
-      title: title.appLevelName,
+      title: '第' + title.appLevel + '级',
       colSpan: 1,
       dataIndex: 'levelMsg',
       key: 'levelMsg',
