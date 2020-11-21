@@ -111,6 +111,7 @@ function Sec(props) {
     {
       title: '第' + title.appLevel + '级',
       colSpan: 1,
+      width: '70px',
       dataIndex: 'levelMsg',
       key: 'levelMsg',
       render: (value, row, index) => {
