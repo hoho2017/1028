@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import styles from './index.less';
-import { Row, Col, Select, Table, Button, Empty  } from 'antd';
+import { Row, Col, Select, Table, Button, Empty } from 'antd';
 import Home from './img/home.png';
 import Inter from './img/inter.png';
 import V from './img/v.png';
@@ -28,7 +28,6 @@ function Frist(props) {
         deptId,
       },
       callback: data => {
-        console.log(data)
         setTitle(data.list[0]);
       },
     });
@@ -113,21 +112,28 @@ function Frist(props) {
           <Col offset={2} span={6}>
             <div className={styles.innerTitle}>
               <img src={Home} className={styles.homeImg} />
-              所属机构:<span style={{ color: '#000' }}>{title?title.parentDeptName:''}</span>
+              所属机构:
+              <span style={{ color: '#000' }}>
+                {title ? title.parentDeptName : ''}
+              </span>
             </div>
           </Col>
           <Col span={6}>
             <div className={styles.innerTitle}>
               <img src={Inter} className={styles.homeImg} />
               所属网络:
-              <span style={{ color: '#000' }}>{title?title.appTypeName:''}</span>
+              <span style={{ color: '#000' }}>
+                {title ? title.appTypeName : ''}
+              </span>
             </div>
           </Col>
           <Col span={6}>
             <div className={styles.innerTitle}>
               <img src={V} className={styles.homeImg} />
               安全等级:
-              <span style={{ color: '#000' }}>{title?title.appLevelName:''}</span>
+              <span style={{ color: '#000' }}>
+                {title ? title.appLevelName : ''}
+              </span>
             </div>
           </Col>
         </Row>
@@ -141,7 +147,11 @@ function Frist(props) {
             >
               <div className={styles.innerTitle}>应用密评概况</div>
 
-              {JSON.stringify(sum) === '{}'?<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />:<Chart1 sum={sum} />}
+              {JSON.stringify(sum) === '{}' ? (
+                <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+              ) : (
+                <Chart1 sum={sum} />
+              )}
 
               <Row style={{ fontSize: '12px' }}>
                 {addYearData.map(item => {
@@ -235,62 +245,69 @@ function Frist(props) {
                 <Col span={5}>
                   <div className={styles.innerTitle}>报告下载</div>
                 </Col>
-                {JSON.stringify(addYearData) === '{}'?<><Col span={9} offset={1}>
-                  <div>
-                    <span style={{ fontWeight: '600' }}>密码测评报告</span>
-                    <Select
-                      value={value2}
-                      style={{ width: 75, marginLeft: '8px' }}
-                      onChange={handleChangeL}
-                    >
-                      {addYearData.map(item => {
-                        if (item.assessmentType === 2) {
-                          let year = item.assessmentDate.split('-')[0];
-                          return (
-                            <Option key={item.id} value={year + '*' + item.key}>
-                              {year}
-                            </Option>
-                          );
-                        }
-                      })}
-                    </Select>
-                    <Button
-                      className={styles.dbtn}
-                      type="primary"
-                      shape="circle"
-                      onClick={() => down('L')}
-                      icon={<DownloadOutlined />}
-                    />
-                  </div>
-                </Col>
-                <Col span={9}>
-                  <div>
-                    <span style={{ fontWeight: '600' }}>历年风评报告</span>
-                    <Select
-                      value={value1}
-                      style={{ width: 75, marginLeft: '8px' }}
-                      onChange={handleChangeR}
-                    >
-                      {addYearData.map(item => {
-                        if (item.assessmentType === 1) {
-                          let year = item.assessmentDate.split('-')[0];
-                          return (
-                            <Option key={year} value={year + '*' + item.key}>
-                              {year}
-                            </Option>
-                          );
-                        }
-                      })}
-                    </Select>
-                    <Button
-                      className={styles.dbtn}
-                      type="primary"
-                      shape="circle"
-                      onClick={() => down('R')}
-                      icon={<DownloadOutlined />}
-                    />
-                  </div>
-                </Col></>:<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />}
+                {/* {JSON.stringify(addYearData) === '{}'? */}
+                <>
+                  <Col span={9} offset={1}>
+                    <div>
+                      <span style={{ fontWeight: '600' }}>密码测评报告</span>
+                      <Select
+                        value={value2}
+                        style={{ width: 75, marginLeft: '8px' }}
+                        onChange={handleChangeL}
+                      >
+                        {addYearData.map(item => {
+                          if (item.assessmentType === 2) {
+                            let year = item.assessmentDate.split('-')[0];
+                            return (
+                              <Option
+                                key={item.id}
+                                value={year + '*' + item.key}
+                              >
+                                {year}
+                              </Option>
+                            );
+                          }
+                        })}
+                      </Select>
+                      <Button
+                        className={styles.dbtn}
+                        type="primary"
+                        shape="circle"
+                        onClick={() => down('L')}
+                        icon={<DownloadOutlined />}
+                      />
+                    </div>
+                  </Col>
+                  <Col span={9}>
+                    <div>
+                      <span style={{ fontWeight: '600' }}>历年风评报告</span>
+                      <Select
+                        value={value1}
+                        style={{ width: 75, marginLeft: '8px' }}
+                        onChange={handleChangeR}
+                      >
+                        {addYearData.map(item => {
+                          if (item.assessmentType === 1) {
+                            let year = item.assessmentDate.split('-')[0];
+                            return (
+                              <Option key={year} value={year + '*' + item.key}>
+                                {year}
+                              </Option>
+                            );
+                          }
+                        })}
+                      </Select>
+                      <Button
+                        className={styles.dbtn}
+                        type="primary"
+                        shape="circle"
+                        onClick={() => down('R')}
+                        icon={<DownloadOutlined />}
+                      />
+                    </div>
+                  </Col>
+                </>
+                {/* :<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />} */}
               </Row>
             </div>
           </Col>
