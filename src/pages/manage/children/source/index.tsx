@@ -63,6 +63,7 @@ const Source: FC<PageProps> = props => {
   const [total, setTotal] = useState(0);
   const [current, setCurrent] = useState(1);
   const [selectionType, setSelectionType] = useState('checkbox');
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const tableRef = useRef();
   const boxRef = useRef();
   const queryTApp = page => {
@@ -179,10 +180,14 @@ const Source: FC<PageProps> = props => {
   useEffect(() => {
     setCurrent(1);
     setChoose({});
+    setShowForm('0');
+    setSelectedRowKeys([]);
   }, [no, deptId]);
   const rowSelection = {
+    selectedRowKeys,
     onChange: (selectedRowKeys, selectedRows) => {
       setChoose({ ...Object.values(selectedRows)[0] });
+      setSelectedRowKeys(selectedRowKeys);
     },
     getCheckboxProps: record => ({
       disabled: false, // Column configuration not to be checked
@@ -213,6 +218,7 @@ const Source: FC<PageProps> = props => {
         values.arithList = values.arithList.toString();
         values.parentDeptId = deptId;
         values.appId = choose.appId;
+        values.appType = choose.appType;
         dispatch({
           type: 'manage/appModify',
           payload: values,
@@ -338,6 +344,8 @@ const Source: FC<PageProps> = props => {
         });
       }
     }
+    setChoose({});
+    setSelectedRowKeys([]);
   };
 
   const onReset = () => {
@@ -492,6 +500,7 @@ const Source: FC<PageProps> = props => {
                 onClick={() => {
                   setNo(index);
                   setChoose({});
+                  setSelectedRowKeys([]);
                 }}
                 span={index === 3 ? '6' : '5'}
                 offset={index === 0 ? '1' : '0'}
