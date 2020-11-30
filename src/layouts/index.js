@@ -33,6 +33,7 @@ function BasicLayout(props) {
             // console.log(collapsed, type);
           }}
         >
+        <Header>
           <div className="bigTitle">密码应用在线管理平台</div>
         </Header>
         <Content>
