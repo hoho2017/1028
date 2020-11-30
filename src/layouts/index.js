@@ -33,10 +33,11 @@ function BasicLayout(props) {
             // console.log(collapsed, type);
           }}
         >
-          <div className="logo" />
-          <Menu
-            theme="light"
-            mode="inline"
+          <div className="bigTitle">密码应用在线管理平台</div>
+        </Header>
+        <Content>
+          <div
+            className="site-layout-background"
             style={{
               backgroundColor: '#056ace',
               height: '100%',
