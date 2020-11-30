@@ -1,4 +1,4 @@
-import { Effect, Reducer, Subscription, request } from 'umi';
+import { Effect, Reducer, Subscription } from 'umi';
 import { login } from '@/services/login';
 import {
   queryTree,

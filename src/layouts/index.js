@@ -2,6 +2,7 @@ import { Layout, Menu } from 'antd';
 import './index.less';
 import { Link } from 'umi';
 import { HomeIcon, CipherIcon, WarnIcon, ManageIcon } from './svg.js';
+import Login from '@/pages/login/login.tsx'
 
 const minHeight = document.body.clientHeight - 136 + 'px';
 
@@ -20,62 +21,62 @@ function BasicLayout(props) {
   } = props;
 
   return (
-    <Layout>
-      <Sider
-        width="112px"
-        breakpoint="lg"
-        collapsedWidth="0"
-        onBreakpoint={broken => {
-          // console.log(broken);
-        }}
-        onCollapse={(collapsed, type) => {
-          // console.log(collapsed, type);
-        }}
-      >
-        <div className="logo" />
-        <Menu
-          theme="light"
-          mode="inline"
-          style={{
-            backgroundColor: '#056ace',
-            height: '100%',
-            paddingTop: '45%',
+       (<Layout>
+        <Sider
+          width="112px"
+          breakpoint="lg"
+          collapsedWidth="0"
+          onBreakpoint={broken => {
+            // console.log(broken);
           }}
-          defaultSelectedKeys={[pathname]}
+          onCollapse={(collapsed, type) => {
+            // console.log(collapsed, type);
+          }}
         >
-          {menuData.map(menu => (
-            <Menu.Item key={`${menu.route}`} style={{ height: '90px' }}>
-              <Link to={menu.route}>
-                <menu.icon style={{ fontSize: '32px' }} className="iconTitle" />
-                <div className="title"> {menu.name}</div>
-              </Link>
-            </Menu.Item>
-          ))}
-        </Menu>
-      </Sider>
-      <Layout>
-        <Header
-          className="site-layout-sub-header-background"
-          style={{
-            padding: 0,
-            boxShadow: ' 0px 5px 3px #E2E7EB',
-            zIndex: '999',
-          }}
-        />
-        <Content>
-          <div
-            className="site-layout-background"
+          <div className="logo" />
+          <Menu
+            theme="light"
+            mode="inline"
+            style={{
+              backgroundColor: '#056ace',
+              height: '100%',
+              paddingTop: '45%',
+            }}
+            defaultSelectedKeys={[pathname]}
+          >
+            {menuData.map(menu => (
+              <Menu.Item key={`${menu.route}`} style={{ height: '90px' }}>
+                <Link to={menu.route}>
+                  <menu.icon style={{ fontSize: '32px' }} className="iconTitle" />
+                  <div className="title"> {menu.name}</div>
+                </Link>
+              </Menu.Item>
+            ))}
+          </Menu>
+        </Sider>
+        <Layout>
+          <Header
+            className="site-layout-sub-header-background"
             style={{
               padding: 0,
-              minHeight,
+              boxShadow: ' 0px 5px 3px #E2E7EB',
+              zIndex: '999',
             }}
-          >
-            {children}
-          </div>
-        </Content>
-        <Footer style={{ textAlign: 'center' }}>Copyright © 2011-2020</Footer>
-      </Layout>
-    </Layout>
+          />
+          <Content>
+            <div
+              className="site-layout-background"
+              style={{
+                padding: 0,
+                minHeight,
+              }}
+            >
+              {children}
+            </div>
+          </Content>
+          <Footer style={{ textAlign: 'center' }}>Copyright © 2011-2020</Footer>
+        </Layout>
+      </Layout>)
   );
 }
 
