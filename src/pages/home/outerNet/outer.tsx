@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState, useRef } from 'react';
 import styles from './outer.less';
 import { Row, Col, Select, Button } from 'antd';
+import { ConnectProps, connect, IndexModelState } from 'umi';
 import Chart4 from './chart4';
 import Chart5 from './chart5';
 import Chart6 from './chart6';
@@ -12,9 +13,24 @@ const arrTitle = [
   '历年加密传输的终端数',
   '历年应用调用密码次数',
 ];
-function OuterNet(props) {
-  const { dispatch } = props;
+
+interface PageProps extends ConnectProps {
+  index: IndexModelState;
+}
+
+const OuterNet: FC<PageProps> = ({ index, dispatch }) => {
   const [chartNo, setChartNo] = useState(0);
+
+  useEffect(() => {
+    dispatch({
+      type: 'index/outerInit',
+      payload: {},
+      callback: data => {
+        console.log(data);
+      },
+    });
+  }, []);
+
   return (
     <>
       <div className={styles.content3} style={{ paddingBottom: '30px' }}>
@@ -62,6 +78,7 @@ function OuterNet(props) {
               {arrTitle.map((item, index) => {
                 return (
                   <Col
+                    key={index}
                     span={4}
                     onClick={() => setChartNo(index)}
                     className={chartNo === index ? styles.choosed : ''}
@@ -85,6 +102,8 @@ function OuterNet(props) {
       </div>
     </>
   );
-}
+};
 
-export default OuterNet;
+export default connect(({ index }: { index: IndexModelState }) => ({ index }))(
+  OuterNet,
+);

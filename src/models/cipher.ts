@@ -1,4 +1,4 @@
-import { Effect, Reducer, Subscription, request } from 'umi';
+import { Effect, Reducer, Subscription } from 'umi';
 import { login } from '@/services/login';
 import {
   queryTree,
@@ -9,7 +9,7 @@ import {
   queryZD,
   queryListCollect,
   queryFlist,
-  down
+  down,
 } from '@/services/cipher';
 import { treeMake } from '@/utils/translateFunc.js';
 export interface CipherModelState {
@@ -31,7 +31,7 @@ export interface CipherModelType {
     queryTable: Effect;
     queryFlist: Effect;
     queryListCollect: Effect;
-    down:Effect;
+    down: Effect;
   };
   reducers: {
     save: Reducer<CipherModelState>;
@@ -82,7 +82,7 @@ const CipherModel: CipherModelType = {
       if (callback) callback(page);
     },
     *queryY({ type, payload, callback }, { put, call, select }) {
-      const { year={}, sum={} } = yield call(queryYear, payload);
+      const { year = {}, sum = {} } = yield call(queryYear, payload);
       if (callback) callback(year, sum);
     },
     *queryTable({ type, payload, callback }, { put, call, select }) {

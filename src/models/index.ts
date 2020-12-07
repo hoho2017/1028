@@ -14,6 +14,7 @@ export interface IndexModelType {
   effects: {
     login: Effect;
     query: Effect;
+    outerInit: Effect;
   };
   reducers: {
     save: Reducer<IndexModelState>;
@@ -38,7 +39,10 @@ const IndexModel: IndexModelType = {
 
       if (callback) callback();
     },
-
+    *outerInit({ type, payload, callback }, { put, call }) {
+      const data = yield call(outerInit);
+      if (callback) callback(data.data);
+    },
     *query({ type, payload }, { put, call, select }) {
       //请求tree data
       const localData = ['外网数据首页'];

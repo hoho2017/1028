@@ -2,6 +2,7 @@ import { Layout, Menu } from 'antd';
 import './index.less';
 import { Link } from 'umi';
 import { HomeIcon, CipherIcon, WarnIcon, ManageIcon } from './svg.js';
+import Login from '@/pages/login/login.tsx';
 
 const minHeight = document.body.clientHeight - 136 + 'px';
 
@@ -61,9 +62,7 @@ function BasicLayout(props) {
             boxShadow: ' 0px 5px 3px #E2E7EB',
             zIndex: '999',
           }}
-        >
-          <div className="bigTitle">密码应用在线管理平台</div>
-        </Header>
+        />
         <Content>
           <div
             className="site-layout-background"
