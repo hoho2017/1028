@@ -1,9 +1,11 @@
 import { Effect, Reducer, Subscription, request } from 'umi';
 import { login } from '@/services/login';
 import { queryZD } from '@/services/cipher';
+import { queryTotal } from '@/services/home';
 export interface IndexModelState {
   catalogue: Array<string>;
   ZD: object;
+  total: object;
 }
 
 export interface IndexModelType {
@@ -24,6 +26,7 @@ const IndexModel: IndexModelType = {
   state: {
     catalogue: [],
     ZD: {},
+    total: {},
   },
   effects: {
     *login({ type, payload, callback }, { put, call, select }) {
@@ -42,12 +45,17 @@ const IndexModel: IndexModelType = {
       // const localData = ['a', 'b', 'c'];
 
       const dataZD = yield call(queryZD);
+      const total = yield call(queryTotal, {
+        appType: 1,
+      });
+      console.log(total);
 
       yield put({
         type: 'save',
         payload: {
           catalogue: localData,
           ZD: dataZD.data,
+          total,
         },
       });
     },
