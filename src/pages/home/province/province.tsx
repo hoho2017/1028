@@ -6,19 +6,12 @@ import Chart4 from './chart4';
 import Chart5 from './chart5';
 import Chart6 from './chart6';
 const { Option } = Select;
-const arrTitle = [
-  '历年密评应用系统数量',
-  '历年密评应用在用数量',
-  '历年商密认证用户',
-  '历年加密传输的终端数',
-  '历年应用调用密码次数',
-];
 
 interface PageProps extends ConnectProps {
   index: IndexModelState;
 }
 
-const OuterNet: FC<PageProps> = ({ index, dispatch }) => {
+const Province: FC<PageProps> = ({ index, dispatch }) => {
   const [chartNo, setChartNo] = useState(0);
   const [totalData, setTotalData] = useState({
     charArray: [],
@@ -28,7 +21,7 @@ const OuterNet: FC<PageProps> = ({ index, dispatch }) => {
 
   useEffect(() => {
     dispatch!({
-      type: 'index/outerInit',
+      type: 'index/interDataInit',
       payload: { appType: 1 },
       callback: data => {
         console.log(data);
@@ -42,9 +35,9 @@ const OuterNet: FC<PageProps> = ({ index, dispatch }) => {
       <div className={styles.content3} style={{ paddingBottom: '30px' }}>
         <div className={styles.title}>贵州省电子政务外网密码使用情况</div>
         <Row justify="space-around">
-          {totalData.charArray.map(item => {
+          {totalData.charArray.map((item, index) => {
             return (
-              <Col span={4}>
+              <Col key={item.total.key} span={4}>
                 <div
                   className={styles.content2}
                   style={{ paddingBottom: '30px', paddingTop: '20px' }}
@@ -60,22 +53,36 @@ const OuterNet: FC<PageProps> = ({ index, dispatch }) => {
           })}
         </Row>
       </div>
-      <div className={styles.content1} style={{ paddingBottom: '30px' }}>
-        <div className={styles.title}>省级单位密码使用情况</div>
+      <div className={styles.content4}>
         <Row>
-          <Col span={18}>
-            <Chart4
-              data={
-                totalData.charArray.length > 0
-                  ? totalData.charArray[chartNo].list
-                  : []
-              }
-            />
-            <div className={styles.title2}>
-              {totalData.charArray.length > 0
-                ? totalData.charArray[chartNo].detailName
-                : ''}
+          <Col span={15}>
+            <div className={styles.content5} style={{ marginRight: '40px' }}>
+              <Row>
+                <Col span={1}>
+                  <div className={styles.textTitle}>当年密码调用分布</div>
+                </Col>
+                <Col offset={2} span={10}>
+                  <Chart5 data={totalData.ratioTotalCurrent} />
+                </Col>
+                <Col offset={1} span={10}>
+                  <Chart6 data={totalData.currentData} />
+                </Col>
+              </Row>
             </div>
+          </Col>
+          <Col offset={1} span={8}>
+            <div className={styles.content5}>
+              <div className={styles.textTitle}>风险控制</div>
+            </div>
+          </Col>
+        </Row>
+      </div>
+      <div
+        className={styles.content1}
+        style={{ paddingBottom: '30px', paddingTop: '30px' }}
+      >
+        <Row>
+          <Col span={24}>
             <Row justify="space-around">
               {totalData.charArray.map((item, index) => {
                 return (
@@ -105,14 +112,6 @@ const OuterNet: FC<PageProps> = ({ index, dispatch }) => {
               })} */}
             </Row>
           </Col>
-          <Col span={6}>
-            <div>
-              <Chart5 data={totalData.ratioTotalCurrent} />
-            </div>
-            <div>
-              <Chart6 data={totalData.currentData} />
-            </div>
-          </Col>
         </Row>
       </div>
     </>
@@ -120,5 +119,5 @@ const OuterNet: FC<PageProps> = ({ index, dispatch }) => {
 };
 
 export default connect(({ index }: { index: IndexModelState }) => ({ index }))(
-  OuterNet,
+  Province,
 );

@@ -1,7 +1,7 @@
 import { Effect, Reducer, Subscription, request } from 'umi';
 import { login } from '@/services/login';
 import { queryZD } from '@/services/cipher';
-import { queryTotal } from '@/services/home';
+import { queryTotal, outerInit, interDataInit } from '@/services/home';
 export interface IndexModelState {
   catalogue: Array<string>;
   ZD: object;
@@ -15,6 +15,7 @@ export interface IndexModelType {
     login: Effect;
     query: Effect;
     outerInit: Effect;
+    interDataInit: Effect;
   };
   reducers: {
     save: Reducer<IndexModelState>;
@@ -40,26 +41,29 @@ const IndexModel: IndexModelType = {
       if (callback) callback();
     },
     *outerInit({ type, payload, callback }, { put, call }) {
-      const data = yield call(outerInit);
+      const data = yield call(outerInit, payload);
+      if (callback) callback(data.data);
+    },
+    *interDataInit({ type, payload, callback }, { put, call }) {
+      const data = yield call(interDataInit, payload);
       if (callback) callback(data.data);
     },
     *query({ type, payload }, { put, call, select }) {
       //请求tree data
-      const localData = ['外网数据首页'];
+      const localData = ['外网数据首页', '省级数据首页', '互联网数据首页'];
       // const localData = ['a', 'b', 'c'];
 
       const dataZD = yield call(queryZD);
-      const total = yield call(queryTotal, {
-        appType: 1,
-      });
-      console.log(total);
+      // const total = yield call(queryTotal, {
+      //   appType: 1,
+      // });
 
       yield put({
         type: 'save',
         payload: {
           catalogue: localData,
           ZD: dataZD.data,
-          total,
+          // total,
         },
       });
     },

@@ -4,35 +4,37 @@ import { DonutChart } from 'bizcharts';
 import Chart1 from '@/pages/cipher/children/charts/chart1';
 
 // 数据源
-const data = [
-  {
-    type: '一级系统',
-    value: 27,
-  },
-  {
-    type: '二级系统',
-    value: 25,
-  },
-  {
-    type: '三级系统',
-    value: 18,
-  },
-  {
-    type: '四级系统',
-    value: 15,
-  },
-];
 
-function Chart5() {
+function Chart5(props) {
+  let { data } = props;
+  let all = 0;
+  data.totalList.forEach(item => {
+    all += item.value;
+  });
+  data.totalList = data.totalList.map(item => {
+    item.values = (item.value / all).toFixed(2) * 100 + '%';
+    return item;
+  });
   return (
     <DonutChart
+      statistic={{ visible: true }}
       height="200"
-      data={data || []}
+      data={data.totalList || []}
       forceFit
-      radius={0.8}
+      radius={1}
       padding="auto"
+      tooltip={{
+        visible: true,
+        offset: 10,
+        formatter: (text, item, index) => {
+          return {
+            name: item + '比例',
+            value: (text / all).toFixed(2) * 100 + '%',
+          };
+        },
+      }}
       angleField="value"
-      colorField="type"
+      colorField="key"
       pieStyle={{ stroke: 'white', lineWidth: 5 }}
     />
   );

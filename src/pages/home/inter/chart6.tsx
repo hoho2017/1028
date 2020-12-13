@@ -29,7 +29,7 @@ class Chart6 extends React.Component {
       },
     });
     return (
-      <Chart height={200} data={dv.rows} autoFit>
+      <Chart data={dv.rows} autoFit>
         <Coordinate transpose />
         <Tooltip shared={true} showCrosshairs>
           {(title, items) => {
