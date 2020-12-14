@@ -3,6 +3,7 @@ import React, { FC, useEffect, useState } from 'react';
 import styles from './index.less';
 import { Row, Col } from 'antd';
 import OuterNet from './outerNet/outer';
+import OuterNet2 from './outerNet2/outer';
 import Province from './province/province';
 import Inter from './inter/inter';
 
@@ -17,6 +18,8 @@ function Box(props) {
           <Province />
         ) : index === 2 ? (
           <Inter />
+        ) : index === 3 ? (
+          <OuterNet2 />
         ) : (
           <></>
         )}

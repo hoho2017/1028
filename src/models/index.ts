@@ -50,7 +50,12 @@ const IndexModel: IndexModelType = {
     },
     *query({ type, payload }, { put, call, select }) {
       //请求tree data
-      const localData = ['外网数据首页', '省级数据首页', '互联网数据首页'];
+      const localData = [
+        '外网数据首页',
+        '省级数据首页',
+        '互联网数据首页',
+        '部门数据首页',
+      ];
       // const localData = ['a', 'b', 'c'];
 
       const dataZD = yield call(queryZD);
