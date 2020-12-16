@@ -39,7 +39,7 @@ const OuterNet: FC<PageProps> = ({ index, dispatch }) => {
 
   return (
     <>
-      <div className={styles.content3} style={{ paddingBottom: '30px' }}>
+      <div className={styles.content3} style={{ padding: '30px' }}>
         <div className={styles.title}>贵州省电子政务外网密码使用情况</div>
         <Row justify="space-around">
           {totalData.charArray.map(item => {
@@ -60,7 +60,7 @@ const OuterNet: FC<PageProps> = ({ index, dispatch }) => {
           })}
         </Row>
       </div>
-      <div className={styles.content1} style={{ paddingBottom: '30px' }}>
+      <div className={styles.content1} style={{ padding: '20px' }}>
         <div className={styles.title}>省级单位密码使用情况</div>
         <Row>
           <Col span={18}>

@@ -5,6 +5,8 @@ import { ConnectProps, connect, IndexModelState } from 'umi';
 import Chart4 from './chart4';
 import Chart5 from './chart5';
 import Chart6 from './chart6';
+import geo from '@/pages/home/geo.js';
+const echarts = require('echarts');
 const { Option } = Select;
 const arrTitle = [
   '历年密评应用系统数量',
@@ -35,6 +37,25 @@ const OuterNet: FC<PageProps> = ({ index, dispatch }) => {
         setTotalData({ ...data });
       },
     });
+
+    var myChart = echarts.init(document.getElementById('map'));
+    echarts.registerMap('g', geo);
+
+    myChart.setOption({
+      series: [
+        {
+          name: '贵州',
+          type: 'map',
+          mapType: 'g', // 自定义扩展图表类型
+          label: {
+            show: true,
+          },
+        },
+      ],
+    });
+    myChart.on('click', function(params) {
+      console.log(params);
+    });
   }, []);
 
   return (
@@ -60,7 +81,7 @@ const OuterNet: FC<PageProps> = ({ index, dispatch }) => {
           })}
         </Row>
       </div>
-      <div className={styles.content1} style={{ paddingBottom: '30px' }}>
+      <div className={styles.content1} style={{ padding: '20px' }}>
         <div className={styles.title}>省级单位密码使用情况</div>
         <Row>
           <Col span={18}>
@@ -90,19 +111,6 @@ const OuterNet: FC<PageProps> = ({ index, dispatch }) => {
                   </Col>
                 );
               })}
-              {/* {arrTitle.map((item, index) => {
-                return (
-                  <Col
-                    key={index}
-                    span={4}
-                    onClick={() => setChartNo(index)}
-                    className={chartNo === index ? styles.choosed : ''}
-                  >
-                    <Chart4 height="100" />
-                    <div className={styles.title3}>{arrTitle[index]}</div>
-                  </Col>
-                );
-              })} */}
             </Row>
           </Col>
           <Col span={6}>
@@ -111,6 +119,15 @@ const OuterNet: FC<PageProps> = ({ index, dispatch }) => {
             </div>
             <div>
               <Chart6 data={totalData.currentData} />
+            </div>
+          </Col>
+        </Row>
+      </div>
+      <div className={styles.content4}>
+        <Row>
+          <Col span={16}>
+            <div className={styles.content5}>
+              <div className={styles.map} id="map"></div>
             </div>
           </Col>
         </Row>
