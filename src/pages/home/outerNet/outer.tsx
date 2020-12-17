@@ -124,13 +124,9 @@ const OuterNet: FC<PageProps> = ({ index, dispatch }) => {
         </Row>
       </div>
       <div className={styles.content4}>
-        <Row>
-          <Col span={16}>
-            <div className={styles.content5}>
-              <div className={styles.map} id="map"></div>
-            </div>
-          </Col>
-        </Row>
+        <div className={styles.content5}>
+          <div className={styles.map} id="map"></div>
+        </div>
       </div>
     </>
   );
