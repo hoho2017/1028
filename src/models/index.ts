@@ -42,11 +42,11 @@ const IndexModel: IndexModelType = {
     },
     *outerInit({ type, payload, callback }, { put, call }) {
       const data = yield call(outerInit, payload);
-      if (callback) callback(data.data);
+      if (callback) callback(data);
     },
     *interDataInit({ type, payload, callback }, { put, call }) {
       const data = yield call(interDataInit, payload);
-      if (callback) callback(data.data);
+      if (callback) callback(data);
     },
     *query({ type, payload }, { put, call, select }) {
       //请求tree data

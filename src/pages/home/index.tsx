@@ -11,7 +11,7 @@ function Box(props) {
   const { index } = props;
   return (
     <>
-      <Row style={{ marginBottom: '4%' }}>
+      <Row style={{ marginBottom: '0%' }}>
         {index === 0 ? (
           <OuterNet />
         ) : index === 1 ? (
