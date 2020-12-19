@@ -1,4 +1,4 @@
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Row, Col } from 'antd';
 import './index.less';
 import { Link } from 'umi';
 import { HomeIcon, CipherIcon, WarnIcon, ManageIcon } from './svg.js';
@@ -62,7 +62,22 @@ function BasicLayout(props) {
             boxShadow: ' 0px 5px 3px #E2E7EB',
             zIndex: '999',
           }}
-        />
+        >
+          <Row>
+            <Col span={20}>
+              <div
+                style={{
+                  color: '#056ace',
+                  fontWeight: '800',
+                  fontSize: '2rem',
+                  padding: '0 31px',
+                }}
+              >
+                密码应用在线管理平台
+              </div>
+            </Col>
+          </Row>
+        </Header>
         <Content>
           <div
             className="site-layout-background"

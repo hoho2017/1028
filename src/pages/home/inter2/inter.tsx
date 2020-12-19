@@ -22,7 +22,7 @@ const Inter: FC<PageProps> = ({ index, dispatch }) => {
   useEffect(() => {
     dispatch!({
       type: 'index/interDataInit',
-      payload: { appType: 1 },
+      payload: { appType: 2 },
       callback: data => {
         console.log(data);
         setTotalData({ ...data.data });

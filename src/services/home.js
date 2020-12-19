@@ -19,7 +19,7 @@ export async function outerInit(params) {
   });
 }
 export async function interDataInit(params) {
-  return request(`/sys/subapplogcollect/city-total`, {
+  return request(`/sys/subapplogcollect/total`, {
     method: 'POST',
     body: {
       ...params,

@@ -6,6 +6,7 @@ import OuterNet from './outerNet/outer';
 import OuterNet2 from './outerNet2/outer';
 import Province from './province/province';
 import Inter from './inter/inter';
+import Inter2 from './inter2/inter';
 
 function Box(props) {
   const { index } = props;
@@ -15,11 +16,11 @@ function Box(props) {
         {index === 0 ? (
           <OuterNet />
         ) : index === 1 ? (
-          <Province />
+          <OuterNet2 />
         ) : index === 2 ? (
           <Inter />
         ) : index === 3 ? (
-          <OuterNet2 />
+          <Inter2 />
         ) : (
           <></>
         )}
