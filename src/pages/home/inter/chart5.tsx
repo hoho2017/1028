@@ -3,10 +3,14 @@ import { Chart, Interval, Tooltip, Axis, Coordinate, Legend } from 'bizcharts';
 
 function Chart5(props) {
   const { data } = props;
+  let total = 0;
+  data.totalList.forEach(item => {
+    total += item.value;
+  });
   const cols = {
     value: {
       formatter: val => {
-        val = val * 100 + '%';
+        val = ((val / total) * 100).toFixed(1) + '%';
         return val;
       },
     },

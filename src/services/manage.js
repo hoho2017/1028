@@ -2,6 +2,12 @@ import request from '@/utils/request';
 import { requestRaw } from '@/utils/request';
 import getParamsStr from '@/utils/getParamsStr';
 
+export async function down(params) {
+  return requestRaw(`/sys/subappassessmentsplit/download/template`, {
+    headers: '3',
+  });
+}
+
 export async function queryTree(params) {
   return requestRaw(`/sys/menu/list`);
 }

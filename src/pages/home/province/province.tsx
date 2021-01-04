@@ -24,7 +24,6 @@ const Province: FC<PageProps> = ({ index, dispatch }) => {
       type: 'index/interDataInit',
       payload: { appType: 1 },
       callback: data => {
-        console.log(data);
         setTotalData({ ...data });
       },
     });

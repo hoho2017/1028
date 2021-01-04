@@ -128,14 +128,14 @@ const OuterNet: FC<PageProps> = ({ index, dispatch }) => {
   useEffect(() => {
     dispatch!({
       type: 'index/outerInit',
-      payload: { appType: 1 },
+      payload: { appType: 2 },
       callback: data => {
         setTotalData({ ...data.data });
         setCity([...data.city]);
       },
     });
 
-    var myChart = echarts.init(document.getElementById('map2'));
+    var myChart = echarts.init(document.getElementById('map'));
     echarts.registerMap('g', geo);
 
     myChart.setOption({
@@ -261,7 +261,7 @@ const OuterNet: FC<PageProps> = ({ index, dispatch }) => {
               })}
             </div>
           </div>
-          <div className={styles.map} id="map2"></div>
+          <div className={styles.map} id="map"></div>
           <div style={{ maxWidth: '1150px' }}>
             <Row>
               {city.map((item, index) => {

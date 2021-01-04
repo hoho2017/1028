@@ -64,12 +64,11 @@ const Auth: FC<PageProps> = props => {
       type: 'manage/queryTRole',
       payload: {
         parentDeptId: deptId,
-        limit: 10,
+        limit: 1000,
         page: page,
       },
       callback: data => {
         const { list, totalCount } = data;
-        setTotal(totalCount);
         setListApp(
           list.map(item => {
             item.key = item.roleId;
@@ -119,7 +118,7 @@ const Auth: FC<PageProps> = props => {
   useEffect(() => {
     setCurrent(1);
     setListOrg([]);
-    setListApp([]);
+    // setListApp([]);
   }, [no]);
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -340,6 +339,7 @@ const Auth: FC<PageProps> = props => {
       },
     },
   ]);
+  console.log(listOrg);
   return (
     <div ref={boxRef}>
       <div className={styles.content}>

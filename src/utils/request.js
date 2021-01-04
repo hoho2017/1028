@@ -64,6 +64,7 @@ export function requestRaw(url, option = { method: 'GET' }) {
   if (newOptions.headers === '2') {
     delete newOptions.headers;
     return fetch(url, newOptions).then(res =>
+      // console.log(res)
       res.blob().then(blob => {
         const url = window.URL || window.webkitURL || window.moxURL;
         const downloadHref = url.createObjectURL(blob);
@@ -76,7 +77,22 @@ export function requestRaw(url, option = { method: 'GET' }) {
       }),
     );
   }
-
+  if (newOptions.headers === '3') {
+    delete newOptions.headers;
+    return fetch(url, newOptions).then(res =>
+      // console.log(res)
+      res.blob().then(blob => {
+        const url = window.URL || window.webkitURL || window.moxURL;
+        const downloadHref = url.createObjectURL(blob);
+        let downloadLink = document.createElement('a');
+        downloadLink.style.display = 'none';
+        downloadLink.href = downloadHref;
+        downloadLink.download = '密评风评方案模板.xlsx';
+        downloadLink.click();
+        window.URL.revokeObjectURL(downloadHref);
+      }),
+    );
+  }
   // add token to header
   // const token = localStorage.getItem('auth_token');
   // if(token){

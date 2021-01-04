@@ -24,7 +24,6 @@ const Inter: FC<PageProps> = ({ index, dispatch }) => {
       type: 'index/interDataInit',
       payload: { appType: 2 },
       callback: data => {
-        console.log(data);
         setTotalData({ ...data.data });
       },
     });

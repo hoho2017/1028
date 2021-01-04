@@ -24,7 +24,6 @@ const Inter: FC<PageProps> = ({ index, dispatch }) => {
       type: 'index/interDataInit',
       payload: { appType: 1 },
       callback: data => {
-        console.log(data);
         setTotalData({ ...data.data });
       },
     });
@@ -33,7 +32,7 @@ const Inter: FC<PageProps> = ({ index, dispatch }) => {
   return (
     <>
       <div className={styles.content3} style={{ paddingBottom: '30px' }}>
-        <div className={styles.title}>贵州省电子政务外网密码使用情况</div>
+        <div className={styles.title}>贵州省互联网密码使用情况</div>
         <Row justify="space-around">
           {totalData.charArray.map((item, index) => {
             return (

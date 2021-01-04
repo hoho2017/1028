@@ -58,20 +58,20 @@ function Sec(props) {
   };
   const columns = [
     {
-      title: '密码应用控制点',
+      title: '测评指标',
       dataIndex: 'splitTypeDescOne',
       key: 'splitTypeDescOne',
-      colSpan: 3,
+      colSpan: 2,
       render: (value, row, index) => {
         const obj = {
           children: value,
           props: {},
         };
-        obj.props.rowSpan = 100;
+        obj.props.rowSpan = 0;
 
-        if (value === '技术要求' && index > 0) {
-          obj.props.rowSpan = 0;
-        }
+        // if (value === '技术要求' && index > 0) {
+        //   obj.props.rowSpan = 0;
+        // }
         return obj;
       },
     },
@@ -108,7 +108,7 @@ function Sec(props) {
       },
     },
     {
-      title: '第' + title.appLevel + '级',
+      title: title.appLevel ? '第' + title.appLevel + '级' : '-',
       colSpan: 1,
       width: '70px',
       dataIndex: 'levelMsg',
@@ -121,6 +121,34 @@ function Sec(props) {
         obj.props.rowSpan = 1;
         return obj;
       },
+    },
+    {
+      title: '符合',
+      colSpan: 1,
+      dataIndex: 'conform',
+      key: 'conform',
+      render: text => <div>{text}</div>,
+    },
+    {
+      title: '部分符合',
+      colSpan: 1,
+      dataIndex: 'partialConform',
+      key: 'partialConform',
+      render: text => <div>{text}</div>,
+    },
+    {
+      title: '不符合',
+      colSpan: 1,
+      dataIndex: 'unConform',
+      key: 'unConform',
+      render: text => <div>{text}</div>,
+    },
+    {
+      title: '不适用',
+      colSpan: 1,
+      dataIndex: 'inconformity',
+      key: 'inconformity',
+      render: text => <div>{text}</div>,
     },
     {
       title: '监控结果',

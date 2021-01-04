@@ -43,6 +43,7 @@ import {
   upload,
   checkFile,
   confirmUp,
+  down,
 } from '@/services/manage';
 import { treeMake } from '@/utils/translateFunc.js';
 export interface ManageModelState {
@@ -94,6 +95,7 @@ export interface ManageModelType {
     upload: Effect;
     checkFile: Effect;
     confirmUp: Effect;
+    down: Effect;
   };
   reducers: {
     save: Reducer<ManageModelState>;
@@ -120,6 +122,10 @@ const ManageModel: ManageModelType = {
     },
     *thirdRegister({ type, payload, callback }, { put, call, select }) {
       const data = yield call(thirdRegister, payload);
+      if (callback) callback(data);
+    },
+    *down({ type, payload, callback }, { put, call, select }) {
+      const data = yield call(down, payload);
       if (callback) callback(data);
     },
     *roleRegister({ type, payload, callback }, { put, call, select }) {
@@ -296,7 +302,7 @@ const ManageModel: ManageModelType = {
         item.key = item.name;
         return item;
       });
-      const treeData = (data);
+      const treeData = data;
 
       // const tableApp = yield call(queryTApp);
       // const tableOrg = yield call(queryTOrg);
