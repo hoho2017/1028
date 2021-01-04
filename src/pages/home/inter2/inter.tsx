@@ -13,6 +13,7 @@ interface PageProps extends ConnectProps {
 
 const Inter: FC<PageProps> = ({ index, dispatch }) => {
   const [chartNo, setChartNo] = useState(0);
+  const [list, setList] = useState([]);
   const [totalData, setTotalData] = useState({
     charArray: [],
     currentData: [],
@@ -25,6 +26,15 @@ const Inter: FC<PageProps> = ({ index, dispatch }) => {
       payload: { appType: 2 },
       callback: data => {
         setTotalData({ ...data.data });
+      },
+    });
+    dispatch!({
+      type: 'index/details',
+      payload: {
+        appTypes: '1,2,3,4',
+      },
+      callback: list => {
+        setList(list);
       },
     });
   }, []);
@@ -70,24 +80,24 @@ const Inter: FC<PageProps> = ({ index, dispatch }) => {
             </div>
           </Col>
           <Col offset={1} span={8}>
-            <div className={styles.content5} style={{ padding: '0 15%' }}>
+            <div className={styles.content5} style={{ padding: '0 6%' }}>
               <div className={styles.textTitle}>风险控制</div>
-              <div>2020年10月7日SM2停止调用</div>
-              <Divider
-                style={{ margin: '12px 0', minWidth: '0', width: '100%' }}
-              />
-              <div>2020年10月17日SM2停止调用</div>
-              <Divider
-                style={{ margin: '12px 0', minWidth: '0', width: '100%' }}
-              />
-              <div>2020年10月27日SM2停止调用</div>
-              <Divider
-                style={{ margin: '12px 0', minWidth: '0', width: '100%' }}
-              />
-              <div>2020年10月29日SM2停止调用</div>
-              <Divider
-                style={{ margin: '12px 0', minWidth: '0', width: '100%' }}
-              />
+              {list.slice(0, 4).map(item => {
+                console.log(item);
+                const txt =
+                  item.logDate.split(' ')[0] +
+                  ' ' +
+                  item.appName +
+                  item.logMessage;
+                return (
+                  <div key={item.id}>
+                    <div key={item.appName + index}>{txt}</div>
+                    <Divider
+                      style={{ margin: '12px 0', minWidth: '0', width: '100%' }}
+                    />
+                  </div>
+                );
+              })}
             </div>
           </Col>
         </Row>

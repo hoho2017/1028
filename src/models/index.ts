@@ -1,6 +1,8 @@
 import { Effect, Reducer, Subscription, request } from 'umi';
 import { login } from '@/services/login';
 import { queryZD } from '@/services/cipher';
+import { details } from '@/services/risk';
+
 import { queryTotal, outerInit, interDataInit } from '@/services/home';
 export interface IndexModelState {
   catalogue: Array<string>;
@@ -16,6 +18,7 @@ export interface IndexModelType {
     query: Effect;
     outerInit: Effect;
     interDataInit: Effect;
+    details: Effect;
   };
   reducers: {
     save: Reducer<IndexModelState>;
@@ -39,6 +42,10 @@ const IndexModel: IndexModelType = {
       document.cookie = `JSESSIONID=${data.JSESSIONID}`;
 
       if (callback) callback();
+    },
+    *details({ type, payload, callback }, { put, call, select }) {
+      const { page } = yield call(details, payload);
+      if (callback) callback(page.list);
     },
     *outerInit({ type, payload, callback }, { put, call }) {
       const data = yield call(outerInit, payload);

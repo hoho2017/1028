@@ -15,7 +15,7 @@ import {
   Util,
   LineAdvance,
 } from 'bizcharts';
-import {Empty} from 'antd'
+import { Empty } from 'antd';
 
 const { Line } = Guide;
 
@@ -40,8 +40,8 @@ const axisConfig = {
 
 function Chart4(props) {
   const { monthArith, zd } = props;
-  if(JSON.stringify(monthArith) === '{}'){
-    return  <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+  if (JSON.stringify(monthArith) === '{}') {
+    return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
   }
   let datas = Object.keys(monthArith).map(item => item.split('-')[1]);
   let data = [];
@@ -63,7 +63,7 @@ function Chart4(props) {
       min: 0, // 这里要设置一个最小值, 否则可能图表中按照了 data 中的最小值设置Y轴最小值
     },
   };
-
+  console.log(data);
   return (
     <Chart
       width="100%"
