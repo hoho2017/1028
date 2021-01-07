@@ -2,9 +2,10 @@ import { ConnectProps, connect, ManageModelState } from 'umi';
 import React, { FC, useEffect, useState, useRef } from 'react';
 import styles from './index.less';
 import Box from './children/index.tsx';
-import { Tabs, Tree, Input } from 'antd';
+import { Tabs, Tree, Input, Tooltip } from 'antd';
 import { treeMake } from '@/utils/translateFunc.js';
 import _ from 'lodash';
+import produce from 'immer';
 
 const { TabPane } = Tabs;
 const { Search } = Input;
@@ -133,17 +134,24 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
   const loop = data =>
     data.map(item => {
       const index = item.title.indexOf(searchValue);
-      const beforeStr = item.title.substr(0, index);
-      const afterStr = item.title.substr(index + searchValue.length);
+      const temp = produce(item, draft => {
+        draft;
+      });
+      const eight =
+        temp.title.length > 8 ? temp.title.substr(0, 8) + '..' : temp.title;
+      const beforeStr = eight.substr(0, index);
+      const afterStr = eight.substr(index + searchValue.length);
       const title =
         index > -1 ? (
-          <span>
-            {beforeStr}
-            <span className={styles.choosed}>{searchValue}</span>
-            {afterStr}
-          </span>
+          <Tooltip title={temp.title}>
+            <span>
+              {beforeStr}
+              <span className={styles.choosed}>{searchValue}</span>
+              {afterStr}
+            </span>
+          </Tooltip>
         ) : (
-          <span>{item.title}</span>
+          <Tooltip title={temp.title}>{eight}</Tooltip>
         );
       if (item.children) {
         return {
