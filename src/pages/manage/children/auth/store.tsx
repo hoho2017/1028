@@ -57,9 +57,9 @@ const columnsAuth = [
   },
   {
     title: '所属角色',
-    dataIndex: 'roleIdList',
+    dataIndex: 'ruleListStr',
     align: 'center',
-    key: 'roleIdList',
+    key: 'ruleListStr',
   },
 ];
 const formHead = (

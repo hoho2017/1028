@@ -11,3 +11,8 @@ export async function login(params) {
     method: 'POST',
   });
 }
+export async function getMenu() {
+  return request(`/sys/menu/nav`, {
+    method: 'GET',
+  });
+}

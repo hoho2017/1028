@@ -69,6 +69,12 @@ const Auth: FC<PageProps> = props => {
       },
       callback: data => {
         const { list, totalCount } = data;
+        console.log(
+          list.map(item => {
+            item.key = item.roleId;
+            return item;
+          }),
+        );
         setListApp(
           list.map(item => {
             item.key = item.roleId;

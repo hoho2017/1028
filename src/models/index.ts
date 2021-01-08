@@ -1,5 +1,5 @@
 import { Effect, Reducer, Subscription, request } from 'umi';
-import { login } from '@/services/login';
+import { login, getMenu } from '@/services/login';
 import { queryZD } from '@/services/cipher';
 import { details } from '@/services/risk';
 
@@ -19,6 +19,7 @@ export interface IndexModelType {
     outerInit: Effect;
     interDataInit: Effect;
     details: Effect;
+    getMenu: Effect;
   };
   reducers: {
     save: Reducer<IndexModelState>;
@@ -42,6 +43,10 @@ const IndexModel: IndexModelType = {
       document.cookie = `JSESSIONID=${data.JSESSIONID}`;
 
       if (callback) callback();
+    },
+    *getMenu({ type, callback }, { put, call, select }) {
+      const { menuList } = yield call(getMenu);
+      if (callback) callback(menuList);
     },
     *details({ type, payload, callback }, { put, call, select }) {
       const { page } = yield call(details, payload);
