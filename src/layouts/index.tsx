@@ -1,9 +1,10 @@
-import { Layout, Menu, Row, Col } from 'antd';
+import { Layout, Menu, Row, Col, Dropdown } from 'antd';
 import './index.less';
 import { HomeIcon, CipherIcon, WarnIcon, ManageIcon } from './svg.js';
 import Login from '@/pages/login/login.tsx';
 import { ConnectProps, connect, IndexModelState, Link } from 'umi';
 import { useEffect, useState } from 'react';
+import userImg from './img/user.png';
 
 const minHeight = document.body.clientHeight - 136 + 'px';
 
@@ -89,6 +90,21 @@ const BasicLayout: FC<PageProps> = props => {
     });
     setMenuData([...temp]);
   }, [menu]);
+  const loginOut = () => {
+    console.log(window.location);
+    window.localStorage.clear();
+    document.cookie = 'JSESSIONID=""';
+    window.location.href = window.location.origin + '/login.html';
+  };
+  const menu2 = (
+    <Menu>
+      <Menu.Item>
+        <a target="_blank" rel="noopener noreferrer" onClick={loginOut}>
+          退出
+        </a>
+      </Menu.Item>
+    </Menu>
+  );
   return (
     <Layout>
       <Sider
@@ -140,6 +156,11 @@ const BasicLayout: FC<PageProps> = props => {
               >
                 密码应用在线管理平台
               </div>
+            </Col>
+            <Col span={3} offset={1}>
+              <Dropdown overlay={menu2}>
+                <img style={{ width: '15%' }} src={userImg} />
+              </Dropdown>
             </Col>
           </Row>
         </Header>

@@ -164,13 +164,14 @@ function Sec(props) {
       render: text => <div>{text}</div>,
     },
   ];
+  console.log(year);
   return (
     <>
       <div className={styles.content}>
         <Row>
           <Col span={5}>
             <div className={styles.innerTitle}>
-              {year}年{yearType[index]}详情
+              {year === undefined ? null : `${year}年${yearType[index]}详情`}
             </div>
           </Col>
           <Col offset={15}>

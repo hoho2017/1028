@@ -64,11 +64,12 @@ const Auth: FC<PageProps> = props => {
       type: 'manage/queryTRole',
       payload: {
         parentDeptId: deptId,
-        limit: 1000,
+        limit: 10,
         page: page,
       },
       callback: data => {
         const { list, totalCount } = data;
+        setTotal(totalCount);
         setListApp(
           list.map(item => {
             item.key = item.roleId;
@@ -85,6 +86,7 @@ const Auth: FC<PageProps> = props => {
     });
   };
   const queryTOrg = page => {
+    console.log(1, page);
     dispatch({
       type: 'manage/queryTAuth',
       payload: {
@@ -93,11 +95,12 @@ const Auth: FC<PageProps> = props => {
       },
       callback: data => {
         const { list, totalCount } = data;
+        console.log(list);
         setTotal(totalCount);
 
         setListOrg(
           list.map(item => {
-            item.key = item.deptId;
+            item.key = item.userId;
             return item;
           }),
         );
@@ -112,13 +115,17 @@ const Auth: FC<PageProps> = props => {
   };
 
   useEffect(() => {
-    no === 0 && queryTApp(current);
-    no === 1 && queryTOrg(current);
+    if (no === 0) {
+      queryTApp(current);
+    } else {
+      console.log(2, current);
+      queryTOrg(current);
+    }
   }, [deptId, no, current]); //no -> 0 1 2 3
   useEffect(() => {
     setCurrent(1);
     setListOrg([]);
-    // setListApp([]);
+    setListApp([]);
   }, [no]);
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
