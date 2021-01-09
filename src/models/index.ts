@@ -36,12 +36,12 @@ const IndexModel: IndexModelType = {
   },
   effects: {
     *login({ type, payload, callback }, { put, call, select }) {
-      // const data = yield call(login, {
-      //   username: '1',
-      //   password: 'admin',
-      // });
-      // document.cookie = `JSESSIONID=${data.JSESSIONID}`;
-      // if (callback) callback();
+      const data = yield call(login, {
+        username: 'admin',
+        password: 'admin',
+      });
+      document.cookie = `JSESSIONID=${data.JSESSIONID}`;
+      if (callback) callback();
     },
     *getMenu({ type, callback }, { put, call, select }) {
       const { menuList } = yield call(getMenu);
