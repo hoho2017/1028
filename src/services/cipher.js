@@ -11,9 +11,12 @@ export async function queryTreeM(params) {
 }
 
 export async function down(params) {
-  return requestRaw(`/sys/subappassessmentsplit/download/${(Object.values(params)[0])}`,{
-    headers:'2'
-  });
+  return requestRaw(
+    `/sys/subappassessmentsplit/download/${Object.values(params)[0]}`,
+    {
+      headers: '2',
+    },
+  );
 }
 
 export async function queryYear(params) {
@@ -68,7 +71,7 @@ export async function queryFlist(params) {
   );
 }
 export async function queryZD() {
-  return request(`/sys/dict/list-map`, {
+  return request(`/sys/dict/list-map-confirm`, {
     method: 'POST',
     body: {},
   });

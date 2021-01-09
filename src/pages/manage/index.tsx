@@ -223,6 +223,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
                     dispatch={dispatch}
                     deptName={deptName}
                     index={item}
+                    resetTreeData={resetTreeData}
                   />
                 </div>
               </TabPane>

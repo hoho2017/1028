@@ -8,7 +8,6 @@ import Chart1 from '@/pages/cipher/children/charts/chart1';
 function Chart5(props) {
   let { data } = props;
   let all = 0;
-  console.log(data);
   if (data.totalList !== undefined) {
     data.totalList.forEach(item => {
       all += item.value;

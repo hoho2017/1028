@@ -34,6 +34,7 @@ function Chart2(props) {
       data.shift();
     }
   }
+  data = data.slice(data.length - 6);
   return (
     <Chart
       scale={scale}
@@ -77,7 +78,9 @@ function Chart2(props) {
         visible={true}
         label={{
           formatter(text, item, index) {
-            return `${text.includes('-') ? text.split('-')[1] : text}月`;
+            return `${
+              text.includes('-') ? text.split('-')[1] + '月' : text + '年'
+            }`;
           },
         }}
       />

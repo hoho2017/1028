@@ -16,7 +16,6 @@ function Sec(props) {
     deptId,
     ZD: { arith },
   } = props;
-  console.log(arith);
   const [id, setId] = useState(1);
   const [no, setno] = useState(0);
   const [cond, setcond] = useState(0);
@@ -192,7 +191,7 @@ function Sec(props) {
           <Row>
             <Col span={8} offset={1}>
               <div className={styles.titleTxt}>
-                {cond === 1 ? '历年' : cond === 2 ? '近几月' : '近一年'}
+                {cond === 1 ? '历年' : cond === 2 ? '近六月' : '近一年'}
                 的调用情况
               </div>
             </Col>
@@ -301,7 +300,9 @@ function Sec(props) {
                             return (
                               <Col span={2}>
                                 <div className={styles.innerTitle2}>
-                                  {arith[Number(item) - 1].value}
+                                  {arith[Number(item) - 1]
+                                    ? arith[Number(item) - 1].value
+                                    : null}
                                 </div>
                               </Col>
                             );

@@ -63,8 +63,8 @@ const columnsCalc = [
   {
     title: '算法名称',
     align: 'center',
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'value',
+    key: 'value',
   },
   {
     title: '算法ID',

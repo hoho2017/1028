@@ -58,7 +58,6 @@ function Chart4(props) {
       min: 0, // 这里要设置一个最小值, 否则可能图表中按照了 data 中的最小值设置Y轴最小值
     },
   };
-  console.log(data);
   return (
     <Chart
       width="100%"

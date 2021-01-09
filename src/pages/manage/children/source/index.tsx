@@ -53,7 +53,7 @@ const tailLayout = {
 };
 
 const Source: FC<PageProps> = props => {
-  const { manage, dispatch, deptId, deptName } = props;
+  const { manage, dispatch, deptId, deptName, resetTreeData } = props;
   const [form] = Form.useForm();
   const { arith, app_source_type, app_type_id } = manage;
   const [no, setNo] = useState(0);
@@ -522,7 +522,9 @@ const Source: FC<PageProps> = props => {
   const changeCurrent = page => {
     setCurrent(page);
   };
-  console.log(operation);
+  useEffect(() => {
+    resetTreeData(0, no);
+  }, [no]);
   return (
     <div ref={boxRef}>
       <div className={styles.content}>

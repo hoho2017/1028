@@ -8,12 +8,13 @@ import {
   Interaction,
   PieChart,
 } from 'bizcharts';
-import {Empty} from 'antd'
+import { Empty } from 'antd';
 
 function Chart3(props) {
   const { zd, percent } = props;
-  if(Object.values(percent)[0] === null){
-    return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+
+  if (Object.values(percent)[0] === null) {
+    return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
   }
   if (JSON.stringify(percent) === '{}') {
     return false;
@@ -46,29 +47,6 @@ function Chart3(props) {
     },
   };
   return (
-    // <Chart height={400} data={data1} scale={cols} autoFit>
-    //   <Coordinate type="theta" radius={0.75} />
-    //   <Tooltip showTitle={false} />
-    //   <Axis visible={false} />
-    //   <Interval
-    //     position="percent"
-    //     adjust="stack"
-    //     color="item"
-    //     style={{
-    //       lineWidth: 1,
-    //       stroke: '#fff',
-    //     }}
-    //     label={[
-    //       'count',
-    //       {
-    //         content: data => {
-    //           return `${data.item}: ${data.percent * 100}%`;
-    //         },
-    //       },
-    //     ]}
-    //   />
-    //   <Interaction type="element-single-selected" />
-    // </Chart>
     <PieChart
       data={data1}
       radius={0.8}
