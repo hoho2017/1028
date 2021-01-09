@@ -18,12 +18,14 @@ function Box(props) {
         className={styles.pt20}
         style={{ display: index === 0 ? 'none' : 'block' }}
       >
-        <Col span={15}>
-          <div className={styles.title}>{deptName}</div>
-        </Col>
+        {index === '警示详情' ? (
+          <Col span={15}>
+            <div className={styles.title}>{deptName}</div>
+          </Col>
+        ) : null}
       </Row>
       <Row style={{ marginBottom: '4%' }}>
-        {index === '风险概况' ? (
+        {index === '警示详情' ? (
           <J
             ZD={ZD}
             addYearData={allYearData}
@@ -32,7 +34,7 @@ function Box(props) {
             dispatch={dispatch}
             deptId={deptId}
           />
-        ) : index === '警示详情' ? (
+        ) : index === '风险概况' ? (
           <F
             ZD={ZD}
             addYearData={allYearData}

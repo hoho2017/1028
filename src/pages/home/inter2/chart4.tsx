@@ -40,6 +40,10 @@ const axisConfig = {
 function Chart4(props) {
   const { data } = props;
   const { height = '200' } = props;
+  data.map(item => {
+    item.keyword = 'SM2';
+    return item;
+  });
   // const monthArith = JSON.parse(
   //   '{"2020-05":{"1":5,"2":5,"3":4,"4":5},"2020-06":{"1":6,"2":6,"3":5,"4":6},"2020-07":{"1":7,"2":4,"3":6,"4":7},"2020-08":{"1":4,"2":5,"3":8,"4":8},"2020-09":{"1":5,"2":6,"3":9,"4":9}}',
   // );
