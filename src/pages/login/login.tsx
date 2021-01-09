@@ -15,13 +15,9 @@ const tailLayout = {
 };
 const Login: FC<PageProps> = ({ login, dispatch }) => {
   const { user } = login;
-  const onFinish = values => {
-    console.log('Success:', values);
-  };
+  const onFinish = values => {};
 
-  const onFinishFailed = errorInfo => {
-    console.log('Failed:', errorInfo);
-  };
+  const onFinishFailed = errorInfo => {};
   return (
     <div className={styles.box}>
       <div className={styles.inner}>

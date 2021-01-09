@@ -44,15 +44,15 @@ function Box(props) {
         </Col>
       </Row> */}
       <div>
-        {index === 0 ? (
+        {index === '资源注册' ? (
           <Source deptName={deptName} deptId={deptId} />
-        ) : index === 3 ? (
+        ) : index === '用户管理' ? (
           <User deptName={deptName} deptId={deptId} />
-        ) : index === 5 ? (
+        ) : index === '系统日志' ? (
           <Logs />
-        ) : index === 4 ? (
+        ) : index === '用户授权' ? (
           <Auth />
-        ) : index === 1 ? (
+        ) : index === '密评登记' ? (
           <Confi
             child={child}
             index={index}

@@ -27,10 +27,55 @@ const BasicLayout: FC<PageProps> = props => {
   const { index, dispatch } = props;
   useEffect(() => {
     dispatch!({
+      type: 'index/login',
+    });
+    dispatch!({
       type: 'index/getMenu',
       callback: data => {
         console.log(data);
+        window.localStorage.clear();
+        // const arrManage =  [{list:[{menuId:'93'}, {menuId:'130'}, {menuId:'131'}, {menuId:'137'}, {menuId:'139'}, {menuId:'140'}, {menuId:'166'}, {menuId:'171'}]}];
+        const arrManage = data.filter(item => {
+          return item.menuId === 89;
+        });
+        if (arrManage.length > 0) {
+          window.localStorage.setItem(
+            'manage',
+            arrManage[0].list.map(item => item.menuId).toString(),
+          );
+        }
+        const arrHome = data.filter(item => {
+          return item.menuId === 81;
+        });
+        // const arrHome =  [{list:[{menuId:'82'}, {menuId:'83'}, {menuId:'84'}, {menuId:'85'}]}];
+        if (arrHome.length > 0) {
+          window.localStorage.setItem(
+            'home',
+            arrHome[0].list.map(item => item.menuId).toString(),
+          );
+        }
+        const arrMM = data.filter(item => {
+          return item.menuId === 87;
+        });
+        // const arrMM =  [{list:[{menuId:'141'}, {menuId:'142'}, {menuId:'143'}]}];
+        if (arrMM.length > 0) {
+          window.localStorage.setItem(
+            'mm',
+            arrMM[0].list.map(item => item.menuId).toString(),
+          );
+        }
+        const arrFX = data.filter(item => {
+          return item.menuId === 88;
+        });
+        // const arrFX =  [{list:[{menuId:'145'}, {menuId:'146'}]}];
+        if (arrFX.length > 0) {
+          window.localStorage.setItem(
+            'fx',
+            arrFX[0].list.map(item => item.menuId).toString(),
+          );
+        }
         setMenu([...data]);
+        // setMenu([{name:'首页'}, {name:'密码应用'},{name:'风险监控'},{name:'系统管理'},])
       },
     });
   }, []);
@@ -51,12 +96,8 @@ const BasicLayout: FC<PageProps> = props => {
         width="112px"
         breakpoint="lg"
         collapsedWidth="0"
-        onBreakpoint={broken => {
-          // console.log(broken);
-        }}
-        onCollapse={(collapsed, type) => {
-          // console.log(collapsed, type);
-        }}
+        onBreakpoint={broken => {}}
+        onCollapse={(collapsed, type) => {}}
       >
         <div className="logo" />
         <Menu

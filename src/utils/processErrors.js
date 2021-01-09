@@ -7,10 +7,7 @@ export default ex => {
   const { url, status } = ex.response;
   const { error, message } = ex.data;
   const { method } = ex.reqOptions;
-  // console.log("##############")
-  // console.log(ex)
-  // console.log(ex.response);
-  // console.log(ex.reqOptions);
+
   switch (status) {
     // 401 means no session , we redirect to /login page
     case 401:

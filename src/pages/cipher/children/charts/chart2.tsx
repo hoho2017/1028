@@ -4,7 +4,6 @@ import { Empty } from 'antd';
 
 function Chart2(props) {
   const { allMonthTotal, td, cond } = props;
-  // console.log(allMonthTotal)
   // if(allMonthTotal!== undefined&&allMonthTotal.length === 0 || allMonthTotal === undefined){
   //   return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
   // }

@@ -66,6 +66,7 @@ function Sec(props) {
         end: '2022-01-01 00:00:00',
       },
       callback: (yearArith, monthArith, allYearTotal) => {
+        if (JSON.stringify(yearArith) === '{}') return null;
         setmonthArith(monthArith);
         setyearArith(yearArith);
         let arr = [];

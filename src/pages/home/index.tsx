@@ -13,13 +13,13 @@ function Box(props) {
   return (
     <>
       <Row style={{ marginBottom: '0%' }}>
-        {index === 0 ? (
+        {index === '密码局互联网首页' ? (
           <OuterNet />
-        ) : index === 1 ? (
+        ) : index === '密码局政务外网首页' ? (
           <OuterNet2 />
-        ) : index === 2 ? (
+        ) : index === '大数据局互联网首页' ? (
           <Inter />
-        ) : index === 3 ? (
+        ) : index === '大数据局政务外网首页' ? (
           <Inter2 />
         ) : (
           <></>

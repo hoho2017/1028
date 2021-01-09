@@ -44,15 +44,7 @@ const RiskModel: RiskModelType = {
     ZD: {},
   },
   effects: {
-    *login({ type, payload, callback }, { put, call, select }) {
-      const data = yield call(login, {
-        username: 'admin',
-        password: 'admin',
-      });
-      document.cookie = `JSESSIONID=${data.JSESSIONID}`;
-
-      if (callback) callback();
-    },
+    *login({ type, payload, callback }, { put, call, select }) {},
     *details({ type, payload, callback }, { put, call, select }) {
       const { page } = yield call(details, payload);
       if (callback) callback(page.list);
@@ -67,9 +59,19 @@ const RiskModel: RiskModelType = {
     },
     *query({ type, payload }, { put, call, select }) {
       //请求tree data
-      const localData = ['风险概况', '警示详情'];
+      const list = localStorage.getItem('fx')?.split(',')
+        ? localStorage.getItem('fx')?.split(',')
+        : [];
+      if (list === undefined) return;
+      const localData = [];
+      const temp = ['风险概况', '警示详情'];
       // const localData = ['a', 'b', 'c'];
-
+      if (list.includes('145')) {
+        localData.push(temp[0]);
+      }
+      if (list.includes('146')) {
+        localData.push(temp[1]);
+      }
       const { data } = yield call(queryTree);
       const dataZD = yield call(queryZD);
 
@@ -104,12 +106,7 @@ const RiskModel: RiskModelType = {
       return history.listen(({ pathname }) => {
         if (pathname === '/risk') {
           dispatch({
-            type: 'login',
-            callback: () => {
-              dispatch({
-                type: 'query',
-              });
-            },
+            type: 'query',
           });
         }
       });

@@ -37,11 +37,10 @@ const IndexModel: IndexModelType = {
   effects: {
     *login({ type, payload, callback }, { put, call, select }) {
       const data = yield call(login, {
-        username: 'admin',
+        username: '1',
         password: 'admin',
       });
       document.cookie = `JSESSIONID=${data.JSESSIONID}`;
-
       if (callback) callback();
     },
     *getMenu({ type, callback }, { put, call, select }) {
@@ -62,12 +61,30 @@ const IndexModel: IndexModelType = {
     },
     *query({ type, payload }, { put, call, select }) {
       //请求tree data
-      const localData = [
-        '互联网数据首页',
-        '政务外网数据首页',
-        '互联网数据首页',
-        '政务外网数据首页',
+      const list = localStorage.getItem('home')?.split(',')
+        ? localStorage.getItem('home')?.split(',')
+        : [];
+      if (list === undefined) return;
+      const localData = [];
+      const temp = [
+        '密码局互联网首页',
+        '密码局政务外网首页',
+        '大数据局互联网首页',
+        '大数据局政务外网首页',
       ];
+      if (list.includes('82')) {
+        localData.push(temp[0]);
+      }
+      if (list.includes('83')) {
+        localData.push(temp[1]);
+      }
+      if (list.includes('84')) {
+        localData.push(temp[2]);
+      }
+      if (list.includes('85')) {
+        localData.push(temp[3]);
+      }
+
       // const localData = ['a', 'b', 'c'];
 
       const dataZD = yield call(queryZD);

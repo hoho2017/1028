@@ -22,12 +22,12 @@ const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
     setExpandedKeys(treeList.map(item => item.name));
     // setDeptId(treeList[1]?treeList[1].deptId:'')
     // setDeptName(treeList[1]?treeList[1].name:'')
-    treeList.forEach((item)=>{
-      if(item.type === 99){
-        setDeptId(item.deptId)
-        setDeptName(item.name)
+    treeList.forEach(item => {
+      if (item.type === 99) {
+        setDeptId(item.deptId);
+        setDeptName(item.name);
       }
-    })
+    });
   }, [treeList]);
 
   const onSelect = (selectedKeys: any, info: any) => {
@@ -86,23 +86,27 @@ const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
           <span>{item.title}</span>
         );
       if (item.children) {
-        return { title, key: item.key, children: loop(item.children), disabled:item.disabled };
+        return {
+          title,
+          key: item.key,
+          children: loop(item.children),
+          disabled: item.disabled,
+        };
       }
 
       return {
         title,
         key: item.key,
-        disabled:item.disabled,
+        disabled: item.disabled,
       };
     });
   const onExpand = expandedKeys => {
     setExpandedKeys(expandedKeys);
     setAutoExpandParent(false);
   };
-  if(deptId === '') {
-    return ''
+  if (deptId === '') {
+    return '';
   }
-
   return (
     <>
       <div className="tabs">
@@ -136,7 +140,8 @@ const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
                     deptId={deptId}
                     dispatch={dispatch}
                     deptName={deptName}
-                    index={index}
+                    index={item}
+                    catalogue={catalogue}
                   />
                 </div>
               </TabPane>

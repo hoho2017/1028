@@ -69,12 +69,6 @@ const Auth: FC<PageProps> = props => {
       },
       callback: data => {
         const { list, totalCount } = data;
-        console.log(
-          list.map(item => {
-            item.key = item.roleId;
-            return item;
-          }),
-        );
         setListApp(
           list.map(item => {
             item.key = item.roleId;
@@ -313,7 +307,7 @@ const Auth: FC<PageProps> = props => {
         roleId: choose.roleId,
         roleName: choose.roleName,
         deptIdList: [],
-        menuIdList: checkedKeys,
+        menuIdList: checkedKeys.checked,
       },
       callback: data => {
         if (data.code === 500) {
@@ -345,7 +339,6 @@ const Auth: FC<PageProps> = props => {
       },
     },
   ]);
-  console.log(listOrg);
   return (
     <div ref={boxRef}>
       <div className={styles.content}>
@@ -554,6 +547,7 @@ const Auth: FC<PageProps> = props => {
         ]}
       >
         <Tree
+          checkStrictly
           checkable
           onExpand={onExpand}
           expandedKeys={expandedKeys}

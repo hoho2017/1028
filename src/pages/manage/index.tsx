@@ -222,7 +222,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
                     deptId={deptId}
                     dispatch={dispatch}
                     deptName={deptName}
-                    index={index}
+                    index={item}
                   />
                 </div>
               </TabPane>

@@ -18,7 +18,6 @@ function Sec(props) {
   //       deptId,
   //     },
   //     callback: data => {
-  //       console.log(data)
   //       //appLevelName
   //     },
   //   });
@@ -108,7 +107,7 @@ function Sec(props) {
       },
     },
     {
-      title: title.appLevel ? '第' + title.appLevel + '级' : '-',
+      title: title && title.appLevel ? '第' + title.appLevel + '级' : '-',
       colSpan: 1,
       width: '70px',
       dataIndex: 'levelMsg',

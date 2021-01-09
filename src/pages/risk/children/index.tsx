@@ -23,7 +23,7 @@ function Box(props) {
         </Col>
       </Row>
       <Row style={{ marginBottom: '4%' }}>
-        {index === 1 ? (
+        {index === '风险概况' ? (
           <J
             ZD={ZD}
             addYearData={allYearData}
@@ -32,7 +32,7 @@ function Box(props) {
             dispatch={dispatch}
             deptId={deptId}
           />
-        ) : (
+        ) : index === '警示详情' ? (
           <F
             ZD={ZD}
             addYearData={allYearData}
@@ -41,7 +41,7 @@ function Box(props) {
             dispatch={dispatch}
             deptId={deptId}
           />
-        )}
+        ) : null}
       </Row>
     </>
   );

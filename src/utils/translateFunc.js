@@ -1,8 +1,8 @@
-export function treeMake(data, arr=[]) {
+export function treeMake(data, arr = []) {
   let tempArr = [];
   for (let i = 0; i < data.length; i++) {
-    if(!arr.includes(data[i].type)){
-      data[i].disabled = true
+    if (!arr.includes(data[i].type)) {
+      data[i].disabled = true;
     }
     if (data[i].title === undefined) {
       data[i].title = data[i].name;
@@ -28,8 +28,7 @@ export function treeMake(data, arr=[]) {
       }
     }
   }
-  // console.log(tempArr)
-  // console.log(JSON.stringify(data))
+
   // tempArr.sort().forEach((item, index) => {
   //   data.splice(item - index, 1);
   // });

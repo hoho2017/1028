@@ -32,7 +32,7 @@ const Index: FC<PageProps> = ({ index, dispatch }) => {
                   }}
                 ></div>
                 <div className="content">
-                  <Box ZD={ZD} index={index} />
+                  <Box ZD={ZD} index={item} />
                 </div>
               </TabPane>
             );

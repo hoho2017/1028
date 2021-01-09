@@ -26,12 +26,12 @@ const Risk: FC<PageProps> = ({ risk, dispatch }) => {
     setExpandedKeys(treeList.map(item => item.name));
     // setDeptId(treeList[1]?treeList[1].deptId:'')
     // setDeptName(treeList[1]?treeList[1].name:'')
-    treeList.forEach((item)=>{
-      if(item.type === 99){
-        setDeptId(item.deptId)
-        setDeptName(item.name)
+    treeList.forEach(item => {
+      if (item.type === 99) {
+        setDeptId(item.deptId);
+        setDeptName(item.name);
       }
-    })
+    });
   }, [treeList]);
   const onSelect = (selectedKeys: any, info: any) => {
     let deptId = 1;
@@ -89,14 +89,18 @@ const Risk: FC<PageProps> = ({ risk, dispatch }) => {
           <span>{item.title}</span>
         );
       if (item.children) {
-        return { title, key: item.key, children: loop(item.children) ,
-          disabled:item.disabled};
+        return {
+          title,
+          key: item.key,
+          children: loop(item.children),
+          disabled: item.disabled,
+        };
       }
 
       return {
         title,
         key: item.key,
-        disabled:item.disabled
+        disabled: item.disabled,
       };
     });
   const onExpand = expandedKeys => {
@@ -140,7 +144,7 @@ const Risk: FC<PageProps> = ({ risk, dispatch }) => {
                     deptId={deptId}
                     dispatch={dispatch}
                     deptName={deptName}
-                    index={index}
+                    index={item}
                   />
                 </div>
               </TabPane>

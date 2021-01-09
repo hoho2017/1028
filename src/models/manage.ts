@@ -112,14 +112,7 @@ const ManageModel: ManageModelType = {
     ZD: {},
   },
   effects: {
-    *login({ type, payload, callback }, { put, call, select }) {
-      const data = yield call(login, {
-        username: 'admin',
-        password: 'admin',
-      });
-      document.cookie = `JSESSIONID=${data.JSESSIONID}`;
-      if (callback) callback();
-    },
+    *login({ type, payload, callback }, { put, call, select }) {},
     *thirdRegister({ type, payload, callback }, { put, call, select }) {
       const data = yield call(thirdRegister, payload);
       if (callback) callback(data);
@@ -284,7 +277,13 @@ const ManageModel: ManageModelType = {
     },
     *query({ type, payload }, { put, call, select }) {
       //请求tree data
-      const localData = [
+      const list = localStorage.getItem('manage')?.split(',')
+        ? localStorage.getItem('manage')?.split(',')
+        : [];
+      if (list === undefined) return;
+      const localData = [];
+
+      const temp = [
         '资源注册',
         '密评登记',
         '级联管理',
@@ -292,6 +291,24 @@ const ManageModel: ManageModelType = {
         '用户授权',
         '系统日志',
       ];
+      if (list.includes('171')) {
+        localData.push(temp[0]);
+      }
+      if (list.includes('130')) {
+        localData.push(temp[1]);
+      }
+      if (list.includes('131')) {
+        localData.push(temp[2]);
+      }
+      if (list.includes('137')) {
+        localData.push(temp[3]);
+      }
+      if (list.includes('139')) {
+        localData.push(temp[4]);
+      }
+      if (list.includes('140')) {
+        localData.push(temp[5]);
+      }
       // const localData = ['a', 'b', 'c'];
 
       const { data } = yield call(queryTreeM);
@@ -336,12 +353,7 @@ const ManageModel: ManageModelType = {
       return history.listen(({ pathname }) => {
         if (pathname === '/manage') {
           dispatch({
-            type: 'login',
-            callback: () => {
-              dispatch({
-                type: 'query',
-              });
-            },
+            type: 'query',
           });
         }
       });

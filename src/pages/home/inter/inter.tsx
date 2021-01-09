@@ -84,7 +84,6 @@ const Inter: FC<PageProps> = ({ index, dispatch }) => {
               <div className={styles.textTitle}>风险控制</div>
 
               {list.slice(0, 4).map(item => {
-                console.log(item);
                 const txt =
                   item.logDate.split(' ')[0] +
                   ' ' +

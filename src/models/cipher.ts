@@ -48,14 +48,7 @@ const CipherModel: CipherModelType = {
     ZD: {},
   },
   effects: {
-    *login({ type, payload, callback }, { put, call, select }) {
-      const data = yield call(login, {
-        username: 'admin',
-        password: 'admin',
-      });
-      document.cookie = `JSESSIONID=${data.JSESSIONID}`;
-      if (callback) callback();
-    },
+    *login({ type, payload, callback }, { put, call, select }) {},
     *queryFlist({ type, payload, callback }, { put, call, select }) {
       const { data } = yield call(queryFlist, payload);
       if (callback) callback(data);
@@ -91,9 +84,22 @@ const CipherModel: CipherModelType = {
     },
     *query({ type, payload }, { put, call, select }) {
       //请求tree data
-      const localData = ['应用概况', '密评详情', '调用详情'];
+      const list = localStorage.getItem('mm')?.split(',')
+        ? localStorage.getItem('mm')?.split(',')
+        : [];
+      if (list === undefined) return;
+      const localData = [];
+      const temp = ['应用概况', '密评详情', '调用详情'];
       // const localData = ['a', 'b', 'c'];
-
+      if (list.includes('141')) {
+        localData.push(temp[0]);
+      }
+      if (list.includes('142')) {
+        localData.push(temp[1]);
+      }
+      if (list.includes('143')) {
+        localData.push(temp[2]);
+      }
       const { data } = yield call(queryTree);
       const dataZD = yield call(queryZD);
 
@@ -128,12 +134,7 @@ const CipherModel: CipherModelType = {
       return history.listen(({ pathname }) => {
         if (pathname === '/cipher') {
           dispatch({
-            type: 'login',
-            callback: () => {
-              dispatch({
-                type: 'query',
-              });
-            },
+            type: 'query',
           });
         }
       });
