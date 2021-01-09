@@ -32,7 +32,6 @@ const BasicLayout: FC<PageProps> = props => {
     dispatch!({
       type: 'index/getMenu',
       callback: data => {
-        console.log(data);
         window.localStorage.clear();
         // const arrManage =  [{list:[{menuId:'93'}, {menuId:'130'}, {menuId:'131'}, {menuId:'137'}, {menuId:'139'}, {menuId:'140'}, {menuId:'166'}, {menuId:'171'}]}];
         const arrManage = data.filter(item => {

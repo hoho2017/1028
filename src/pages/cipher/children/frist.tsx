@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import styles from './index.less';
-import { Row, Col, Select, Table, Button, Empty } from 'antd';
+import { Row, Col, Select, Table, Button, Empty, message } from 'antd';
 import Home from './img/home.png';
 import Inter from './img/inter.png';
 import V from './img/v.png';
@@ -61,27 +61,31 @@ function Frist(props) {
     });
   }, [deptId]);
   const handleChangeL = value => {
-    setValue2(value.split('*')[0]);
+    setValue1(value.split('*')[0]);
     setLeft(value.split('*')[1]);
   };
   const handleChangeR = value => {
-    setValue1(value.split('*')[0]);
+    setValue2(value.split('*')[0]);
     setRight(value.split('*')[1]);
   };
   useEffect(() => {
     const v1 = addYearData.filter(item => {
-      return item.assessmentType === 1;
+      return item.assessmentType === 2;
     });
     v1.length > 0 && setValue1(v1[0].year);
     v1.length > 0 && setLeft(v1[0].id);
     const v2 = addYearData.filter(item => {
-      return item.assessmentType === 2;
+      return item.assessmentType === 1;
     });
     v2.length > 0 && setValue2(v2[0].year);
     v2.length > 0 && setRight(v2[0].id);
   }, [addYearData]);
   const down = zm => {
     if (zm === 'L') {
+      if (left === undefined || left === 'undefined') {
+        message.warn('暂无数据可下载');
+        return null;
+      }
       //use left
       dispatch({
         type: 'cipher/down',
@@ -90,6 +94,10 @@ function Frist(props) {
         },
       });
     } else {
+      if (right === undefined || right === 'undefined') {
+        message.warn('暂无数据可下载');
+        return null;
+      }
       // use right
       dispatch({
         type: 'cipher/down',
@@ -251,7 +259,7 @@ function Frist(props) {
                     <div>
                       <span style={{ fontWeight: '600' }}>密码测评报告</span>
                       <Select
-                        value={value2}
+                        value={value1}
                         style={{ width: 75, marginLeft: '8px' }}
                         onChange={handleChangeL}
                       >
@@ -261,7 +269,7 @@ function Frist(props) {
                             return (
                               <Option
                                 key={item.id}
-                                value={year + '*' + item.key}
+                                value={year + '*' + item.id}
                               >
                                 {year}
                               </Option>
@@ -282,7 +290,7 @@ function Frist(props) {
                     <div>
                       <span style={{ fontWeight: '600' }}>历年风评报告</span>
                       <Select
-                        value={value1}
+                        value={value2}
                         style={{ width: 75, marginLeft: '8px' }}
                         onChange={handleChangeR}
                       >
@@ -290,7 +298,7 @@ function Frist(props) {
                           if (item.assessmentType === 1) {
                             let year = item.assessmentDate.split('-')[0];
                             return (
-                              <Option key={year} value={year + '*' + item.key}>
+                              <Option key={year} value={year + '*' + item.id}>
                                 {year}
                               </Option>
                             );

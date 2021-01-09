@@ -15,7 +15,6 @@ const Index: FC<PageProps> = ({ index, dispatch }) => {
   const { catalogue, ZD } = index; //二级目录
 
   const minHeight = document.body.clientHeight - 136 + 'px';
-  console.log('catalogue', catalogue);
 
   return (
     <>

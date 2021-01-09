@@ -4,9 +4,11 @@ import { Chart, Interval, Tooltip, Axis, Coordinate, Legend } from 'bizcharts';
 function Chart5(props) {
   const { data } = props;
   let total = 0;
-  data.totalList.forEach(item => {
-    total += item.value;
-  });
+  if (data.totalList !== undefined) {
+    data.totalList.forEach(item => {
+      total += item.value;
+    });
+  }
   const cols = {
     value: {
       formatter: val => {

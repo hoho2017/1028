@@ -17,6 +17,7 @@ import {
   TreeSelect,
   Switch,
   message,
+  Modal,
 } from 'antd';
 import {
   appB,
@@ -35,10 +36,12 @@ import {
   columnsThird,
   formHead,
 } from './store';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+
 interface PageProps extends ConnectProps {
   manage: ManageModelState;
 }
-
+const { confirm } = Modal;
 const { Option } = Select;
 
 const layout = {
@@ -382,21 +385,24 @@ const Source: FC<PageProps> = props => {
       }
       if (i === '3') {
         //注销
-        dispatch({
-          type: 'manage/appDelete',
-          payload: {
-            appId: choose.appId,
-          },
-          callback: data => {
-            if (data.code === 500) {
-              message.error(data.msg);
-            } else if (data.code === 0) {
-              message.success('操作成功!');
-              onReset();
-              queryTApp(current);
-            }
-          },
-        });
+        function zx() {
+          dispatch!({
+            type: 'manage/appDelete',
+            payload: {
+              appId: choose.appId,
+            },
+            callback: data => {
+              if (data.code === 500) {
+                message.error(data.msg);
+              } else if (data.code === 0) {
+                message.success('操作成功!');
+                onReset();
+                queryTApp(current);
+              }
+            },
+          });
+        }
+        showConfirm(zx);
       }
     } else if (no === 1) {
       if (i === '1') {
@@ -411,21 +417,25 @@ const Source: FC<PageProps> = props => {
       }
       if (i === '3') {
         //注销
-        dispatch({
-          type: 'manage/orgDelete',
-          payload: {
-            id: choose.deptId,
-          },
-          callback: data => {
-            if (data.code === 500) {
-              message.error(data.msg);
-            } else if (data.code === 0) {
-              message.success('操作成功!');
-              onReset();
-              queryTApp(current);
-            }
-          },
-        });
+
+        function zx1() {
+          dispatch({
+            type: 'manage/orgDelete',
+            payload: {
+              id: choose.deptId,
+            },
+            callback: data => {
+              if (data.code === 500) {
+                message.error(data.msg);
+              } else if (data.code === 0) {
+                message.success('操作成功!');
+                onReset();
+                queryTApp(current);
+              }
+            },
+          });
+        }
+        showConfirm(zx1);
       }
     } else if (no === 2) {
       if (i === '2') {
@@ -435,21 +445,25 @@ const Source: FC<PageProps> = props => {
       }
       if (i === '3') {
         //注销
-        dispatch({
-          type: 'manage/calcDelete',
-          payload: {
-            id: choose.id,
-          },
-          callback: data => {
-            if (data.code === 500) {
-              message.error(data.msg);
-            } else if (data.code === 0) {
-              message.success('操作成功!');
-              onReset();
-              queryTCalc(current);
-            }
-          },
-        });
+        function zx2() {
+          dispatch({
+            type: 'manage/calcDelete',
+            payload: {
+              id: choose.id,
+            },
+            callback: data => {
+              if (data.code === 500) {
+                message.error(data.msg);
+              } else if (data.code === 0) {
+                message.success('操作成功!');
+                onReset();
+                queryTCalc(current);
+              }
+            },
+          });
+        }
+
+        showConfirm(zx2);
       }
     } else if (no === 3) {
       if (i === '1') {
@@ -468,27 +482,47 @@ const Source: FC<PageProps> = props => {
       }
       if (i === '3') {
         //注销
-        dispatch({
-          type: 'manage/thirdDelete',
-          payload: {
-            id: choose.id,
-          },
-          callback: data => {
-            if (data.code === 500) {
-              message.error(data.msg);
-            } else if (data.code === 0) {
-              message.success('操作成功!');
-              onReset();
-              queryTThird(current);
-            }
-          },
-        });
+
+        function zx3() {
+          dispatch({
+            type: 'manage/thirdDelete',
+            payload: {
+              id: choose.id,
+            },
+            callback: data => {
+              if (data.code === 500) {
+                message.error(data.msg);
+              } else if (data.code === 0) {
+                message.success('操作成功!');
+                onReset();
+                queryTThird(current);
+              }
+            },
+          });
+        }
+        showConfirm(zx3);
       }
     }
   };
+  function showConfirm(func) {
+    confirm({
+      title: '确认注销?',
+      icon: <ExclamationCircleOutlined />,
+      content: '注销后操作不可逆',
+      okText: '确认注销',
+      okType: 'danger',
+      cancelText: '取消',
+      onOk() {
+        func();
+        setChoose({});
+      },
+      onCancel() {},
+    });
+  }
   const changeCurrent = page => {
     setCurrent(page);
   };
+  console.log(operation);
   return (
     <div ref={boxRef}>
       <div className={styles.content}>

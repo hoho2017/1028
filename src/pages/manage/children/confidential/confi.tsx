@@ -34,7 +34,7 @@ const Confi: FC<PageProps> = props => {
   const [title, setTitle] = useState(false);
   const [showConf, setShowConf] = useState(false);
   const [showUpload, setShowUpload] = useState(false);
-  const [importYear, setImportYear] = useState(2020);
+  const [importYear, setImportYear] = useState(2021);
   const [tableData, setTableData] = useState([]);
   const [showTableData, setShowTableData] = useState(false);
   const [uuid, setUuid] = useState('');
@@ -266,9 +266,21 @@ const Confi: FC<PageProps> = props => {
       },
     });
   };
+  useEffect(() => {
+    let last = year.length > 0 ? year[0].k : 0;
+    year.length > 0 &&
+      year.forEach((item, index) => {
+        const i = index === 0 ? 1 : index;
+        if (item.color === 'black' && year[i - 1].color === '#0FB723') {
+          last = item.k;
+        }
+      });
+    setImportYear(last);
+  }, [year]);
+
   return (
     <>
-      <div style={{ marginTop: '1rem' }}>
+      <div style={{ marginTop: '1rem', textAlign: 'center' }}>
         <span className={styles.title}>{deptName} &emsp; 密评登记结果</span>
       </div>
       <div className={styles.content} style={{ paddingBottom: '20px' }}>
@@ -341,7 +353,7 @@ const Confi: FC<PageProps> = props => {
                   );
                 })}
               </Row>
-              <Row style={{ display: isAll ? 'flex' : 'none' }}>
+              {/* <Row style={{ display: isAll ? 'flex' : 'none' }}>
                 {year.slice(10, 20).map((item, index) => {
                   return (
                     <Col span={2} offset={index === 0 ? 2 : 0} key={item.k}>
@@ -361,7 +373,7 @@ const Confi: FC<PageProps> = props => {
                     </Col>
                   );
                 })}
-              </Row>
+              </Row> */}
             </div>
           </Col>
           <Col offset={1}>
@@ -392,7 +404,8 @@ const Confi: FC<PageProps> = props => {
         <Row>
           <Col offset={1}>
             <span style={{ padding: '5px' }}>导入登记信息</span>
-            <Select
+            <span>{importYear}</span>
+            {/* <Select
               size="small"
               defaultValue="2020"
               onChange={value => setImportYear(value)}
@@ -405,7 +418,7 @@ const Confi: FC<PageProps> = props => {
                   </Option>
                 );
               })}
-            </Select>
+            </Select> */}
           </Col>
           <Col offset={5}>
             <Button

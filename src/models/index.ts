@@ -64,7 +64,6 @@ const IndexModel: IndexModelType = {
     },
     *query({ type, payload }, { put, call, select }) {
       //请求tree data
-      console.log(localStorage.getItem('home'));
       const list = localStorage.getItem('home')?.split(',')
         ? localStorage.getItem('home')?.split(',')
         : [];

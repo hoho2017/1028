@@ -1,8 +1,9 @@
 import { ConnectProps, connect, CipherModelState } from 'umi';
 import React, { FC, useEffect, useState } from 'react';
 import styles from './index.less';
-import { Tabs, Tree, Input } from 'antd';
+import { Tabs, Tree, Input, Tooltip } from 'antd';
 import Box from './children/index.tsx';
+import produce from 'immer';
 
 const { TabPane } = Tabs;
 const { Search } = Input;
@@ -73,17 +74,24 @@ const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
   const loop = data =>
     data.map(item => {
       const index = item.title.indexOf(searchValue);
-      const beforeStr = item.title.substr(0, index);
-      const afterStr = item.title.substr(index + searchValue.length);
+      const temp = produce(item, draft => {
+        draft;
+      });
+      const eight =
+        temp.title.length > 8 ? temp.title.substr(0, 8) + '..' : temp.title;
+      const beforeStr = eight.substr(0, index);
+      const afterStr = eight.substr(index + searchValue.length);
       const title =
         index > -1 ? (
-          <span>
-            {beforeStr}
-            <span className={styles.choosed}>{searchValue}</span>
-            {afterStr}
-          </span>
+          <Tooltip title={temp.title}>
+            <span>
+              {beforeStr}
+              <span className={styles.choosed}>{searchValue}</span>
+              {afterStr}
+            </span>
+          </Tooltip>
         ) : (
-          <span>{item.title}</span>
+          <Tooltip title={temp.title}>{eight}</Tooltip>
         );
       if (item.children) {
         return {

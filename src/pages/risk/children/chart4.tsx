@@ -40,7 +40,7 @@ const axisConfig = {
 function Chart4(props) {
   const { monthArith, zd, id } = props;
 
-  let datas = Object.keys(monthArith).map(item => item.split('-')[1]);
+  let datas = Object.keys(monthArith).map(item => item);
   let data = [];
   Object.values(monthArith).forEach((item, index) => {
     data.push({
@@ -58,7 +58,7 @@ function Chart4(props) {
       min: 0, // 这里要设置一个最小值, 否则可能图表中按照了 data 中的最小值设置Y轴最小值
     },
   };
-
+  console.log(data);
   return (
     <Chart
       width="100%"

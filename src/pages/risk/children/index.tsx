@@ -19,7 +19,7 @@ function Box(props) {
         style={{ display: index === 0 ? 'none' : 'block' }}
       >
         {index === '警示详情' ? (
-          <Col span={15}>
+          <Col span={24}>
             <div className={styles.title}>{deptName}</div>
           </Col>
         ) : null}

@@ -34,7 +34,7 @@ export async function queryTCalc(params) {
 }
 
 export async function queryTApp(params) {
-  return request(`/sys/subapplication/list${getParamsStr(params)}`, {
+  return request(`/sys/subapplication/list-confirm${getParamsStr(params)}`, {
     method: 'POST',
   });
 }

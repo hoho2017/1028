@@ -81,7 +81,14 @@ function Chart2(props) {
           },
         }}
       />
-
+      <Tooltip>
+        {(title, items) => {
+          // items 是个数组，即被触发tooltip的数据。
+          // 获取items的颜色
+          const color = items[0].color;
+          return <div style={{ padding: '5px' }}>次数: {items[0].value}</div>;
+        }}
+      </Tooltip>
       <Interval position="time*value" color={colors[0]} />
       <Line position="time*number" color={colors[1]} size={3} shape="smooth" />
       <Point position="time*number" color={colors[1]} size={3} shape="circle" />

@@ -16,6 +16,7 @@ function Sec(props) {
     deptId,
     ZD: { arith },
   } = props;
+  console.log(arith);
   const [id, setId] = useState(1);
   const [no, setno] = useState(0);
   const [cond, setcond] = useState(0);
@@ -111,6 +112,7 @@ function Sec(props) {
     let data = [];
     Object.values(monthArith).forEach((item, index) => {
       Object.keys(item).forEach(name => {
+        if (arith[Number(name) - 1] === undefined) return null;
         data.push({
           keyword: arith[Number(name) - 1].value,
           dates: datas[index],
@@ -137,6 +139,7 @@ function Sec(props) {
     let data = [];
     Object.values(yearArith).forEach((item, index) => {
       Object.keys(item).forEach(name => {
+        if (arith[Number(name) - 1] === undefined) return null;
         data.push({
           keyword: arith[Number(name) - 1].value,
           dates: datas[index],
@@ -272,18 +275,26 @@ function Sec(props) {
                       <div className={styles.titleb}>
                         场景{index === 0 ? '一' : index === 1 ? '二' : '三'}
                       </div>
-                      <Row className={styles.mt}>
+                      <Row className={styles.mt} style={{ height: '36px' }}>
                         <Col span={4}>
                           <div className={styles.innerTitle2}>应用系统</div>
                         </Col>
-                        <Col span={2}>
-                          <img className={styles.arrow} src={arrow} />
+                        <Col span={2} style={{ height: '100%' }}>
+                          <img
+                            className={styles.arrow}
+                            src={arrow}
+                            style={{ height: '100%' }}
+                          />
                         </Col>
                         {item.split('').map(item => {
                           if (item === '，') {
                             return (
-                              <Col span={2}>
-                                <img className={styles.arrow} src={arrow} />
+                              <Col span={2} style={{ height: '100%' }}>
+                                <img
+                                  className={styles.arrow}
+                                  src={arrow}
+                                  style={{ height: '100%' }}
+                                />
                               </Col>
                             );
                           } else {
