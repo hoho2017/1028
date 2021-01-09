@@ -36,16 +36,19 @@ const IndexModel: IndexModelType = {
   },
   effects: {
     *login({ type, payload, callback }, { put, call, select }) {
-      // const data = yield call(login, {
-      //   username: 'admin',
-      //   password: 'admin',
-      // });
-      // document.cookie = `JSESSIONID=${data.JSESSIONID}`;
-      // if (callback) callback();
+      const data = yield call(login, {
+        username: 'admin',
+        password: 'admin',
+      });
+      document.cookie = `JSESSIONID=${data.JSESSIONID}`;
+      if (callback) callback();
     },
     *getMenu({ type, callback }, { put, call, select }) {
       const { menuList } = yield call(getMenu);
       if (callback) callback(menuList);
+      yield put({
+        type: 'query',
+      });
     },
     *details({ type, payload, callback }, { put, call, select }) {
       const { page } = yield call(details, payload);
@@ -61,6 +64,7 @@ const IndexModel: IndexModelType = {
     },
     *query({ type, payload }, { put, call, select }) {
       //请求tree data
+      console.log(localStorage.getItem('home'));
       const list = localStorage.getItem('home')?.split(',')
         ? localStorage.getItem('home')?.split(',')
         : [];
@@ -114,14 +118,6 @@ const IndexModel: IndexModelType = {
     init({ dispatch, history }) {
       return history.listen(({ pathname }) => {
         if (pathname === '/') {
-          dispatch({
-            type: 'login',
-            callback: () => {
-              dispatch({
-                type: 'query',
-              });
-            },
-          });
         }
       });
     },
