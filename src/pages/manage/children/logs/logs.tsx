@@ -18,81 +18,138 @@ import moment from 'moment';
 const columns = [
   {
     title: '日志ID',
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'id',
+    key: 'id',
     render: text => <a>{text}</a>,
   },
   {
     title: '日志类型',
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'typeName',
+    key: 'typeName',
     render: text => <a>{text}</a>,
   },
   {
     title: '操作时间',
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'logDate',
+    key: 'logDate',
     render: text => <a>{text}</a>,
   },
   {
     title: '操作人员',
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'userName',
+    key: 'userName',
     render: text => <a>{text}</a>,
   },
   {
     title: '人员角色',
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'userRule',
+    key: 'userRule',
     render: text => <a>{text}</a>,
   },
   {
     title: '操作内容',
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'logMessage',
+    key: 'logMessage',
     render: text => <a>{text}</a>,
   },
 ];
+const { RangePicker } = DatePicker;
 const { Option } = Select;
 interface PageProps extends ConnectProps {
   manage: ManageModelState;
 }
 const Logs: FC<PageProps> = props => {
-  const handleChange = value => {};
-  const onChange = (date, dateString) => {};
+  const {
+    manage: {
+      ZD: { log_type },
+    },
+    dispatch,
+  } = props;
+  const [code, setCode] = useState();
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
+  const [page, setPage] = useState(1);
+  const [data, setData] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [current, setCurrent] = useState(1);
 
+  const handleChange = value => {
+    setCode(value);
+  };
+  const timeChange = (date, dateString) => {
+    console.log(date, dateString);
+    setStartDate(dateString[0]);
+    setEndDate(dateString[1]);
+  };
+  const query = () => {
+    dispatch!({
+      type: 'manage/queryLog',
+      payload: {
+        logTypes: Array.isArray(code) && code.length === 0 ? undefined : code,
+        startDate,
+        endDate,
+        page: current,
+        limit: 10,
+      },
+      callback: page => {
+        const { list, totalCount } = page;
+        setData(list);
+        setTotal(totalCount);
+      },
+    });
+  };
+  useEffect(() => {
+    query();
+  }, [current]);
+  const changeCurrent = current => {
+    setCurrent(current);
+  };
+  const { RangePicker } = DatePicker;
   return (
     <ConfigProvider locale={locale}>
       <div className={styles.content2}>
         <Row>
-          <Col span={6} className={styles.padding10}>
+          <Col span={10} className={styles.padding10}>
             <span className={styles.title}>选择类型</span>
             <Select
-              size="small"
-              defaultValue="lucy"
-              style={{ width: 120 }}
+              mode="multiple"
+              style={{ width: 300 }}
               onChange={handleChange}
+              maxTagCount={2}
+              placeholder="请选择角色类型"
             >
-              <Option value="jack">Jack</Option>
-              <Option value="lucy">角色</Option>
-              <Option value="Yiminghe">yiminghe</Option>
+              {log_type.map(item => {
+                return <Option value={item.code}>{item.value}</Option>;
+              })}
             </Select>
           </Col>
-          <Col span={6} offset={4} className={styles.padding10}>
-            <span className={styles.title}>开始时间</span>
-            <DatePicker showTime size="small" onChange={onChange} />
-          </Col>
-          <Col span={6} className={styles.padding10}>
-            <span className={styles.title}>截止时间</span>
-            <DatePicker showTime size="small" onChange={onChange} />
+          <Col span={12} offset={0} className={styles.padding10}>
+            <span className={styles.title}>时间范围</span>
+            <RangePicker onChange={timeChange} />
           </Col>
           <Col span={2}>
-            <div className={styles.sure}>确定</div>
+            <div
+              className={styles.sure}
+              onClick={() => {
+                query();
+              }}
+            >
+              确定
+            </div>
           </Col>
         </Row>
       </div>
       <div className={styles.content3}>
-        <Table bordered columns={columns}></Table>
+        <Table
+          pagination={{
+            total,
+            current,
+            onChange: page => changeCurrent(page),
+          }}
+          bordered
+          columns={columns}
+          dataSource={data}
+        ></Table>
       </div>
     </ConfigProvider>
   );

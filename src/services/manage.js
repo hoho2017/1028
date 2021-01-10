@@ -53,6 +53,11 @@ export async function confirmUp(params) {
     },
   );
 }
+export async function queryLog(params) {
+  return request(`/sys/sysoperationlog/list${getParamsStr(params)}`, {
+    method: 'POST',
+  });
+}
 export async function checkFile(params) {
   return request(
     `/sys/subappassessmentsplit/info/by-uuid${getParamsStr(params)}`,
