@@ -527,7 +527,7 @@ const Source: FC<PageProps> = props => {
     setCurrent(page);
   };
   useEffect(() => {
-    resetTreeData(0, no);
+    resetTreeData('资源注册', no);
   }, [no]);
   return (
     <div ref={boxRef}>
