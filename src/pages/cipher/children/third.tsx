@@ -191,7 +191,7 @@ function Sec(props) {
           <Row>
             <Col span={8} offset={1}>
               <div className={styles.titleTxt}>
-                {cond === 1 ? '历年' : cond === 2 ? '近六月' : '近一年'}
+                {cond === 1 ? '历年' : cond === 2 ? '近一年' : '近一年'}
                 的调用情况
               </div>
             </Col>

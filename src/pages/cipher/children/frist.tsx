@@ -51,7 +51,7 @@ function Frist(props) {
         setAllMonthTotal(
           Object.keys(allMonthTotal).map(item => {
             return {
-              time: item.split('-')[1],
+              time: item,
               value: allMonthTotal[item],
               number: allMonthTotal[item],
             };

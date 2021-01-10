@@ -3,6 +3,7 @@ import { Effect, Reducer, Subscription, request } from 'umi';
 import { login } from '@/services/login';
 import {
   queryTreeM,
+  queryTree,
   queryYear,
   queryTable,
   queryTitle,
@@ -38,7 +39,6 @@ import {
   roleRegister,
   roleModify,
   roleDelete,
-  queryTree,
   queryTable2,
   upload,
   checkFile,
@@ -120,7 +120,6 @@ const ManageModel: ManageModelType = {
       if (callback) callback(data);
     },
     *queryLog({ type, payload, callback }, { put, call, select }) {
-      console.log(payload);
       const { page } = yield call(queryLog, payload);
       if (callback) callback(page);
     },
@@ -319,6 +318,7 @@ const ManageModel: ManageModelType = {
       // const localData = ['a', 'b', 'c'];
 
       const { data } = yield call(queryTreeM);
+      const data2 = yield call(queryTree);
       const dataZD = yield call(queryZD);
       const arith = yield call(queryArith);
       const treeList = data.map(item => {
@@ -326,7 +326,13 @@ const ManageModel: ManageModelType = {
         item.key = item.name;
         return item;
       });
+      const treeList2 = data2.data.map(item => {
+        item.title = item.name;
+        item.key = item.name;
+        return item;
+      });
       const treeData = data;
+      const treeData2 = data2.data;
 
       // const tableApp = yield call(queryTApp);
       // const tableOrg = yield call(queryTOrg);
@@ -338,6 +344,7 @@ const ManageModel: ManageModelType = {
         payload: {
           catalogue: localData,
           treeData,
+          treeData2,
           treeList,
           ZD: dataZD.data,
           arith: arith.data.page.list,

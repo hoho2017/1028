@@ -1,6 +1,7 @@
 import { Chart, Tooltip, Legend, Point, Line, Interval, Axis } from 'bizcharts';
 import React, { FC, useEffect, useState } from 'react';
 import { Empty } from 'antd';
+import moment from 'moment';
 
 function Chart2(props) {
   const { allMonthTotal, td, cond } = props;
@@ -34,7 +35,19 @@ function Chart2(props) {
       data.shift();
     }
   }
-  data = data.slice(data.length - 6);
+  if (data.length > 0 && data[0].time.includes('-')) {
+    data = data.filter(item => {
+      if (
+        Number(item.time.split('-')[0]) >= moment().year() - 1 &&
+        Number(item.time.split('-')[1]) >= moment().month() + 1
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }
+
   return (
     <Chart
       scale={scale}

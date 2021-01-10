@@ -77,7 +77,6 @@ const Logs: FC<PageProps> = props => {
     setCode(value);
   };
   const timeChange = (date, dateString) => {
-    console.log(date, dateString);
     setStartDate(dateString[0]);
     setEndDate(dateString[1]);
   };

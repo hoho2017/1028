@@ -42,10 +42,10 @@ function Box(props) {
   return (
     <>
       <Row className={styles.pt20}>
-        <Col span={8}>
+        <Col span={24}>
           <div className={styles.title}>{deptName}</div>
         </Col>
-        {catalogue.includes('应用概况') ? (
+        {/* {catalogue.includes('应用概况') ? (
           <Col span={4} offset={4}>
             <div
               className={styles.tabs}
@@ -74,7 +74,7 @@ function Box(props) {
               调用详情
             </div>
           </Col>
-        ) : null}
+        ) : null} */}
       </Row>
       <Row>
         {index === '应用概况' ? (

@@ -15,7 +15,7 @@ interface PageProps extends ConnectProps {
 }
 
 const Manage: FC<PageProps> = ({ manage, dispatch }) => {
-  const { catalogue, treeData, treeList, ZD } = manage;
+  const { catalogue, treeData, treeData2 = [], treeList, ZD } = manage;
   const child = useRef({});
   const [expandedKeys, setExpandedKeys] = useState([]);
   const [searchValue, setSearchValue] = useState('');
@@ -54,6 +54,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
     //inex 0->source 1->mp 3->user 4->auth
     // index = Number(index);
     let data = _.cloneDeep(treeData);
+    let data2 = _.cloneDeep(treeData2);
     if (index === '资源注册') {
       if (no === 1) {
         setTreeD(
@@ -75,7 +76,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
         );
       }
     } else if (index === '密评登记') {
-      setTreeD(treeMake(data, [99]));
+      setTreeD(treeMake(data2, [99]));
     } else if (index === '用户管理' || index === '用户授权') {
       // setTreeD(
       //   treeMake(
@@ -85,7 +86,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
       //     [1, 2, 3, 4],
       //   ),
       // );
-      setTreeD(treeMake(data, [1, 2, 3, 4, 99]));
+      setTreeD(treeMake(data2, [1, 2, 3, 4, 99]));
     } else {
       setTreeD(treeMake(data, [1, 2, 3, 4, 99]));
     }
