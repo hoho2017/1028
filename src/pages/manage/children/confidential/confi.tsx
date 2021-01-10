@@ -275,7 +275,11 @@ const Confi: FC<PageProps> = props => {
           last = item.k;
         }
       });
-    setImportYear(last);
+    if (year.length > 0 && year[year.length - 1].color === '#0FB723') {
+      setImportYear(year[year.length - 1].k);
+    } else {
+      setImportYear(last);
+    }
   }, [year]);
 
   return (

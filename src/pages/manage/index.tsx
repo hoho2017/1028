@@ -51,7 +51,6 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
     );
   }, [treeData]);
   const resetTreeData = (index = '', no = 0) => {
-    console.log(index);
     //inex 0->source 1->mp 3->user 4->auth
     // index = Number(index);
     let data = _.cloneDeep(treeData);
