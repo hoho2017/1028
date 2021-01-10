@@ -23,7 +23,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
   const [deptId, setDeptId] = useState();
   const [deptName, setDeptName] = useState();
   const [treeD, setTreeD] = useState([]);
-  const [indexS, setIndexS] = useState(0);
+  const [indexS, setIndexS] = useState('');
   useEffect(() => {
     setExpandedKeys(treeList.map(item => item.name));
     // setDeptId(treeList[1]?treeList[1].deptId:'')
@@ -50,11 +50,12 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
       ),
     );
   }, [treeData]);
-  const resetTreeData = (index = 0, no = 0) => {
+  const resetTreeData = (index = '', no = 0) => {
+    console.log(index);
     //inex 0->source 1->mp 3->user 4->auth
-    index = Number(index);
+    // index = Number(index);
     let data = _.cloneDeep(treeData);
-    if (index === 0) {
+    if (index === '资源注册') {
       if (no === 1) {
         setTreeD(
           treeMake(
@@ -74,9 +75,9 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
           ),
         );
       }
-    } else if (index === 1) {
+    } else if (index === '密评登记') {
       setTreeD(treeMake(data, [99]));
-    } else if (index === 3) {
+    } else if (index === '用户管理' || index === '用户授权') {
       // setTreeD(
       //   treeMake(
       //     data.filter(item => {
@@ -86,7 +87,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
       //   ),
       // );
       setTreeD(treeMake(data, [1, 2, 3, 4, 99]));
-    } else if (index === 4) {
+    } else {
       setTreeD(treeMake(data, [1, 2, 3, 4, 99]));
     }
   };
@@ -174,6 +175,9 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
     setExpandedKeys(expandedKeys);
     setAutoExpandParent(false);
   };
+  useEffect(() => {
+    setIndexS(catalogue[0]);
+  }, [catalogue]);
   return (
     <>
       <div className="tabs">
@@ -182,9 +186,10 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
           size="large"
           style={{ minHeight }}
           onChange={index => {
-            setIndexS(index);
+            setIndexS(catalogue[index]);
           }}
         >
+          index
           {catalogue.map((item, index) => {
             return (
               <TabPane tab={item} key={index}>
