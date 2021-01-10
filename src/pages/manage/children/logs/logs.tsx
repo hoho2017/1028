@@ -20,37 +20,37 @@ const columns = [
     title: '日志ID',
     dataIndex: 'id',
     key: 'id',
-    render: text => <a>{text}</a>,
+    render: text => <div>{text}</div>,
   },
   {
     title: '日志类型',
     dataIndex: 'typeName',
     key: 'typeName',
-    render: text => <a>{text}</a>,
+    render: text => <div>{text}</div>,
   },
   {
     title: '操作时间',
     dataIndex: 'logDate',
     key: 'logDate',
-    render: text => <a>{text}</a>,
+    render: text => <div>{text}</div>,
   },
   {
     title: '操作人员',
     dataIndex: 'userName',
     key: 'userName',
-    render: text => <a>{text}</a>,
+    render: text => <div>{text}</div>,
   },
   {
     title: '人员角色',
     dataIndex: 'userRule',
     key: 'userRule',
-    render: text => <a>{text}</a>,
+    render: text => <div>{text}</div>,
   },
   {
     title: '操作内容',
     dataIndex: 'logMessage',
     key: 'logMessage',
-    render: text => <a>{text}</a>,
+    render: text => <div>{text}</div>,
   },
 ];
 const { RangePicker } = DatePicker;
