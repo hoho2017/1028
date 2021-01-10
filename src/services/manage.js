@@ -62,7 +62,7 @@ export async function checkFile(params) {
   );
 }
 export async function queryTOrg(params) {
-  return request(`/sys/dept/list-page${getParamsStr(params)}`, {
+  return request(`/sys/dept/list-page-level-two${getParamsStr(params)}`, {
     method: 'POST',
   });
 }
