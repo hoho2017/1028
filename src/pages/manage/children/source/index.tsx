@@ -356,6 +356,10 @@ const Source: FC<PageProps> = props => {
     setShowForm('0');
   };
   const showFormFunc = (i: string) => {
+    if (no !== 2 && deptId === undefined && i === '1') {
+      message.warn('请先选择机构！');
+      return false;
+    }
     if (
       (JSON.stringify(choose) === '{}' && i === '2') ||
       (JSON.stringify(choose) === '{}' && i === '3')

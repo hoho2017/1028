@@ -86,7 +86,6 @@ const Auth: FC<PageProps> = props => {
     });
   };
   const queryTOrg = page => {
-    console.log(1, page);
     dispatch({
       type: 'manage/queryTAuth',
       payload: {
@@ -95,7 +94,6 @@ const Auth: FC<PageProps> = props => {
       },
       callback: data => {
         const { list, totalCount } = data;
-        console.log(list);
         setTotal(totalCount);
 
         setListOrg(
@@ -118,7 +116,6 @@ const Auth: FC<PageProps> = props => {
     if (no === 0) {
       queryTApp(current);
     } else {
-      console.log(2, current);
       queryTOrg(current);
     }
   }, [deptId, no, current]); //no -> 0 1 2 3

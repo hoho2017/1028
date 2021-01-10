@@ -164,7 +164,6 @@ function Sec(props) {
       render: text => <div>{text}</div>,
     },
   ];
-  console.log(year);
   return (
     <>
       <div className={styles.content}>

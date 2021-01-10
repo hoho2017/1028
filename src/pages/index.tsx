@@ -1,7 +1,7 @@
 import { ConnectProps, connect, IndexModelState } from 'umi';
 import React, { FC, useEffect, useState } from 'react';
 import styles from './index.less';
-import { Tabs, Tree, Input } from 'antd';
+import { Tabs, Input } from 'antd';
 import Box from './home/index';
 
 const { TabPane } = Tabs;
@@ -23,14 +23,14 @@ const Index: FC<PageProps> = ({ index, dispatch }) => {
           {catalogue.map((item, index) => {
             return (
               <TabPane tab={item} key={index}>
-                <div
+                {/* <div
                   className={styles.tree}
                   style={{
                     minHeight,
                     height: '100%',
                     display: index === 0 ? 'none' : 'block',
                   }}
-                ></div>
+                ></div> */}
                 <div className="content">
                   <Box ZD={ZD} index={item} />
                 </div>

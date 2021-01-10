@@ -102,8 +102,8 @@ const columnsThird = [
   {
     align: 'center',
     title: '建设单位',
-    dataIndex: 'parentDeptId',
-    key: 'parentDeptId',
+    dataIndex: 'parentDeptName',
+    key: 'parentDeptName',
   },
   {
     align: 'center',

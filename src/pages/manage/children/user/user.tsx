@@ -118,6 +118,10 @@ const User: FC<PageProps> = props => {
     setShowForm('0');
   };
   const showFormFunc = (i: string) => {
+    if (deptId === undefined && i === '1') {
+      message.warn('请先选择机构！');
+      return false;
+    }
     if (
       (JSON.stringify(choose) === '{}' && i === '2') ||
       (JSON.stringify(choose) === '{}' && i === '3')

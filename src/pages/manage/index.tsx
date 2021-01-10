@@ -28,12 +28,13 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
     setExpandedKeys(treeList.map(item => item.name));
     // setDeptId(treeList[1]?treeList[1].deptId:'')
     // setDeptName(treeList[1]?treeList[1].name:'')
-    treeList.forEach(item => {
-      if (item.type === 99) {
-        setDeptId(item.deptId);
-        setDeptName(item.name);
-      }
-    });
+
+    // treeList.forEach(item => {
+    //   if (item.type === 99) {
+    //     setDeptId(item.deptId);
+    //     setDeptName(item.name);
+    //   }
+    // });
   }, [treeList]);
   useEffect(() => {
     setExpandedKeys(treeList.map(item => item.name));
@@ -76,14 +77,15 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
     } else if (index === 1) {
       setTreeD(treeMake(data, [99]));
     } else if (index === 3) {
-      setTreeD(
-        treeMake(
-          data.filter(item => {
-            return [1, 2, 3, 4].includes(item.type);
-          }),
-          [1, 2, 3, 4],
-        ),
-      );
+      // setTreeD(
+      //   treeMake(
+      //     data.filter(item => {
+      //       return [1, 2, 3, 4].includes(item.type);
+      //     }),
+      //     [1, 2, 3, 4],
+      //   ),
+      // );
+      setTreeD(treeMake(data, [1, 2, 3, 4, 99]));
     } else if (index === 4) {
       setTreeD(treeMake(data, [1, 2, 3, 4, 99]));
     }
