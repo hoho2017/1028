@@ -115,10 +115,19 @@ const temp = [
   },
 ];
 const OuterNet: FC<PageProps> = ({ index, dispatch }) => {
+  const color = [
+    '#FC6030',
+    '#075AA0',
+    '#0263E5',
+    '#FC6030',
+    '#075AA0',
+    '#0263E5',
+  ];
   const [chartNo, setChartNo] = useState(0);
   const [city, setCity] = useState([]);
-  const [current, setCurrent] = useState(0);
+  const [current, setCurrent] = useState('贵阳');
   const [show, setShow] = useState(false);
+  const [temp, setTemp] = useState({});
   const [totalData, setTotalData] = useState({
     charArray: [],
     currentData: [],
@@ -132,6 +141,11 @@ const OuterNet: FC<PageProps> = ({ index, dispatch }) => {
       callback: data => {
         setTotalData({ ...data.data });
         setCity([...data.city]);
+        let obj = {};
+        data.city.forEach(item => {
+          obj[item.total.key.substr(0, 2)] = item.totalList;
+        });
+        setTemp({ ...obj });
       },
     });
 
@@ -141,7 +155,7 @@ const OuterNet: FC<PageProps> = ({ index, dispatch }) => {
     myChart.setOption({
       series: [
         {
-          name: '贵州',
+          key: '贵州',
           type: 'map',
           mapType: 'g', // 自定义扩展图表类型
           label: {
@@ -151,17 +165,21 @@ const OuterNet: FC<PageProps> = ({ index, dispatch }) => {
       ],
     });
     myChart.on('click', function(params) {
-      setCurrent(params.dataIndex);
+      console.log(params.name.substr(0, 2));
+      setCurrent(params.name.substr(0, 2));
       setShow(true);
     });
   }, []);
-  const max = temp[current].data
-    .map(item => {
-      return Number(item.value);
-    })
-    .reduce((a, b) => {
-      return Math.max(a, b);
-    });
+  const max =
+    JSON.stringify(temp) !== '{}' &&
+    temp[current]
+      .map(item => {
+        return Number(item.value);
+      })
+      .reduce((a, b) => {
+        return Math.max(a, b);
+      });
+  console.log(city);
   return (
     <>
       <div className={styles.content3} style={{ paddingBottom: '30px' }}>
@@ -239,38 +257,43 @@ const OuterNet: FC<PageProps> = ({ index, dispatch }) => {
             style={{ display: show ? 'block' : 'none' }}
           >
             <div className={styles.detailTitle}>
-              <span style={{ fontWeight: '700' }}>{temp[current].name}</span>
+              <span style={{ fontWeight: '700' }}>{current}</span>
               -密码使用情况
             </div>
-            <div style={{ float: 'left', width: '100%' }}>
-              {temp[current].data.map(item => {
-                return (
-                  <div key={item.name}>
-                    <span>{item.name}&emsp;</span>
-                    <Progress
-                      style={{ width: '75%' }}
-                      // showInfo={false}
-                      percent={(Number(item.value) / max) * 100}
-                      strokeColor={item.color}
-                      format={percent => {
-                        return item.value;
-                      }}
-                    />
-                  </div>
-                );
-              })}
+            <div style={{ float: 'left', width: '100%', padding: '10px' }}>
+              {JSON.stringify(temp) !== '{}' &&
+                temp[current].map((item, index) => {
+                  return (
+                    <div key={item.key}>
+                      <Row style={{ padding: '5px' }}>
+                        <Col span={9}>
+                          <span>{item.key}&emsp;</span>
+                        </Col>
+                        <Col span={15}>
+                          <Progress
+                            style={{ width: '100%' }}
+                            // showInfo={false}
+                            percent={(Number(item.value) / max) * 100}
+                            strokeColor={color[index]}
+                            format={percent => {
+                              return item.value;
+                            }}
+                          />
+                        </Col>
+                      </Row>
+                    </div>
+                  );
+                })}
             </div>
           </div>
           <div className={styles.map} id="map"></div>
           <div style={{ maxWidth: '1150px' }}>
             <Row>
               {city.map((item, index) => {
-                let max = 0;
-                item.totalList.forEach(item => {
-                  if (item.value > max) {
-                    max = item.value;
-                  }
-                });
+                let max =
+                  item.totalList[0].value > item.totalList[1].value
+                    ? item.totalList[0].value
+                    : item.totalList[1].value;
                 return (
                   <Col
                     key={item.total.key}

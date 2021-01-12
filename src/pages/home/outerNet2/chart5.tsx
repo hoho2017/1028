@@ -8,19 +8,21 @@ import Chart1 from '@/pages/cipher/children/charts/chart1';
 function Chart5(props) {
   let { data } = props;
   let all = 0;
-  let list = data.totalList || [];
-  list.forEach(item => {
-    all += item.value;
-  });
-  list = list.map(item => {
-    item.values = (item.value / all).toFixed(2) * 100 + '%';
-    return item;
-  });
+  if (data.totalList !== undefined) {
+    data.totalList.forEach(item => {
+      all += item.value;
+    });
+    data.totalList = data.totalList.map(item => {
+      item.values = (item.value / all).toFixed(2) * 100 + '%';
+      return item;
+    });
+  }
+
   return (
     <DonutChart
       statistic={{ visible: true }}
       height="200"
-      data={list || []}
+      data={data.totalList || []}
       forceFit
       radius={1}
       padding="auto"

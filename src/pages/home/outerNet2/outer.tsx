@@ -13,112 +13,21 @@ const { Option } = Select;
 interface PageProps extends ConnectProps {
   index: IndexModelState;
 }
-const temp = [
-  {
-    name: '贵阳市',
-    data: [
-      { name: '密码设备数量', value: '23', color: '#FC6030' },
-      { name: '商密登录认证', value: '34', color: '#075AA0' },
-      { name: '终端加密数量', value: '21', color: '#0263E5' },
-      { name: '密评通过应用', value: '6', color: '#FC6030' },
-      { name: '密评应用在用', value: '3', color: '#075AA0' },
-      { name: '门禁合规数量', value: '35', color: '#0263E5' },
-    ],
-  },
-  {
-    name: '六盘水',
-    data: [
-      { name: '密码设备数量', value: '22', color: '#FC6030' },
-      { name: '商密登录认证', value: '13', color: '#075AA0' },
-      { name: '终端加密数量', value: '24', color: '#0263E5' },
-      { name: '密评通过应用', value: '2', color: '#FC6030' },
-      { name: '密评应用在用', value: '3', color: '#075AA0' },
-      { name: '门禁合规数量', value: '21', color: '#0263E5' },
-    ],
-  },
-  {
-    name: '遵义市',
-    data: [
-      { name: '密码设备数量', value: '32', color: '#FC6030' },
-      { name: '商密登录认证', value: '12', color: '#075AA0' },
-      { name: '终端加密数量', value: '21', color: '#0263E5' },
-      { name: '密评通过应用', value: '22', color: '#FC6030' },
-      { name: '密评应用在用', value: '42', color: '#075AA0' },
-      { name: '门禁合规数量', value: '12', color: '#0263E5' },
-    ],
-  },
-  {
-    name: '安顺市',
-    data: [
-      { name: '密码设备数量', value: '32', color: '#FC6030' },
-      { name: '商密登录认证', value: '14', color: '#075AA0' },
-      { name: '终端加密数量', value: '61', color: '#0263E5' },
-      { name: '密评通过应用', value: '6', color: '#FC6030' },
-      { name: '密评应用在用', value: '2', color: '#075AA0' },
-      { name: '门禁合规数量', value: '24', color: '#0263E5' },
-    ],
-  },
-  {
-    name: '毕节市',
-    data: [
-      { name: '密码设备数量', value: '65', color: '#FC6030' },
-      { name: '商密登录认证', value: '43', color: '#075AA0' },
-      { name: '终端加密数量', value: '32', color: '#0263E5' },
-      { name: '密评通过应用', value: '2', color: '#FC6030' },
-      { name: '密评应用在用', value: '34', color: '#075AA0' },
-      { name: '门禁合规数量', value: '23', color: '#0263E5' },
-    ],
-  },
-  {
-    name: '铜仁市',
-    data: [
-      { name: '密码设备数量', value: '32', color: '#FC6030' },
-      { name: '商密登录认证', value: '33', color: '#075AA0' },
-      { name: '终端加密数量', value: '21', color: '#0263E5' },
-      { name: '密评通过应用', value: '23', color: '#FC6030' },
-      { name: '密评应用在用', value: '35', color: '#075AA0' },
-      { name: '门禁合规数量', value: '12', color: '#0263E5' },
-    ],
-  },
-  {
-    name: '黔西南',
-    data: [
-      { name: '密码设备数量', value: '12', color: '#FC6030' },
-      { name: '商密登录认证', value: '34', color: '#075AA0' },
-      { name: '终端加密数量', value: '4', color: '#0263E5' },
-      { name: '密评通过应用', value: '6', color: '#FC6030' },
-      { name: '密评应用在用', value: '2', color: '#075AA0' },
-      { name: '门禁合规数量', value: '1', color: '#0263E5' },
-    ],
-  },
-  {
-    name: '黔东南',
-    data: [
-      { name: '密码设备数量', value: '5', color: '#FC6030' },
-      { name: '商密登录认证', value: '12', color: '#075AA0' },
-      { name: '终端加密数量', value: '3', color: '#0263E5' },
-      { name: '密评通过应用', value: '6', color: '#FC6030' },
-      { name: '密评应用在用', value: '12', color: '#075AA0' },
-      { name: '门禁合规数量', value: '21', color: '#0263E5' },
-    ],
-  },
-  {
-    name: '黔南',
-    data: [
-      { name: '密码设备数量', value: '22', color: '#FC6030' },
-      { name: '商密登录认证', value: '34', color: '#075AA0' },
-      { name: '终端加密数量', value: '1', color: '#0263E5' },
-      { name: '密评通过应用', value: '23', color: '#FC6030' },
-      { name: '密评应用在用', value: '41', color: '#075AA0' },
-      { name: '门禁合规数量', value: '1', color: '#0263E5' },
-    ],
-  },
-];
+
 const OuterNet: FC<PageProps> = ({ index, dispatch }) => {
+  const color = [
+    '#FC6030',
+    '#075AA0',
+    '#0263E5',
+    '#FC6030',
+    '#075AA0',
+    '#0263E5',
+  ];
   const [chartNo, setChartNo] = useState(0);
   const [city, setCity] = useState([]);
-  const [current, setCurrent] = useState(0);
+  const [current, setCurrent] = useState('贵阳');
   const [show, setShow] = useState(false);
+  const [temp, setTemp] = useState({});
   const [totalData, setTotalData] = useState({
     charArray: [],
     currentData: [],
@@ -132,16 +41,21 @@ const OuterNet: FC<PageProps> = ({ index, dispatch }) => {
       callback: data => {
         setTotalData({ ...data.data });
         setCity([...data.city]);
+        let obj = {};
+        data.city.forEach(item => {
+          obj[item.total.key.substr(0, 2)] = item.totalList;
+        });
+        setTemp({ ...obj });
       },
     });
 
-    var myChart = echarts.init(document.getElementById('map'));
+    var myChart = echarts.init(document.getElementById('map2'));
     echarts.registerMap('g', geo);
 
     myChart.setOption({
       series: [
         {
-          name: '贵州',
+          key: '贵州',
           type: 'map',
           mapType: 'g', // 自定义扩展图表类型
           label: {
@@ -151,21 +65,25 @@ const OuterNet: FC<PageProps> = ({ index, dispatch }) => {
       ],
     });
     myChart.on('click', function(params) {
-      setCurrent(params.dataIndex);
+      console.log(params.name.substr(0, 2));
+      setCurrent(params.name.substr(0, 2));
       setShow(true);
     });
   }, []);
-  const max = temp[current].data
-    .map(item => {
-      return Number(item.value);
-    })
-    .reduce((a, b) => {
-      return Math.max(a, b);
-    });
+  const max =
+    JSON.stringify(temp) !== '{}' &&
+    temp[current]
+      .map(item => {
+        return Number(item.value);
+      })
+      .reduce((a, b) => {
+        return Math.max(a, b);
+      });
+  console.log(city);
   return (
     <>
       <div className={styles.content3} style={{ paddingBottom: '30px' }}>
-        <div className={styles.title}>贵州省电子政务外网密码使用情况</div>
+        <div className={styles.title}>贵州省互联网密码使用情况</div>
         <Row justify="space-around">
           {totalData.charArray.map((item, index) => {
             return (
@@ -239,38 +157,43 @@ const OuterNet: FC<PageProps> = ({ index, dispatch }) => {
             style={{ display: show ? 'block' : 'none' }}
           >
             <div className={styles.detailTitle}>
-              <span style={{ fontWeight: '700' }}>{temp[current].name}</span>
+              <span style={{ fontWeight: '700' }}>{current}</span>
               -密码使用情况
             </div>
-            <div style={{ float: 'left', width: '100%' }}>
-              {temp[current].data.map(item => {
-                return (
-                  <div key={item.name}>
-                    <span>{item.name}&emsp;</span>
-                    <Progress
-                      style={{ width: '75%' }}
-                      // showInfo={false}
-                      percent={(Number(item.value) / max) * 100}
-                      strokeColor={item.color}
-                      format={percent => {
-                        return item.value;
-                      }}
-                    />
-                  </div>
-                );
-              })}
+            <div style={{ float: 'left', width: '100%', padding: '10px' }}>
+              {JSON.stringify(temp) !== '{}' &&
+                temp[current].map((item, index) => {
+                  return (
+                    <div key={item.key}>
+                      <Row style={{ padding: '5px' }}>
+                        <Col span={9}>
+                          <span>{item.key}&emsp;</span>
+                        </Col>
+                        <Col span={15}>
+                          <Progress
+                            style={{ width: '100%' }}
+                            // showInfo={false}
+                            percent={(Number(item.value) / max) * 100}
+                            strokeColor={color[index]}
+                            format={percent => {
+                              return item.value;
+                            }}
+                          />
+                        </Col>
+                      </Row>
+                    </div>
+                  );
+                })}
             </div>
           </div>
-          <div className={styles.map} id="map"></div>
+          <div className={styles.map} id="map2"></div>
           <div style={{ maxWidth: '1150px' }}>
             <Row>
               {city.map((item, index) => {
-                let max = 0;
-                item.totalList.forEach(item => {
-                  if (item.value > max) {
-                    max = item.value;
-                  }
-                });
+                let max =
+                  item.totalList[0].value > item.totalList[1].value
+                    ? item.totalList[0].value
+                    : item.totalList[1].value;
                 return (
                   <Col
                     key={item.total.key}
