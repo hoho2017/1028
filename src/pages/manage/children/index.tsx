@@ -5,6 +5,7 @@ import { Row, Col } from 'antd';
 import Source from './source/index';
 import User from './user/user';
 import Logs from './logs/logs';
+import Cascade from './cascade/logs';
 import Auth from './auth/auth';
 import Confi from './confidential/confi';
 import { findIndex } from 'lodash';
@@ -63,6 +64,8 @@ function Box(props) {
             deptName={deptName}
             deptId={deptId}
           />
+        ) : index === '级联管理' ? (
+          <Cascade />
         ) : null}
       </div>
     </>

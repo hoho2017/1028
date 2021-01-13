@@ -186,6 +186,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
           size="large"
           style={{ minHeight }}
           onChange={index => {
+            console.log(catalogue[index]);
             setIndexS(catalogue[index]);
           }}
         >
@@ -199,7 +200,11 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
                   style={{
                     minHeight,
                     height: '100%',
-                    display: index === 5 ? 'none' : 'block',
+                    display:
+                      catalogue[index] === '系统日志' ||
+                      catalogue[index] === '级联管理'
+                        ? 'none'
+                        : 'block',
                   }}
                 >
                   <Tree
