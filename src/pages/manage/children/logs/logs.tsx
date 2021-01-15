@@ -108,7 +108,7 @@ const Logs: FC<PageProps> = props => {
     <ConfigProvider locale={locale}>
       <div className={styles.content2}>
         <Row>
-          <Col span={10} className={styles.padding10}>
+          <Col span={10} className={styles.padding5}>
             <span className={styles.title}>选择类型</span>
             <Select
               mode="multiple"
@@ -122,7 +122,7 @@ const Logs: FC<PageProps> = props => {
               })}
             </Select>
           </Col>
-          <Col span={12} offset={0} className={styles.padding10}>
+          <Col span={12} offset={0} className={styles.padding5}>
             <span className={styles.title}>时间范围</span>
             <RangePicker onChange={timeChange} />
           </Col>

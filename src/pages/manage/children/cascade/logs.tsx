@@ -12,145 +12,127 @@ import {
   DatePicker,
   ConfigProvider,
 } from 'antd';
+import rowB from './imgs/rowB.png';
+import rowG from './imgs/rowG.png';
+import colB from './imgs/colB.png';
+import colG from './imgs/colG.png';
 import locale from 'antd/es/locale/zh_CN';
 import 'moment/locale/zh-cn';
 import moment from 'moment';
-const columns = [
-  {
-    title: '日志ID',
-    dataIndex: 'id',
-    key: 'id',
-    render: text => <div>{text}</div>,
-  },
-  {
-    title: '日志类型',
-    dataIndex: 'typeName',
-    key: 'typeName',
-    render: text => <div>{text}</div>,
-  },
-  {
-    title: '操作时间',
-    dataIndex: 'logDate',
-    key: 'logDate',
-    render: text => <div>{text}</div>,
-  },
-  {
-    title: '操作人员',
-    dataIndex: 'userName',
-    key: 'userName',
-    render: text => <div>{text}</div>,
-  },
-  {
-    title: '人员角色',
-    dataIndex: 'userRule',
-    key: 'userRule',
-    render: text => <div>{text}</div>,
-  },
-  {
-    title: '操作内容',
-    dataIndex: 'logMessage',
-    key: 'logMessage',
-    render: text => <div>{text}</div>,
-  },
-];
-const { RangePicker } = DatePicker;
-const { Option } = Select;
+
 interface PageProps extends ConnectProps {
   manage: ManageModelState;
 }
 const Cascade: FC<PageProps> = props => {
-  const {
-    manage: {
-      ZD: { log_type },
-    },
-    dispatch,
-  } = props;
-  const [code, setCode] = useState();
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
-  const [page, setPage] = useState(1);
-  const [data, setData] = useState([]);
+  const { dispatch } = props;
+  const [flag, setFlag] = useState(true);
+  const [list, setList] = useState([]);
   const [total, setTotal] = useState(0);
   const [current, setCurrent] = useState(1);
-
-  const handleChange = value => {
-    setCode(value);
-  };
-  const timeChange = (date, dateString) => {
-    setStartDate(dateString[0]);
-    setEndDate(dateString[1]);
-  };
-  const query = () => {
+  const columns = [
+    {
+      title: '序号',
+      dataIndex: 'id',
+      key: 'id',
+      align: 'center',
+      render: text => <div>{text}</div>,
+    },
+    {
+      title: '级联对象',
+      dataIndex: 'cascadeName',
+      align: 'center',
+      key: 'cascadeName',
+      render: text => <div>{text}</div>,
+    },
+    {
+      title: '级联状态',
+      dataIndex: 'cascadeStatusName',
+      align: 'center',
+      key: 'cascadeStatusName',
+      render: text => <div>{text}</div>,
+    },
+    {
+      title: '级联情况',
+      align: 'center',
+      dataIndex: 'cascadeStatusName',
+      key: 'cascadeStatusName',
+      render: (record, text) => (
+        <Button type="primary" shape="round" onClick={() => queryDetail(text)}>
+          查看详情
+        </Button>
+      ),
+    },
+  ];
+  const queryDetail = record => {
+    console.log(record);
     dispatch!({
-      type: 'manage/queryLog',
+      type: 'manage/queryDetailCascade',
       payload: {
-        logTypes: Array.isArray(code) && code.length === 0 ? undefined : code,
-        startDate,
-        endDate,
-        page: current,
-        limit: 10,
+        id: record.id,
       },
-      callback: page => {
-        const { list, totalCount } = page;
-        setData(list);
-        setTotal(totalCount);
+      callback: data => {
+        console.log(data);
       },
     });
   };
   useEffect(() => {
-    query();
-  }, [current]);
-  const changeCurrent = current => {
-    setCurrent(current);
+    queryTrue();
+  }, []);
+  const queryTrue = () => {
+    dispatch!({
+      type: 'manage/queryListCascade',
+      payload: {
+        cascadeType: flag ? '1' : '2',
+        page: current,
+        limit: 10,
+      },
+      callback: data => {
+        setList([...data.list]);
+        setTotal(data.totalCount);
+      },
+    });
   };
-  const { RangePicker } = DatePicker;
+  useEffect(() => {
+    queryTrue();
+  }, [current, flag]);
   return (
-    <ConfigProvider locale={locale}>
+    <div>
       <div className={styles.content2}>
         <Row>
-          <Col span={10} className={styles.padding10}>
-            <span className={styles.title}>选择类型</span>
-            <Select
-              mode="multiple"
-              style={{ width: 300 }}
-              onChange={handleChange}
-              maxTagCount={2}
-              placeholder="请选择角色类型"
+          <Col span={4} onClick={() => setFlag(true)}>
+            <img className={styles.w22} src={flag ? colB : colG} />{' '}
+            <span
+              className={styles.f1l3}
+              style={{ color: flag ? '#056ACE' : '#ccc' }}
             >
-              {log_type.map(item => {
-                return <Option value={item.code}>{item.value}</Option>;
-              })}
-            </Select>
+              纵向级联
+            </span>
           </Col>
-          <Col span={12} offset={0} className={styles.padding10}>
-            <span className={styles.title}>时间范围</span>
-            <RangePicker onChange={timeChange} />
-          </Col>
-          <Col span={2}>
-            <div
-              className={styles.sure}
-              onClick={() => {
-                query();
-              }}
+          <Col span={4} onClick={() => setFlag(false)}>
+            <img className={styles.w22} src={!flag ? rowB : rowG} />{' '}
+            <span
+              className={styles.f1l3}
+              style={{ color: !flag ? '#056ACE' : '#ccc' }}
             >
-              确定
-            </div>
+              横向级联
+            </span>
           </Col>
         </Row>
       </div>
-      <div className={styles.content3}>
+      <div className={styles.content2}>
         <Table
           pagination={{
             total,
             current,
-            onChange: page => changeCurrent(page),
+            onChange: page => setCurrent(page),
           }}
-          bordered
           columns={columns}
-          dataSource={data}
-        ></Table>
+          style={{ padding: '2%' }}
+          bordered
+          dataSource={list}
+        />
       </div>
-    </ConfigProvider>
+    </div>
   );
 };
 

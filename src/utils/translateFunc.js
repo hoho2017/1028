@@ -1,5 +1,4 @@
 export function treeMake(data, arr = []) {
-  console.log(data);
   let tempArr = [];
   for (let i = 0; i < data.length; i++) {
     if (!arr.includes(data[i].type)) {
@@ -33,13 +32,10 @@ export function treeMake(data, arr = []) {
   // tempArr.sort().forEach((item, index) => {
   //   data.splice(item - index, 1);
   // });
-  console.log(data.slice(0, 1));
   return data.slice(0, 1);
 }
 
 export function treeMake2(data) {
-  console.log(data);
-
   let tempArr = [];
   for (let i = 0; i < data.length; i++) {
     if (data[i].title === undefined) {

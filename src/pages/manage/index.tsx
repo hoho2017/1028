@@ -200,11 +200,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
                   style={{
                     minHeight,
                     height: '100%',
-                    display:
-                      catalogue[index] === '系统日志' ||
-                      catalogue[index] === '级联管理'
-                        ? 'none'
-                        : 'block',
+                    display: true ? 'none' : 'block',
                   }}
                 >
                   <Tree
@@ -225,7 +221,9 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
                 </div>
                 <div
                   className="content"
-                  style={{ paddingLeft: index === 5 ? 0 : '268px' }}
+                  style={{
+                    paddingLeft: true ? 0 : '268px',
+                  }}
                 >
                   {/* <div className="content" style={{ paddingLeft:'268px' }}> */}
                   <Box

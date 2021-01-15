@@ -45,6 +45,8 @@ import {
   confirmUp,
   down,
   queryLog,
+  queryListCascade,
+  queryDetailCascade,
 } from '@/services/manage';
 import { treeMake } from '@/utils/translateFunc.js';
 export interface ManageModelState {
@@ -98,6 +100,8 @@ export interface ManageModelType {
     confirmUp: Effect;
     down: Effect;
     queryLog: Effect;
+    queryListCascade: Effect;
+    queryDetailCascade: Effect;
   };
   reducers: {
     save: Reducer<ManageModelState>;
@@ -118,6 +122,18 @@ const ManageModel: ManageModelType = {
     *thirdRegister({ type, payload, callback }, { put, call, select }) {
       const data = yield call(thirdRegister, payload);
       if (callback) callback(data);
+    },
+    *queryDetailCascade({ type, payload, callback }, { put, call, select }) {
+      const {
+        data: { page },
+      } = yield call(queryDetailCascade, payload);
+      if (callback) callback(page);
+    },
+    *queryListCascade({ type, payload, callback }, { put, call, select }) {
+      const {
+        data: { page },
+      } = yield call(queryListCascade, payload);
+      if (callback) callback(page);
     },
     *queryLog({ type, payload, callback }, { put, call, select }) {
       const { page } = yield call(queryLog, payload);

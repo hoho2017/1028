@@ -11,6 +11,10 @@ export async function down(params) {
 export async function queryTree(params) {
   return requestRaw(`/sys/menu/list`);
 }
+export async function queryDetailCascade(params) {
+  console.log(params);
+  return requestRaw(`/sys/subcascadeplatformlog/info-detail/${params.id}`);
+}
 
 export async function queryArith(params) {
   return requestRaw(`/sys/dict/arith-list`);
@@ -24,7 +28,11 @@ export async function queryTable2(params) {
     },
   );
 }
-
+export async function queryListCascade(params) {
+  return requestRaw(`/sys/subcascadeplatform/list${getParamsStr(params)}`, {
+    method: 'POST',
+  });
+}
 export async function queryTRole(params) {
   return requestRaw(`/sys/role/list${getParamsStr(params)}`);
 }
