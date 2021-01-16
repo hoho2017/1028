@@ -124,10 +124,8 @@ const ManageModel: ManageModelType = {
       if (callback) callback(data);
     },
     *queryDetailCascade({ type, payload, callback }, { put, call, select }) {
-      const {
-        data: { page },
-      } = yield call(queryDetailCascade, payload);
-      if (callback) callback(page);
+      const { data } = yield call(queryDetailCascade, payload);
+      if (callback) callback(data);
     },
     *queryListCascade({ type, payload, callback }, { put, call, select }) {
       const {

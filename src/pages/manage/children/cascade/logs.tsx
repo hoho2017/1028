@@ -11,6 +11,7 @@ import {
   message,
   DatePicker,
   ConfigProvider,
+  Modal,
 } from 'antd';
 import rowB from './imgs/rowB.png';
 import rowG from './imgs/rowG.png';
@@ -29,6 +30,8 @@ const Cascade: FC<PageProps> = props => {
   const [list, setList] = useState([]);
   const [total, setTotal] = useState(0);
   const [current, setCurrent] = useState(1);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [content, setContent] = useState([]);
   const columns = [
     {
       title: '序号',
@@ -64,14 +67,14 @@ const Cascade: FC<PageProps> = props => {
     },
   ];
   const queryDetail = record => {
-    console.log(record);
     dispatch!({
       type: 'manage/queryDetailCascade',
       payload: {
         id: record.id,
       },
       callback: data => {
-        console.log(data);
+        setContent(data.data);
+        setIsModalVisible(true);
       },
     });
   };
@@ -132,6 +135,24 @@ const Cascade: FC<PageProps> = props => {
           dataSource={list}
         />
       </div>
+      <Modal
+        title="详情"
+        visible={isModalVisible}
+        onOk={() => setIsModalVisible(false)}
+        onCancel={() => setIsModalVisible(false)}
+      >
+        {content.length > 0
+          ? content.map(item => {
+              return (
+                <>
+                  &emsp;&emsp;<span>{item.cascadeTime}</span>&emsp;
+                  <span>{item.cascadeStatusName}</span>
+                  <br />
+                </>
+              );
+            })
+          : '暂无数据'}
+      </Modal>
     </div>
   );
 };
