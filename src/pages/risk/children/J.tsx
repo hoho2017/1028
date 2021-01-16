@@ -120,11 +120,13 @@ function J(props) {
                 },
               }}
               renderItem={item => {
+                const name =
+                  item.arithId !== null
+                    ? ZD.arith[item.arithId - 1].value
+                    : ' ';
                 return (
                   <List.Item onClick={() => setDetail(item)}>
-                    {item.appName +
-                      ZD.arith[item.arithId - 1].value +
-                      item.appTypeName}
+                    {item.appName + name + item.appTypeName}
                   </List.Item>
                 );
               }}
@@ -136,7 +138,9 @@ function J(props) {
                 <>
                   <Row>
                     {detail ? detail.logDate : ''},密码智能体调用
-                    {ZD.arith[Number(detail ? detail.arithId : 1) - 1].value}
+                    {detail.arithId
+                      ? ZD.arith[Number(detail ? detail.arithId : 1) - 1].value
+                      : ' '}
                     出错
                   </Row>
                   <Row>错误代码:{detail ? detail.appWarnCode : ''}</Row>

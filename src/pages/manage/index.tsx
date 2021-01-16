@@ -186,7 +186,6 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
           size="large"
           style={{ minHeight }}
           onChange={index => {
-            console.log(catalogue[index]);
             setIndexS(catalogue[index]);
           }}
         >
@@ -200,7 +199,11 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
                   style={{
                     minHeight,
                     height: '100%',
-                    display: true ? 'none' : 'block',
+                    display:
+                      catalogue[index] === '级联管理' ||
+                      catalogue[index] === '日志系统'
+                        ? 'none'
+                        : 'block',
                   }}
                 >
                   <Tree
@@ -222,7 +225,11 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
                 <div
                   className="content"
                   style={{
-                    paddingLeft: true ? 0 : '268px',
+                    paddingLeft:
+                      catalogue[index] === '级联管理' ||
+                      catalogue[index] === '日志系统'
+                        ? 0
+                        : '268px',
                   }}
                 >
                   {/* <div className="content" style={{ paddingLeft:'268px' }}> */}

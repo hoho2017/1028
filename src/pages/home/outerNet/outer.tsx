@@ -165,7 +165,6 @@ const OuterNet: FC<PageProps> = ({ index, dispatch }) => {
       ],
     });
     myChart.on('click', function(params) {
-      console.log(params.name.substr(0, 2));
       setCurrent(params.name.substr(0, 2));
       setShow(true);
     });
@@ -179,7 +178,6 @@ const OuterNet: FC<PageProps> = ({ index, dispatch }) => {
       .reduce((a, b) => {
         return Math.max(a, b);
       });
-  console.log(city);
   return (
     <>
       <div className={styles.content3} style={{ paddingBottom: '30px' }}>

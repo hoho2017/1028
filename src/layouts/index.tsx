@@ -91,7 +91,6 @@ const BasicLayout: FC<PageProps> = props => {
     setMenuData([...temp]);
   }, [menu]);
   const loginOut = () => {
-    console.log(window.location);
     window.localStorage.clear();
     document.cookie = 'JSESSIONID=""';
     window.location.href = window.location.origin + '/login.html';

@@ -96,8 +96,8 @@ const columnsThird = [
   {
     title: '系统类别',
     align: 'center',
-    dataIndex: 'typeId',
-    key: 'typeId',
+    dataIndex: 'typeName',
+    key: 'typeName',
   },
   {
     align: 'center',

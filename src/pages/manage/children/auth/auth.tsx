@@ -122,7 +122,7 @@ const Auth: FC<PageProps> = props => {
   useEffect(() => {
     setCurrent(1);
     setListOrg([]);
-    setListApp([]);
+    // setListApp([]);
   }, [no]);
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {

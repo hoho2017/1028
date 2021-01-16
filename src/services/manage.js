@@ -12,7 +12,6 @@ export async function queryTree(params) {
   return requestRaw(`/sys/menu/list`);
 }
 export async function queryDetailCascade(params) {
-  console.log(params);
   return requestRaw(`/sys/subcascadeplatformlog/info-detail/${params.id}`);
 }
 
@@ -120,7 +119,7 @@ export async function appRegister(params) {
   });
 }
 export async function orgRegister(params) {
-  return request(`/sys/dept/save`, {
+  return request(`/sys/dept/level-two-save`, {
     method: 'POST',
     body: {
       ...params,

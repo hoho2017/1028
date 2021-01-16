@@ -70,7 +70,7 @@ export function requestRaw(url, option = { method: 'GET' }) {
         let downloadLink = document.createElement('a');
         downloadLink.style.display = 'none';
         downloadLink.href = downloadHref;
-        downloadLink.download = '报告.xlsx';
+        downloadLink.download = '报告.xls';
         downloadLink.click();
         window.URL.revokeObjectURL(downloadHref);
       }),
@@ -85,7 +85,7 @@ export function requestRaw(url, option = { method: 'GET' }) {
         let downloadLink = document.createElement('a');
         downloadLink.style.display = 'none';
         downloadLink.href = downloadHref;
-        downloadLink.download = '密评风评方案模板.xlsx';
+        downloadLink.download = '密评风评方案模板.xls';
         downloadLink.click();
         window.URL.revokeObjectURL(downloadHref);
       }),
