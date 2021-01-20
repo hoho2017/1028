@@ -47,6 +47,7 @@ import {
   queryLog,
   queryListCascade,
   queryDetailCascade,
+  queryTreeManage,
 } from '@/services/manage';
 import { treeMake } from '@/utils/translateFunc.js';
 export interface ManageModelState {
@@ -279,7 +280,7 @@ const ManageModel: ManageModelType = {
       if (callback) callback(data.page);
     },
     *queryTree({ type, payload, callback }, { put, call, select }) {
-      const data = yield call(queryTree, payload);
+      const data = yield call(queryTreeManage, payload);
       const tree = data.data;
       const treedata = tree.map(item => {
         item.key = item.menuId;

@@ -8,7 +8,7 @@ export async function down(params) {
   });
 }
 
-export async function queryTree(params) {
+export async function queryTreeManage(params) {
   return requestRaw(`/sys/menu/list`);
 }
 export async function queryDetailCascade(params) {

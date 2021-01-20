@@ -40,7 +40,7 @@ export function treeMake2(data) {
   for (let i = 0; i < data.length; i++) {
     if (data[i].title === undefined) {
       data[i].title = data[i].name;
-      data[i].key = data[i].deptId;
+      data[i].key = data[i].deptId || data[i].menuId;
     }
     for (let j = 0; j < data.length; j++) {
       if (data[i].menuId === data[j].parentId) {
