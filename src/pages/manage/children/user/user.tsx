@@ -47,7 +47,7 @@ const User: FC<PageProps> = props => {
           }),
         );
         setTimeout(() => {
-          if (boxRef.current !== undefined) {
+          if (boxRef.current) {
             boxRef.current.style.minHeight =
               tableRef.current.offsetHeight + 170 + 'px';
           }

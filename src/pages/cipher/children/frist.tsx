@@ -108,7 +108,7 @@ function Frist(props) {
     }
   };
   return (
-    <div className="first">
+    <div className={styles.frist}>
       <div
         className={styles.content}
         style={{ padding: '15px', borderRadius: '40px', marginBottom: '2%' }}

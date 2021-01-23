@@ -63,7 +63,7 @@ const Auth: FC<PageProps> = props => {
     dispatch({
       type: 'manage/queryTRole',
       payload: {
-        parentDeptId: deptId,
+        deptId: deptId,
         limit: 10,
         page: page,
       },
@@ -91,6 +91,7 @@ const Auth: FC<PageProps> = props => {
       payload: {
         limit: 10,
         page: page,
+        deptId,
       },
       callback: data => {
         const { list, totalCount } = data;
@@ -152,7 +153,7 @@ const Auth: FC<PageProps> = props => {
     if (no === 0) {
       if (showForm === '1') {
         //应用注册
-        values.deptId = 1;
+        values.deptId = deptId;
         values.deptIdList = [];
         values.menuIdList = [];
         dispatch({
@@ -170,7 +171,7 @@ const Auth: FC<PageProps> = props => {
         });
       } else if (showForm === '2') {
         //应用变更
-        values.deptId = 1;
+        values.deptId = deptId;
         values.deptIdList = [];
         values.menuIdList = [];
         dispatch({
@@ -286,6 +287,7 @@ const Auth: FC<PageProps> = props => {
   };
   const showAuthFunc = record => {
     setAuthObj({ ...record });
+    setSelectedKeys([...record.roleIdList]);
     setShowAuth(true);
   };
   const onExpand = expandedKeys => {
@@ -530,6 +532,7 @@ const Auth: FC<PageProps> = props => {
           rowSelection={{
             columnTitle: '选择',
             type: 'radio',
+            selectedRowKeys: selectedKeys,
             ...rowSelection2,
           }}
           columns={columnsRoleJ}

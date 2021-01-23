@@ -95,7 +95,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
     resetTreeData(indexS);
   }, [indexS]);
   const onSelect = (selectedKeys: any, info: any) => {
-    let deptId = 1;
+    let deptId = undefined;
     treeList.forEach(item => {
       if (item.name === selectedKeys[0]) {
         deptId = item.deptId;
