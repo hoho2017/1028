@@ -332,6 +332,9 @@ const Source: FC<PageProps> = props => {
       } else if (showForm === '2') {
         //应用变更
         values.parentDeptId = deptId;
+        values.typeId = isNaN(Number(values.typeId))
+          ? choose.typeId
+          : values.typeId;
         dispatch({
           type: 'manage/thirdModify',
           payload: values,

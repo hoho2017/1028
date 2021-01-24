@@ -166,7 +166,7 @@ const formHead = (
         label: '机构ID',
         name: 'uniqueDeptId',
         type: 'input',
-        disabled: '2',
+        // disabled,
       },
     ],
     [
@@ -192,7 +192,7 @@ const formHead = (
         label: '系统ID',
         name: 'uniqueConfigId',
         type: 'input',
-        disabled: '2',
+        // disabled: '2',
       },
       {
         label: '所属位置',

@@ -77,7 +77,7 @@ const Auth: FC<PageProps> = props => {
           }),
         );
         setTimeout(() => {
-          if (boxRef) {
+          if (boxRef && boxRef.current) {
             boxRef.current.style.height =
               tableRef.current.offsetHeight + 170 + 'px';
           }
@@ -288,7 +288,8 @@ const Auth: FC<PageProps> = props => {
   const showAuthFunc = record => {
     setAuthObj({ ...record });
     // setSelectedKeys([...record.roleIdList]);
-    setChoose2([...record.roleIdList]);
+    const a = record.roleIdList || [];
+    setChoose2([...a]);
     setShowAuth(true);
   };
   const onExpand = expandedKeys => {

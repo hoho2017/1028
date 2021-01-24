@@ -45,9 +45,9 @@ const columnsAuth = [
   },
   {
     title: '用户标识',
-    dataIndex: 'status',
+    dataIndex: 'uniqueUserId',
     align: 'center',
-    key: 'status',
+    key: 'uniqueUserId',
   },
   {
     title: '所属机构',
