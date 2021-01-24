@@ -39,7 +39,7 @@ function F(props) {
     dispatch({
       type: 'risk/queryDouble',
       payload: {
-        deptId,
+        // deptId,
       },
       callback: avgTime => {
         let obj = {};

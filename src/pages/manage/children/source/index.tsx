@@ -166,7 +166,7 @@ const Source: FC<PageProps> = props => {
           }),
         );
         setTimeout(() => {
-          if (boxRef) {
+          if (boxRef && boxRef.current) {
             boxRef.current.style.height =
               tableRef.current.offsetHeight + 170 + 'px';
           }
@@ -258,6 +258,7 @@ const Source: FC<PageProps> = props => {
       } else if (showForm === '2') {
         //应用变更
         values.parentId = deptId;
+        values.deptId = choose.deptId;
         dispatch({
           type: 'manage/orgModify',
           payload: values,
@@ -416,7 +417,7 @@ const Source: FC<PageProps> = props => {
       if (i === '2') {
         // 变更设置所属结构
         form.setFieldsValue({ parentId: choose.parentName });
-        form.setFieldsValue({ deptId: choose.deptId });
+        form.setFieldsValue({ uniqueDeptId: choose.uniqueDeptId });
         form.setFieldsValue({ name: choose.name });
       }
       if (i === '3') {
@@ -434,7 +435,7 @@ const Source: FC<PageProps> = props => {
               } else if (data.code === 0) {
                 message.success('操作成功!');
                 onReset();
-                queryTApp(current);
+                queryTOrg(current);
               }
             },
           });
@@ -476,12 +477,12 @@ const Source: FC<PageProps> = props => {
       }
       if (i === '2') {
         // 变更设置所属结构
-        form.setFieldsValue({ parentDeptId: choose.parentDeptId });
-        form.setFieldsValue({ id: choose.id });
+        form.setFieldsValue({ parentDeptId: choose.parentDeptName });
+        form.setFieldsValue({ uniqueConfigId: choose.uniqueConfigId });
 
         form.setFieldsValue({ thirdPartyName: choose.thirdPartyName });
         form.setFieldsValue({ modelPosition: choose.modelPosition });
-        form.setFieldsValue({ typeId: choose.typeId });
+        form.setFieldsValue({ typeId: choose.typeName });
         form.setFieldsValue({ modelNumber: choose.modelNumber });
       }
       if (i === '3') {
@@ -529,6 +530,7 @@ const Source: FC<PageProps> = props => {
   useEffect(() => {
     resetTreeData('资源注册', no);
   }, [no]);
+  console.log(choose);
   return (
     <div ref={boxRef}>
       <div className={styles.content}>

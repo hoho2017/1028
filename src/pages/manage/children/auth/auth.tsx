@@ -287,7 +287,8 @@ const Auth: FC<PageProps> = props => {
   };
   const showAuthFunc = record => {
     setAuthObj({ ...record });
-    setSelectedKeys([...record.roleIdList]);
+    // setSelectedKeys([...record.roleIdList]);
+    setChoose2([...record.roleIdList]);
     setShowAuth(true);
   };
   const onExpand = expandedKeys => {
@@ -532,7 +533,7 @@ const Auth: FC<PageProps> = props => {
           rowSelection={{
             columnTitle: '选择',
             type: 'radio',
-            selectedRowKeys: selectedKeys,
+            selectedRowKeys: choose2,
             ...rowSelection2,
           }}
           columns={columnsRoleJ}

@@ -201,7 +201,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
                     height: '100%',
                     display:
                       catalogue[index] === '级联管理' ||
-                      catalogue[index] === '日志系统'
+                      catalogue[index] === '系统日志'
                         ? 'none'
                         : 'block',
                   }}
@@ -227,7 +227,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
                   style={{
                     paddingLeft:
                       catalogue[index] === '级联管理' ||
-                      catalogue[index] === '日志系统'
+                      catalogue[index] === '系统日志'
                         ? 0
                         : '268px',
                   }}

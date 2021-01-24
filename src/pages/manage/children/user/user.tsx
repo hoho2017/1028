@@ -94,7 +94,7 @@ const User: FC<PageProps> = props => {
         //应用变更
         values.password = '123456';
         values.deptId = deptId;
-
+        values.userId = choose.userId;
         dispatch({
           type: 'manage/userModify',
           payload: values,
@@ -142,7 +142,7 @@ const User: FC<PageProps> = props => {
     if (i === '2') {
       // 变更设置所属结构
       form.setFieldsValue({ deptId: choose.deptName });
-      form.setFieldsValue({ userId: choose.userId });
+      form.setFieldsValue({ uniqueUserId: choose.uniqueUserId });
       form.setFieldsValue({ username: choose.username });
     }
     if (i === '3') {
@@ -177,8 +177,8 @@ const User: FC<PageProps> = props => {
     },
     {
       title: '用户标识',
-      dataIndex: 'userId',
-      key: 'userId',
+      dataIndex: 'uniqueUserId',
+      key: 'uniqueUserId',
       align: 'center',
     },
     {
@@ -202,7 +202,7 @@ const User: FC<PageProps> = props => {
     },
     {
       label: '用户ID',
-      name: 'userId',
+      name: 'uniqueUserId',
       type: 'input',
       disabled: '2',
     },

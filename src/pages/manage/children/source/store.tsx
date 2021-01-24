@@ -49,8 +49,8 @@ const columnsOrg = [
   {
     title: '机构标识',
     align: 'center',
-    dataIndex: 'deptId',
-    key: 'deptId',
+    dataIndex: 'uniqueDeptId',
+    key: 'uniqueDeptId',
   },
   {
     title: '上级机构',
@@ -82,9 +82,9 @@ const columnsThird = [
   },
   {
     title: '系统ID',
-    dataIndex: 'id',
+    dataIndex: 'uniqueConfigId',
     align: 'center',
-    key: 'id',
+    key: 'uniqueConfigId',
   },
 
   {
@@ -164,7 +164,7 @@ const formHead = (
       },
       {
         label: '机构ID',
-        name: 'deptId',
+        name: 'uniqueDeptId',
         type: 'input',
         disabled: '2',
       },
@@ -190,7 +190,7 @@ const formHead = (
       },
       {
         label: '系统ID',
-        name: 'id',
+        name: 'uniqueConfigId',
         type: 'input',
         disabled: '2',
       },

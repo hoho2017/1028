@@ -2,7 +2,7 @@ import fetch from 'dva/fetch';
 // import environments from 'environments';
 import { RequestError, StatusError, ServerError } from '../errors';
 import processErrors from './processErrors';
-
+import { message } from 'antd';
 const checkStatus = (response, reqOptions) => {
   if (response.status >= 200 && response.status < 300) {
     return response;
@@ -113,6 +113,13 @@ export function requestRaw(url, option = { method: 'GET' }) {
         });
       }
       return response.json().then(json => {
+        if (json.code === 5001) {
+          message.warning('登入过期！');
+          window.localStorage.clear();
+          document.cookie = 'JSESSIONID=""';
+          window.location.href = window.location.origin + '/login.html';
+          return null;
+        }
         return { headers, data: json };
       });
     })
