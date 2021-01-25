@@ -197,6 +197,10 @@ const Auth: FC<PageProps> = props => {
     setShowForm('0');
   };
   const showFormFunc = (i: string) => {
+    if (deptId === undefined && i === '1') {
+      message.warn('请先勾选部门！');
+      return false;
+    }
     if (
       (JSON.stringify(choose) === '{}' && i === '2') ||
       (JSON.stringify(choose) === '{}' && i === '4') ||
@@ -214,10 +218,12 @@ const Auth: FC<PageProps> = props => {
     if (no === 0) {
       if (i === '1') {
         // 注册设置所属结构
+        form.setFieldsValue({ deptName });
       }
       if (i === '2') {
         // 变更设置所属结构
         form.setFieldsValue({ roleId: choose.roleId });
+        form.setFieldsValue({ deptName });
         form.setFieldsValue({ roleName: choose.roleName });
       }
       if (i === '3') {

@@ -70,6 +70,12 @@ const formHead = (
   return [
     [
       {
+        label: '部门名称',
+        name: 'deptName',
+        type: 'input',
+        disabled: true,
+      },
+      {
         label: '角色名称',
         name: 'roleName',
         type: 'input',
@@ -82,6 +88,12 @@ const formHead = (
       },
     ],
     [
+      {
+        label: '部门名称',
+        name: 'deptName',
+        type: 'input',
+        disabled: true,
+      },
       {
         label: '角色名称',
         name: 'roleName',

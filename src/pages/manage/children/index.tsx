@@ -56,7 +56,7 @@ function Box(props) {
         ) : index === '系统日志' ? (
           <Logs />
         ) : index === '用户授权' ? (
-          <Auth deptId={deptId} />
+          <Auth deptId={deptId} deptName={deptName} />
         ) : index === '密评登记' ? (
           <Confi
             child={child}

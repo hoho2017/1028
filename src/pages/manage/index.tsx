@@ -187,6 +187,8 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
           style={{ minHeight }}
           onChange={index => {
             setIndexS(catalogue[index]);
+            setDeptId(undefined);
+            setDeptName(undefined);
           }}
         >
           index
