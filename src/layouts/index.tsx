@@ -91,9 +91,14 @@ const BasicLayout: FC<PageProps> = props => {
     setMenuData([...temp]);
   }, [menu]);
   const loginOut = () => {
-    window.localStorage.clear();
-    document.cookie = 'JSESSIONID=""';
-    window.location.href = window.location.origin + '/login.html';
+    dispatch!({
+      type: 'index/loginOut',
+      callback: () => {
+        window.localStorage.clear();
+        document.cookie = 'JSESSIONID=""';
+        window.location.href = window.location.origin + '/login.html';
+      },
+    });
   };
   const menu2 = (
     <Menu>
@@ -174,7 +179,7 @@ const BasicLayout: FC<PageProps> = props => {
             {children}
           </div>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>Copyright © 2011-2020</Footer>
+        <Footer style={{ textAlign: 'center' }}>Copyright © 2011-2021</Footer>
       </Layout>
     </Layout>
   );

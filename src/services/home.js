@@ -26,3 +26,6 @@ export async function interDataInit(params) {
     },
   });
 }
+export async function loginOut() {
+  return request(`/logout`);
+}

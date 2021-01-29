@@ -92,7 +92,6 @@ const Logs: FC<PageProps> = props => {
       },
       callback: page => {
         const { list, totalCount } = page;
-        console.log(list);
         setData(
           list.map(item => {
             item.key = item.id;
@@ -110,7 +109,6 @@ const Logs: FC<PageProps> = props => {
     setCurrent(current);
   };
   const { RangePicker } = DatePicker;
-  console.log(data);
 
   return (
     <ConfigProvider locale={locale}>

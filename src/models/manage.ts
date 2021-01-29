@@ -338,12 +338,12 @@ const ManageModel: ManageModelType = {
       const arith = yield call(queryArith);
       const treeList = data.map(item => {
         item.title = item.name;
-        item.key = item.name;
+        item.key = item.deptId;
         return item;
       });
       const treeList2 = data2.data.map(item => {
         item.title = item.name;
-        item.key = item.name;
+        item.key = item.deptId;
         return item;
       });
       const treeData = data;

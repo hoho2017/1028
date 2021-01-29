@@ -3,7 +3,12 @@ import { login, getMenu } from '@/services/login';
 import { queryZD } from '@/services/cipher';
 import { details } from '@/services/risk';
 
-import { queryTotal, outerInit, interDataInit } from '@/services/home';
+import {
+  queryTotal,
+  outerInit,
+  interDataInit,
+  loginOut,
+} from '@/services/home';
 export interface IndexModelState {
   catalogue: Array<string>;
   ZD: object;
@@ -20,6 +25,7 @@ export interface IndexModelType {
     interDataInit: Effect;
     details: Effect;
     getMenu: Effect;
+    loginOut: Effect;
   };
   reducers: {
     save: Reducer<IndexModelState>;
@@ -35,6 +41,10 @@ const IndexModel: IndexModelType = {
     total: {},
   },
   effects: {
+    *loginOut({ type, payload, callback }, { put, call, select }) {
+      yield call(loginOut);
+      if (callback) callback();
+    },
     *login({ type, payload, callback }, { put, call, select }) {
       // const data = yield call(login, {
       //   username: 'admin',

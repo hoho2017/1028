@@ -25,7 +25,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
   const [treeD, setTreeD] = useState([]);
   const [indexS, setIndexS] = useState('');
   useEffect(() => {
-    setExpandedKeys(treeList.map(item => item.name));
+    setExpandedKeys(treeList.map(item => item.deptId));
     // setDeptId(treeList[1]?treeList[1].deptId:'')
     // setDeptName(treeList[1]?treeList[1].name:'')
 
@@ -37,10 +37,11 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
     // });
   }, [treeList]);
   useEffect(() => {
-    setExpandedKeys(treeList.map(item => item.name));
+    setExpandedKeys(treeList.map(item => item.deptId));
   }, [treeList]);
   useEffect(() => {
     let data = _.cloneDeep(treeData);
+
     setTreeD(
       treeMake(
         data.filter(item => {
@@ -95,14 +96,16 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
     resetTreeData(indexS);
   }, [indexS]);
   const onSelect = (selectedKeys: any, info: any) => {
-    let deptId = undefined;
+    let deptId = undefined,
+      deptName = undefined;
     treeList.forEach(item => {
-      if (item.name === selectedKeys[0]) {
+      if (item.deptId === selectedKeys[0]) {
         deptId = item.deptId;
+        deptName = item.name;
       }
     });
     setDeptId(deptId);
-    setDeptName(selectedKeys[0]);
+    setDeptName(deptName);
   };
   const minHeight = document.body.clientHeight - 136 + 'px';
   const getParentKey = (key, tree) => {
@@ -209,6 +212,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
                   }}
                 >
                   <Tree
+                    defaultExpandAll
                     showLine={{ showLeafIcon: false }}
                     showIcon={false}
                     onExpand={onExpand}

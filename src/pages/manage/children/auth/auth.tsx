@@ -223,7 +223,7 @@ const Auth: FC<PageProps> = props => {
       if (i === '2') {
         // 变更设置所属结构
         form.setFieldsValue({ roleId: choose.roleId });
-        form.setFieldsValue({ deptName });
+        form.setFieldsValue({ deptName: choose.deptName });
         form.setFieldsValue({ roleName: choose.roleName });
       }
       if (i === '3') {
@@ -385,7 +385,7 @@ const Auth: FC<PageProps> = props => {
           })}
         </Row>
       </div>
-      <Row style={{ position: 'relative', zIndex: '3' }}>
+      <Row style={{ position: 'relative', zIndex: '3', margin: '2rem' }}>
         {operation.map((item, index) => {
           if (no === index) {
             return Array.from('1234').map(i => {
@@ -480,9 +480,8 @@ const Auth: FC<PageProps> = props => {
       <Row
         ref={tableRef}
         style={{
-          position: 'absolute',
-          top: no === 0 ? '250px' : '200px',
-          width: '67%',
+          position: 'relative',
+          width: '100%',
         }}
       >
         <Col span={22} offset={1}>

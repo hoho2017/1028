@@ -267,7 +267,7 @@ const Confi: FC<PageProps> = props => {
     });
   };
   useEffect(() => {
-    let last = year.length > 0 ? year[0].k : 0;
+    let last = year.length > 0 ? year[year.length - 1].k : 0;
     year.length > 0 &&
       year.forEach((item, index) => {
         const i = index === 0 ? 1 : index;

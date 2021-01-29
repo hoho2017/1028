@@ -533,7 +533,6 @@ const Source: FC<PageProps> = props => {
   useEffect(() => {
     resetTreeData('资源注册', no);
   }, [no]);
-  console.log(choose);
   return (
     <div ref={boxRef}>
       <div className={styles.content}>
@@ -567,7 +566,7 @@ const Source: FC<PageProps> = props => {
           })}
         </Row>
       </div>
-      <Row style={{ position: 'relative', zIndex: '3' }}>
+      <Row style={{ position: 'relative', zIndex: '3', margin: '2rem' }}>
         {operation.map((item, index) => {
           if (no === index) {
             return Array.from('123').map(i => {
@@ -650,10 +649,7 @@ const Source: FC<PageProps> = props => {
           }
         })}
       </Row>
-      <Row
-        ref={tableRef}
-        style={{ position: 'absolute', top: '15rem', width: '65%' }}
-      >
+      <Row ref={tableRef} style={{ position: 'relative', width: '100%' }}>
         <Col span={22} offset={1}>
           <Table
             pagination={{
