@@ -335,6 +335,7 @@ const Source: FC<PageProps> = props => {
         values.typeId = isNaN(Number(values.typeId))
           ? choose.typeId
           : values.typeId;
+        values.id = choose.id;
         dispatch({
           type: 'manage/thirdModify',
           payload: values,
