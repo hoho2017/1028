@@ -93,7 +93,7 @@ const User: FC<PageProps> = props => {
       } else if (showForm === '2') {
         //应用变更
         values.password = '123456';
-        values.deptId = deptId;
+        values.deptId = choose.deptId;
         values.userId = choose.userId;
         dispatch({
           type: 'manage/userModify',
@@ -204,7 +204,6 @@ const User: FC<PageProps> = props => {
       label: '用户ID',
       name: 'uniqueUserId',
       type: 'input',
-      disabled: '2',
     },
   ];
   return (

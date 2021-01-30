@@ -656,7 +656,7 @@ const Source: FC<PageProps> = props => {
           }
         })}
       </Row>
-      <Row ref={tableRef} style={{ position: 'relative', width: '100%' }}>
+      <Row ref={tableRef} style={{ position: 'absolute', width: '65%' }}>
         <Col span={22} offset={1}>
           <Table
             pagination={{

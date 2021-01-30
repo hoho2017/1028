@@ -220,8 +220,8 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
                     showLine={{ showLeafIcon: false }}
                     showIcon={false}
                     onExpand={onExpand}
-                    expandedKeys={expandedKeys}
-                    autoExpandParent={autoExpandParent}
+                    // expandedKeys={expandedKeys}
+                    // autoExpandParent={autoExpandParent}
                     onSelect={onSelect}
                     selectedKeys={[deptId]}
                     treeData={loop(treeD)}

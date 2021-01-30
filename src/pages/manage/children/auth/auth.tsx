@@ -480,8 +480,8 @@ const Auth: FC<PageProps> = props => {
       <Row
         ref={tableRef}
         style={{
-          position: 'relative',
-          width: '100%',
+          position: 'absolute',
+          width: '65%',
         }}
       >
         <Col span={22} offset={1}>
