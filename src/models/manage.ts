@@ -103,6 +103,7 @@ export interface ManageModelType {
     queryLog: Effect;
     queryListCascade: Effect;
     queryDetailCascade: Effect;
+    queryTwo: Effect;
   };
   reducers: {
     save: Reducer<ManageModelState>;
@@ -295,6 +296,20 @@ const ManageModel: ManageModelType = {
     *queryTThird({ type, payload, callback }, { put, call, select }) {
       const data = yield call(queryTThird, payload);
       if (callback) callback(data.page);
+    },
+    *queryTwo({ type, payload }, { put, call, select }) {
+      //请求tree data
+
+      const { data } = yield call(queryTreeM);
+
+      const treeData = data;
+
+      yield put({
+        type: 'save',
+        payload: {
+          treeData,
+        },
+      });
     },
     *query({ type, payload }, { put, call, select }) {
       //请求tree data

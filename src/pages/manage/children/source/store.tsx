@@ -140,7 +140,7 @@ const formHead = (
         label: '应用标识',
         name: 'uniqueAppId',
         type: 'input',
-        disabled: '2',
+        // disabled: '2',
       },
       {
         label: '使用算法',

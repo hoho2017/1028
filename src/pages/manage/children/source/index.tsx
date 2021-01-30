@@ -53,7 +53,7 @@ const tailLayout = {
 };
 
 const Source: FC<PageProps> = props => {
-  const { manage, dispatch, deptId, deptName, resetTreeData } = props;
+  const { manage, dispatch, deptId, deptName, resetTreeData, reset } = props;
   const [form] = Form.useForm();
   const { arith, app_source_type, app_type_id } = manage;
   const [no, setNo] = useState(0);
@@ -96,7 +96,10 @@ const Source: FC<PageProps> = props => {
     });
   };
   const queryTOrg = page => {
-    dispatch({
+    dispatch!({
+      type: 'manage/queryTwo',
+    });
+    dispatch!({
       type: 'manage/queryTOrg',
       payload: {
         parentId: deptId,
@@ -114,7 +117,7 @@ const Source: FC<PageProps> = props => {
           }),
         );
         setTimeout(() => {
-          if (boxRef) {
+          if (boxRef && boxRef.current) {
             boxRef.current.style.height =
               tableRef.current.offsetHeight + 170 + 'px';
           }
@@ -181,6 +184,10 @@ const Source: FC<PageProps> = props => {
     no === 3 && queryTThird(current);
   }, [deptId, no, current]); //no -> 0 1 2 3
   useEffect(() => {
+    reset();
+    resetTreeData('资源注册', no);
+  }, [no]);
+  useEffect(() => {
     setCurrent(1);
     setChoose({});
     setShowForm('0');
@@ -219,7 +226,8 @@ const Source: FC<PageProps> = props => {
       } else if (showForm === '2') {
         //应用变更
         values.arithList = values.arithList.toString();
-        values.parentDeptId = deptId;
+        values.parentDeptId = choose.parentDeptId;
+        values.deptId = choose.deptId;
         values.appId = choose.appId;
         values.appType = choose.appType;
         dispatch({
@@ -531,9 +539,7 @@ const Source: FC<PageProps> = props => {
   const changeCurrent = page => {
     setCurrent(page);
   };
-  useEffect(() => {
-    resetTreeData('资源注册', no);
-  }, [no]);
+  useEffect(() => {}, [no]);
   return (
     <div ref={boxRef}>
       <div className={styles.content}>

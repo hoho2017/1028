@@ -11,7 +11,16 @@ import Confi from './confidential/confi';
 import { findIndex } from 'lodash';
 
 function Box(props) {
-  const { deptId, deptName, index, dispatch, ZD, child, resetTreeData } = props;
+  const {
+    reset,
+    deptId,
+    deptName,
+    index,
+    dispatch,
+    ZD,
+    child,
+    resetTreeData,
+  } = props;
   const [year, setYear] = useState([]);
   const [allYearData, setAllYearData] = useState([]);
   const [sum, setSum] = useState({});
@@ -50,6 +59,7 @@ function Box(props) {
             resetTreeData={resetTreeData}
             deptName={deptName}
             deptId={deptId}
+            reset={reset}
           />
         ) : index === '用户管理' ? (
           <User deptName={deptName} deptId={deptId} />

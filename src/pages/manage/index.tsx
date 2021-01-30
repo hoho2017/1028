@@ -39,18 +39,18 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
   useEffect(() => {
     setExpandedKeys(treeList.map(item => item.deptId));
   }, [treeList]);
-  useEffect(() => {
-    let data = _.cloneDeep(treeData);
+  // useEffect(() => {
+  //   let data = _.cloneDeep(treeData);
 
-    setTreeD(
-      treeMake(
-        data.filter(item => {
-          return [1, 2, 3, 4].includes(item.type);
-        }),
-        [4],
-      ),
-    );
-  }, [treeData]);
+  //   setTreeD(
+  //     treeMake(
+  //       data.filter(item => {
+  //         return [1, 2, 3, 4].includes(item.type);
+  //       }),
+  //       [4],
+  //     ),
+  //   );
+  // }, [treeData]);
   const resetTreeData = (index = '', no = 0) => {
     //inex 0->source 1->mp 3->user 4->auth
     // index = Number(index);
@@ -181,6 +181,10 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
   useEffect(() => {
     setIndexS(catalogue[0]);
   }, [catalogue]);
+  const reset = () => {
+    setDeptId(undefined);
+    setDeptName(undefined);
+  };
   return (
     <>
       <div className="tabs">
@@ -219,6 +223,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
                     expandedKeys={expandedKeys}
                     autoExpandParent={autoExpandParent}
                     onSelect={onSelect}
+                    selectedKeys={[deptId]}
                     treeData={loop(treeD)}
                   />
                   <Search
@@ -246,6 +251,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
                     dispatch={dispatch}
                     deptName={deptName}
                     index={item}
+                    reset={reset}
                     resetTreeData={resetTreeData}
                   />
                 </div>
