@@ -32,14 +32,15 @@ const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
   }, [treeList]);
 
   const onSelect = (selectedKeys: any, info: any) => {
-    let deptId;
+    let deptId, deptName;
     treeList.forEach(item => {
-      if (item.name === selectedKeys[0]) {
+      if (item.deptId === selectedKeys[0]) {
         deptId = item.deptId;
+        deptName = item.name;
       }
     });
     setDeptId(deptId);
-    setDeptName(selectedKeys[0]);
+    setDeptName(deptName);
   };
   const minHeight = document.body.clientHeight - 136 + 'px';
   const getParentKey = (key, tree) => {
@@ -127,10 +128,11 @@ const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
                   style={{ minHeight, height: '100%' }}
                 >
                   <Tree
+                    defaultExpandAll
                     showLine={{ showLeafIcon: false }}
                     showIcon={false}
                     onExpand={onExpand}
-                    expandedKeys={expandedKeys}
+                    // expandedKeys={expandedKeys}
                     autoExpandParent={autoExpandParent}
                     onSelect={onSelect}
                     treeData={loop(treeData)}

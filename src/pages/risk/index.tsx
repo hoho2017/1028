@@ -34,14 +34,16 @@ const Risk: FC<PageProps> = ({ risk, dispatch }) => {
     });
   }, [treeList]);
   const onSelect = (selectedKeys: any, info: any) => {
-    let deptId = 1;
+    let deptId = undefined,
+      deptName = undefined;
     treeList.forEach(item => {
-      if (item.name === selectedKeys[0]) {
+      if (item.deptId === selectedKeys[0]) {
         deptId = item.deptId;
+        deptName = item.name;
       }
     });
     setDeptId(deptId);
-    setDeptName(selectedKeys[0]);
+    setDeptName(deptName);
   };
   const minHeight = document.body.clientHeight - 136 + 'px';
   const getParentKey = (key, tree) => {
@@ -123,10 +125,11 @@ const Risk: FC<PageProps> = ({ risk, dispatch }) => {
                   }}
                 >
                   <Tree
+                    defaultExpandAll
                     showLine={{ showLeafIcon: false }}
                     showIcon={false}
                     onExpand={onExpand}
-                    expandedKeys={expandedKeys}
+                    // expandedKeys={expandedKeys}
                     autoExpandParent={autoExpandParent}
                     onSelect={onSelect}
                     treeData={loop(treeData)}

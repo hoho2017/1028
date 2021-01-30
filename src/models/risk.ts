@@ -77,7 +77,7 @@ const RiskModel: RiskModelType = {
 
       const treeList = data.map(item => {
         item.title = item.name;
-        item.key = item.name;
+        item.key = item.deptId;
         return item;
       });
       const treeData = treeMake(data, [99]);
