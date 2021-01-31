@@ -177,8 +177,14 @@ const Source: FC<PageProps> = props => {
       },
     });
   };
+  const queryArith = () => {
+    dispatch!({
+      type: 'manage/queryArith',
+    });
+  };
   useEffect(() => {
     no === 0 && queryTApp(current);
+    no === 0 && queryArith();
     no === 1 && queryTOrg(current);
     no === 2 && queryTCalc(current);
     no === 3 && queryTThird(current);
@@ -579,7 +585,10 @@ const Source: FC<PageProps> = props => {
             return Array.from('123').map(i => {
               return (
                 <Col key={i} span={5} offset={i === '1' ? 1 : 0}>
-                  <div className={styles.content2}>
+                  <div
+                    className={styles.content2}
+                    style={{ position: 'absolute' }}
+                  >
                     <div
                       className={
                         (i === '1' && showForm === '1') ||
@@ -656,7 +665,10 @@ const Source: FC<PageProps> = props => {
           }
         })}
       </Row>
-      <Row ref={tableRef} style={{ position: 'absolute', width: '65%' }}>
+      <Row
+        ref={tableRef}
+        style={{ position: 'absolute', width: '65%', marginTop: '3rem' }}
+      >
         <Col span={22} offset={1}>
           <Table
             pagination={{

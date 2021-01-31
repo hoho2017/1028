@@ -393,7 +393,10 @@ const Auth: FC<PageProps> = props => {
                 <Col key={i} span={5} offset={i === '1' ? 1 : 0}>
                   <div
                     className={styles.content2}
-                    style={{ display: no === 1 ? 'none' : 'block' }}
+                    style={{
+                      display: no === 1 ? 'none' : 'block',
+                      position: 'absolute',
+                    }}
                   >
                     <div
                       className={
@@ -482,6 +485,7 @@ const Auth: FC<PageProps> = props => {
         style={{
           position: 'absolute',
           width: '65%',
+          marginTop: '3rem',
         }}
       >
         <Col span={22} offset={1}>

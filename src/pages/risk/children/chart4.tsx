@@ -39,12 +39,11 @@ const axisConfig = {
 
 function Chart4(props) {
   const { monthArith, zd, id } = props;
-
   let datas = Object.keys(monthArith).map(item => item);
   let data = [];
   Object.values(monthArith).forEach((item, index) => {
     data.push({
-      keyword: zd[Number(id) - 1].value,
+      keyword: zd.filter(item => item.id === id)[0].value,
       dates: datas[index],
       first: item[id],
     });

@@ -25,7 +25,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
   const [treeD, setTreeD] = useState([]);
   const [indexS, setIndexS] = useState('');
   useEffect(() => {
-    setExpandedKeys(treeList.map(item => item.deptId));
+    setExpandedKeys(treeList.map(item => item.key));
     // setDeptId(treeList[1]?treeList[1].deptId:'')
     // setDeptName(treeList[1]?treeList[1].name:'')
 
@@ -35,9 +35,6 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
     //     setDeptName(item.name);
     //   }
     // });
-  }, [treeList]);
-  useEffect(() => {
-    setExpandedKeys(treeList.map(item => item.deptId));
   }, [treeList]);
   // useEffect(() => {
   //   let data = _.cloneDeep(treeData);
@@ -56,6 +53,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
     // index = Number(index);
     let data = _.cloneDeep(treeData);
     let data2 = _.cloneDeep(treeData2);
+
     if (index === '资源注册') {
       if (no === 1) {
         setTreeD(
@@ -185,6 +183,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
     setDeptId(undefined);
     setDeptName(undefined);
   };
+  console.log(loop(treeD));
   return (
     <>
       <div className="tabs">
@@ -216,15 +215,15 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
                   }}
                 >
                   <Tree
-                    defaultExpandAll
                     showLine={{ showLeafIcon: false }}
                     showIcon={false}
                     onExpand={onExpand}
-                    // expandedKeys={expandedKeys}
-                    // autoExpandParent={autoExpandParent}
+                    expandedKeys={expandedKeys}
+                    autoExpandParent={autoExpandParent}
                     onSelect={onSelect}
                     selectedKeys={[deptId]}
                     treeData={loop(treeD)}
+                    defaultExpandAll
                   />
                   <Search
                     style={{ marginBottom: 8 }}

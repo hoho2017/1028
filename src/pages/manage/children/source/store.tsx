@@ -69,8 +69,8 @@ const columnsCalc = [
   {
     title: '算法ID',
     align: 'center',
-    dataIndex: 'id',
-    key: 'id',
+    dataIndex: 'code',
+    key: 'code',
   },
 ];
 const columnsThird = [

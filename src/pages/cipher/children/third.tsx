@@ -111,9 +111,11 @@ function Sec(props) {
     let data = [];
     Object.values(monthArith).forEach((item, index) => {
       Object.keys(item).forEach(name => {
-        if (arith[Number(name) - 1] === undefined) return null;
+        if (arith.filter(item => item.id === Number(name)).length === 0)
+          return null;
         data.push({
-          keyword: arith[Number(name) - 1].value,
+          keyword: name,
+          // keyword: arith.filter(item=>item.id===Number(name))[0].value,
           dates: datas[index],
           first: item[name],
         });
@@ -121,7 +123,6 @@ function Sec(props) {
     });
 
     let obj = {};
-
     data.forEach(item => {
       if (obj[item.keyword]) {
         obj[item.keyword].push(item);
@@ -140,7 +141,8 @@ function Sec(props) {
       Object.keys(item).forEach(name => {
         if (arith[Number(name) - 1] === undefined) return null;
         data.push({
-          keyword: arith[Number(name) - 1].value,
+          // keyword: arith[Number(name) - 1].value,
+          keyword: name,
           dates: datas[index],
           first: item[name],
         });
@@ -197,6 +199,7 @@ function Sec(props) {
     }
     return overWan ? getWan(overWan) + '万' + getWan(noWan) : getWan(num);
   };
+
   return (
     <>
       <div

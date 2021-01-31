@@ -23,12 +23,12 @@ const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
     setExpandedKeys(treeList.map(item => item.name));
     // setDeptId(treeList[1]?treeList[1].deptId:'')
     // setDeptName(treeList[1]?treeList[1].name:'')
-    treeList.forEach(item => {
-      if (item.type === 99) {
-        setDeptId(item.deptId);
-        setDeptName(item.name);
-      }
-    });
+    // treeList.forEach(item => {
+    //   if (item.type === 99) {
+    //     setDeptId(item.deptId);
+    //     setDeptName(item.name);
+    //   }
+    // });
   }, [treeList]);
 
   const onSelect = (selectedKeys: any, info: any) => {

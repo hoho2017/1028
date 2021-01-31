@@ -104,6 +104,7 @@ export interface ManageModelType {
     queryListCascade: Effect;
     queryDetailCascade: Effect;
     queryTwo: Effect;
+    queryArith: Effect;
   };
   reducers: {
     save: Reducer<ManageModelState>;
@@ -303,11 +304,25 @@ const ManageModel: ManageModelType = {
       const { data } = yield call(queryTreeM);
 
       const treeData = data;
-
+      const treeList = data.map(item => {
+        item.title = item.name;
+        item.key = item.deptId;
+        return item;
+      });
       yield put({
         type: 'save',
         payload: {
           treeData,
+          treeList,
+        },
+      });
+    },
+    *queryArith({ type, payload }, { put, call, select }) {
+      const arith = yield call(queryArith);
+      yield put({
+        type: 'save',
+        payload: {
+          arith: arith.data.page.list,
         },
       });
     },
