@@ -118,16 +118,17 @@ function Sec(props) {
           // keyword: arith.filter(item=>item.id===Number(name))[0].value,
           dates: datas[index],
           first: item[name],
+          name: arith.filter(item => item.code === name)[0].value,
         });
       });
     });
 
     let obj = {};
     data.forEach(item => {
-      if (obj[item.keyword]) {
-        obj[item.keyword].push(item);
+      if (obj[item.name]) {
+        obj[item.name].push(item);
       } else {
-        obj[item.keyword] = [item];
+        obj[item.name] = [item];
       }
     });
     setlines({ ...obj });
@@ -139,7 +140,9 @@ function Sec(props) {
     let data = [];
     Object.values(yearArith).forEach((item, index) => {
       Object.keys(item).forEach(name => {
-        if (arith[Number(name) - 1] === undefined) return null;
+        console.log(arith, name);
+
+        if (arith.filter(item => item.code === name).length === 0) return null;
         data.push({
           // keyword: arith[Number(name) - 1].value,
           keyword: name,
@@ -199,6 +202,7 @@ function Sec(props) {
     }
     return overWan ? getWan(overWan) + '万' + getWan(noWan) : getWan(num);
   };
+  no === 0 ? Object.keys(cond === 1 ? ylines : lines)[no] : no;
 
   return (
     <>

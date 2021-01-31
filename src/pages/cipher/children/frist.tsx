@@ -107,6 +107,7 @@ function Frist(props) {
       });
     }
   };
+
   return (
     <div className={styles.frist}>
       <div

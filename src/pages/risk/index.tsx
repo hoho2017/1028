@@ -22,17 +22,17 @@ const Risk: FC<PageProps> = ({ risk, dispatch }) => {
   useEffect(() => {
     setExpandedKeys(treeList.map(item => item.name));
   }, [treeList]);
-  useEffect(() => {
-    setExpandedKeys(treeList.map(item => item.name));
-    // setDeptId(treeList[1]?treeList[1].deptId:'')
-    // setDeptName(treeList[1]?treeList[1].name:'')
-    treeList.forEach(item => {
-      if (item.type === 99) {
-        setDeptId(item.deptId);
-        setDeptName(item.name);
-      }
-    });
-  }, [treeList]);
+  // useEffect(() => {
+  //   setExpandedKeys(treeList.map(item => item.name));
+  //   // setDeptId(treeList[1]?treeList[1].deptId:'')
+  //   // setDeptName(treeList[1]?treeList[1].name:'')
+  //   treeList.forEach(item => {
+  //     if (item.type === 99) {
+  //       setDeptId(item.deptId);
+  //       setDeptName(item.name);
+  //     }
+  //   });
+  // }, [treeList]);
   const onSelect = (selectedKeys: any, info: any) => {
     let deptId = undefined,
       deptName = undefined;

@@ -10,6 +10,7 @@ import {
   List,
   Typography,
   Divider,
+  Empty,
 } from 'antd';
 import Home from './img/home.png';
 import Inter from './img/inter.png';
@@ -75,7 +76,15 @@ function J(props) {
       },
     });
   };
-
+  console.log(deptId);
+  if (deptId === undefined) {
+    return (
+      <Empty
+        style={{ width: '100%' }}
+        description={<span>无数据，请选择机构</span>}
+      />
+    );
+  }
   return (
     <>
       <div

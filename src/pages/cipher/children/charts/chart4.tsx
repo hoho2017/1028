@@ -48,7 +48,9 @@ function Chart4(props) {
   Object.values(monthArith).forEach((item, index) => {
     Object.keys(item).forEach(name => {
       data.push({
-        keyword: zd[Number(name) - 1].value,
+        keyword: zd.filter(item => item.id === Number(name))[0]
+          ? zd.filter(item => item.code === name)[0].value
+          : '未知',
         dates: datas[index],
         first: item[name],
       });

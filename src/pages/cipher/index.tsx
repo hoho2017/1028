@@ -1,7 +1,7 @@
 import { ConnectProps, connect, CipherModelState } from 'umi';
 import React, { FC, useEffect, useState } from 'react';
 import styles from './index.less';
-import { Tabs, Tree, Input, Tooltip } from 'antd';
+import { Tabs, Tree, Input, Tooltip, Empty } from 'antd';
 import Box from './children/index.tsx';
 import produce from 'immer';
 
@@ -135,6 +135,7 @@ const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
                     // expandedKeys={expandedKeys}
                     autoExpandParent={autoExpandParent}
                     onSelect={onSelect}
+                    selectedKeys={[deptId]}
                     treeData={loop(treeData)}
                   />
                   <Search
@@ -145,14 +146,18 @@ const Cipher: FC<PageProps> = ({ cipher, dispatch }) => {
                   />
                 </div>
                 <div className="content">
-                  <Box
-                    ZD={ZD}
-                    deptId={deptId}
-                    dispatch={dispatch}
-                    deptName={deptName}
-                    index={item}
-                    catalogue={catalogue}
-                  />
+                  {deptId === undefined ? (
+                    <Empty description={<span>无数据，请选择机构</span>} />
+                  ) : (
+                    <Box
+                      ZD={ZD}
+                      deptId={deptId}
+                      dispatch={dispatch}
+                      deptName={deptName}
+                      index={item}
+                      catalogue={catalogue}
+                    />
+                  )}
                 </div>
               </TabPane>
             );
