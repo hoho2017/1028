@@ -111,8 +111,7 @@ function Sec(props) {
     let data = [];
     Object.values(monthArith).forEach((item, index) => {
       Object.keys(item).forEach(name => {
-        if (arith.filter(item => item.id === Number(name)).length === 0)
-          return null;
+        if (arith.filter(item => item.code === name).length === 0) return null;
         data.push({
           keyword: name,
           // keyword: arith.filter(item=>item.id===Number(name))[0].value,
@@ -148,6 +147,7 @@ function Sec(props) {
           keyword: name,
           dates: datas[index],
           first: item[name],
+          name: arith.filter(item => item.code === name)[0].value,
         });
       });
     });
@@ -155,10 +155,10 @@ function Sec(props) {
     let obj = {};
 
     data.forEach(item => {
-      if (obj[item.keyword]) {
-        obj[item.keyword].push(item);
+      if (obj[item.name]) {
+        obj[item.name].push(item);
       } else {
-        obj[item.keyword] = [item];
+        obj[item.name] = [item];
       }
     });
     setylines({ ...obj });

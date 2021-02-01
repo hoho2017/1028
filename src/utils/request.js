@@ -1,4 +1,5 @@
 import fetch from 'dva/fetch';
+
 // import environments from 'environments';
 import { RequestError, StatusError, ServerError } from '../errors';
 import processErrors from './processErrors';
@@ -118,6 +119,9 @@ export function requestRaw(url, option = { method: 'GET' }) {
           window.localStorage.clear();
           document.cookie = 'JSESSIONID=""';
           window.location.href = window.location.origin + '/login.html';
+          return null;
+        } else if (json.code === 500) {
+          message.warning('接口' + url + '异常500', 6);
           return null;
         }
         return { headers, data: json };

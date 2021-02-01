@@ -85,7 +85,14 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
       //     [1, 2, 3, 4],
       //   ),
       // );
-      setTreeD(treeMake(data2, [1, 2, 3, 4, 99]));
+      setTreeD(
+        treeMake(
+          data2.filter(item => {
+            return [1, 2, 3, 4].includes(item.type);
+          }),
+          [1, 2, 3, 4],
+        ),
+      );
     } else {
       setTreeD(treeMake(data, [1, 2, 3, 4, 99]));
     }

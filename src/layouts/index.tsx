@@ -1,4 +1,4 @@
-import { Layout, Menu, Row, Col, Dropdown } from 'antd';
+import { Layout, Menu, Row, Col, Dropdown, message } from 'antd';
 import './index.less';
 import { HomeIcon, CipherIcon, WarnIcon, ManageIcon } from './svg.js';
 import Login from '@/pages/login/login.tsx';
@@ -94,6 +94,7 @@ const BasicLayout: FC<PageProps> = props => {
     dispatch!({
       type: 'index/loginOut',
       callback: () => {
+        message.info('退出成功！');
         window.localStorage.clear();
         document.cookie = 'JSESSIONID=""';
         window.location.href = window.location.origin + '/login.html';
