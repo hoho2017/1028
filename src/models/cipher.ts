@@ -57,18 +57,18 @@ const CipherModel: CipherModelType = {
       const data = yield call(down, payload);
     },
     *queryListCollect({ type, payload, callback }, { put, call, select }) {
-      const { yearArith, monthArith, allYearTotal } = yield call(
+      const { yearArith, monthArith, allYearTotal, allArithType } = yield call(
         queryListCollect,
         payload,
       );
-      if (callback) callback(yearArith, monthArith, allYearTotal);
+      if (callback) callback(yearArith, monthArith, allYearTotal, allArithType);
     },
     *queryDouble({ type, payload, callback }, { put, call, select }) {
-      const { allMonthTotal, percent, monthArith } = yield call(
+      const { allMonthTotal, percent, monthArith, allArithType } = yield call(
         queryDouble,
         payload,
       );
-      if (callback) callback(allMonthTotal, percent, monthArith);
+      if (callback) callback(allMonthTotal, percent, monthArith, allArithType);
     },
     *queryTitle({ type, payload, callback }, { put, call, select }) {
       const { page } = yield call(queryTitle, payload);

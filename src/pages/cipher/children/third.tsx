@@ -20,6 +20,7 @@ function Sec(props) {
   const [no, setno] = useState(0);
   const [cond, setcond] = useState(0);
   const [table, settable] = useState([]);
+  const [table2, settable2] = useState([]);
   const [monthArith, setmonthArith] = useState([]);
   const [yearArith, setyearArith] = useState([]);
   const [lines, setlines] = useState({});
@@ -65,7 +66,8 @@ function Sec(props) {
         start: '2008-01-01 00:00:00',
         end: '2022-01-01 00:00:00',
       },
-      callback: (yearArith, monthArith, allYearTotal) => {
+      callback: (yearArith, monthArith, allYearTotal, allArithType) => {
+        console.log(allArithType);
         if (JSON.stringify(yearArith) === '{}') return null;
         setmonthArith(monthArith);
         setyearArith(yearArith);
@@ -79,11 +81,33 @@ function Sec(props) {
         arith.forEach(item => {
           arr.push({
             name: item.value,
-            ytotal: ydata[item.id],
-            mtotal: mdata[item.id],
+            ytotal: allArithType[item.code] || '-',
+            mtotal: mdata[item.code] || '-',
           });
         });
         settable(arr);
+      },
+    });
+    dispatch({
+      type: 'cipher/queryDouble',
+      payload: {
+        deptId,
+      },
+      callback: (allMonthTotal, percent, monthArith, allArithType) => {
+        console.log(allArithType);
+        let arr = [];
+        let mdata = Object.values(monthArith)[
+          Object.values(monthArith).length - 1
+        ];
+        arith.forEach(item => {
+          arr.push({
+            name: item.value,
+            ytotal: allArithType[item.code] || '-',
+            mtotal: mdata[item.code] || '-',
+          });
+        });
+        console.log(arr);
+        settable2(arr);
       },
     });
     dispatch({
@@ -139,8 +163,6 @@ function Sec(props) {
     let data = [];
     Object.values(yearArith).forEach((item, index) => {
       Object.keys(item).forEach(name => {
-        console.log(arith, name);
-
         if (arith.filter(item => item.code === name).length === 0) return null;
         data.push({
           // keyword: arith[Number(name) - 1].value,
@@ -203,7 +225,7 @@ function Sec(props) {
     return overWan ? getWan(overWan) + '万' + getWan(noWan) : getWan(num);
   };
   no === 0 ? Object.keys(cond === 1 ? ylines : lines)[no] : no;
-
+  console.log(table, table2);
   return (
     <>
       <div
@@ -298,7 +320,7 @@ function Sec(props) {
                 <Table
                   pagination={pagination}
                   columns={columns}
-                  dataSource={table}
+                  dataSource={cond === 1 ? table : table2}
                 />
               </div>
             </Col>

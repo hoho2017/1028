@@ -137,7 +137,7 @@ function F(props) {
       <Row style={{ width: '100%' }}>
         <Col span={10} style={{ height: height + 'px' }} offset={1}>
           <div className={styles.content3}>
-            <div className={styles.innerTitle3}>密码算法调用停止预警</div>
+            <div className={styles.innerTitle3}>密码设备运行故障告警</div>
             {stop.map((item, index) => {
               const txt = (item.appName + item.appTypeName).split('停止');
               return (
@@ -152,7 +152,7 @@ function F(props) {
         </Col>
         <Col span={10} style={{ height: height + 'px' }}>
           <div className={styles.content3}>
-            <div className={styles.innerTitle3}>密码算法调用故障预警</div>
+            <div className={styles.innerTitle3}>密码算法调用故障告警</div>
             {wrong.map((item, index) => {
               const txt = (item.appName + item.appTypeName).includes('故障')
                 ? (item.appName + item.appTypeName).split('故障')
