@@ -336,45 +336,56 @@ function Sec(props) {
             {Object.keys(flist).map((item, index) => {
               //item => 1，2，3
               return (
-                <div className={styles.innerbox2}>
+                <div
+                  className={styles.innerbox2}
+                  style={{
+                    height:
+                      Math.ceil(item.split('，').length / 5) * 3 + 3.5 + 'rem',
+                  }}
+                >
                   <Row>
                     <Col span={18} offset={1}>
                       <div className={styles.titleb}>
                         场景{toChinesNum(index + 1)}
                       </div>
                       <Row className={styles.mt} style={{ height: '36px' }}>
-                        <Col span={4}>
+                        <Col span={4} style={{ margin: '0.4rem 0' }}>
                           <div className={styles.innerTitle2}>应用系统</div>
                         </Col>
-                        <Col span={2} style={{ height: '100%' }}>
+                        <Col
+                          span={2}
+                          style={{ height: '100%', margin: '0.4rem 0' }}
+                        >
                           <img
                             className={styles.arrow}
                             src={arrow}
                             style={{ height: '100%' }}
                           />
                         </Col>
-                        {item.split('').map(item => {
-                          if (item === '，') {
-                            return (
-                              <Col span={2} style={{ height: '100%' }}>
-                                <img
-                                  className={styles.arrow}
-                                  src={arrow}
-                                  style={{ height: '100%' }}
-                                />
-                              </Col>
-                            );
-                          } else {
-                            return (
-                              <Col span={2}>
+                        {item.split('，').map((item2, index) => {
+                          return (
+                            <>
+                              <Col span={2} style={{ margin: '0.4rem 0' }}>
                                 <div className={styles.innerTitle2}>
-                                  {arith[Number(item) - 1]
-                                    ? arith[Number(item) - 1].value
-                                    : null}
+                                  {arith[Number(item2) - 1]
+                                    ? arith[Number(item2) - 1].value
+                                    : item2}
                                 </div>
                               </Col>
-                            );
-                          }
+                              {index !== item.split('，').length - 1 ? (
+                                <Col
+                                  span={2}
+                                  style={{ height: '100%', margin: '0.4rem 0' }}
+                                >
+                                  <img
+                                    className={styles.arrow}
+                                    src={arrow}
+                                    style={{ height: '100%' }}
+                                  />
+                                </Col>
+                              ) : null}
+                            </>
+                          );
                         })}
                       </Row>
                     </Col>
