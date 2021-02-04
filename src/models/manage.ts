@@ -298,10 +298,11 @@ const ManageModel: ManageModelType = {
       const data = yield call(queryTThird, payload);
       if (callback) callback(data.page);
     },
-    *queryTwo({ type, payload }, { put, call, select }) {
+    *queryTwo({ type, payload, callback }, { put, call, select }) {
       //请求tree data
 
       const { data } = yield call(queryTreeM);
+      const data2 = yield call(queryTree);
 
       const treeData = data;
       const treeList = data.map(item => {
@@ -309,13 +310,21 @@ const ManageModel: ManageModelType = {
         item.key = item.deptId;
         return item;
       });
+      const treeList2 = data2.data.map(item => {
+        item.title = item.name;
+        item.key = item.deptId;
+        return item;
+      });
+      const treeData2 = data2.data;
       yield put({
         type: 'save',
         payload: {
           treeData,
+          treeData2,
           treeList,
         },
       });
+      if (callback) callback(treeData, treeData2);
     },
     *queryArith({ type, payload }, { put, call, select }) {
       const arith = yield call(queryArith);
