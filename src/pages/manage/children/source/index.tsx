@@ -546,7 +546,6 @@ const Source: FC<PageProps> = props => {
     setCurrent(page);
   };
   // useEffect(() => {}, [no]);
-  console.log(arith);
   return (
     <div ref={boxRef}>
       <div className={styles.content}>
