@@ -135,7 +135,7 @@ function J(props) {
                     : ' ';
                 return (
                   <List.Item onClick={() => setDetail(item)}>
-                    {item.appName + name + item.appTypeName}
+                    {item.appName + ' ' + name + ' ' + item.appTypeName}
                   </List.Item>
                 );
               }}

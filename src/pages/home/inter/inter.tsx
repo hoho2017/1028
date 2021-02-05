@@ -87,7 +87,10 @@ const Inter: FC<PageProps> = ({ index, dispatch }) => {
                 const txt =
                   item.logDate.split(' ')[0] +
                   ' ' +
+                  item.parentDeptName +
+                  ' ' +
                   item.appName +
+                  ' ' +
                   item.logMessage;
                 return (
                   <div key={item.id}>

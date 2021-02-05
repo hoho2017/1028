@@ -86,7 +86,7 @@ export function requestRaw(url, option = { method: 'GET' }) {
         let downloadLink = document.createElement('a');
         downloadLink.style.display = 'none';
         downloadLink.href = downloadHref;
-        downloadLink.download = '密评风评方案模板.xls';
+        downloadLink.download = '密评风评方案模板.xlsx';
         downloadLink.click();
         window.URL.revokeObjectURL(downloadHref);
       }),
@@ -121,9 +121,9 @@ export function requestRaw(url, option = { method: 'GET' }) {
           window.location.href = window.location.origin + '/login.html';
           return null;
         } else if (json.code === 500) {
-          message.warning('接口' + url + '异常500', 6);
-          window.location.reload();
-          return null;
+          // message.warning( json.msg , 2);
+          //  window.location.reload();
+          //   return null;
         }
         return { headers, data: json };
       });

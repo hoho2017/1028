@@ -122,7 +122,14 @@ function F(props) {
           <div className={styles.content3} style={{ padding: ' 0 0 3% 0' }}>
             <div className={styles.innerTitle3}>密码算法调用趋势预警</div>
             {down.map((item, index) => {
-              const txt = (item.appName + item.appTypeName).split('下降');
+              const txt = (
+                item.parentDeptName +
+                ' ' +
+                item.appName +
+                ' ' +
+                item.arithName +
+                item.appTypeName
+              ).split('下降');
               return (
                 <div style={{ padding: '2px' }} key={item.appName + index}>
                   {txt[0]}
@@ -139,7 +146,13 @@ function F(props) {
           <div className={styles.content3}>
             <div className={styles.innerTitle3}>密码设备运行故障告警</div>
             {stop.map((item, index) => {
-              const txt = (item.appName + item.appTypeName).split('停止');
+              const txt = (
+                item.parentDeptName +
+                ' ' +
+                item.appName +
+                ' ' +
+                item.appTypeName
+              ).split('停止');
               return (
                 <div style={{ padding: '2px' }} key={item.appName + index}>
                   {txt[0]}
@@ -154,9 +167,27 @@ function F(props) {
           <div className={styles.content3}>
             <div className={styles.innerTitle3}>密码算法调用故障告警</div>
             {wrong.map((item, index) => {
-              const txt = (item.appName + item.appTypeName).includes('故障')
-                ? (item.appName + item.appTypeName).split('故障')
-                : (item.appName + item.appTypeName).split('延时');
+              const txt = (
+                item.parentDeptName +
+                ' ' +
+                item.appName +
+                ' ' +
+                item.appTypeName
+              ).includes('故障')
+                ? (
+                    item.parentDeptName +
+                    ' ' +
+                    item.appName +
+                    ' ' +
+                    item.appTypeName
+                  ).split('故障')
+                : (
+                    item.parentDeptName +
+                    ' ' +
+                    item.appName +
+                    ' ' +
+                    item.appTypeName
+                  ).split('延时');
               return (
                 <div style={{ padding: '2px' }} key={item.appName + index}>
                   {txt[0]}
