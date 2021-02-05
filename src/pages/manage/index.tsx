@@ -17,7 +17,7 @@ interface PageProps extends ConnectProps {
 const Manage: FC<PageProps> = ({ manage, dispatch }) => {
   const { catalogue, treeData, treeData2 = [], treeList, ZD } = manage;
   useEffect(() => {
-    resetTreeData(indexS);
+    resetTreeData(indexS, no);
   }, [treeData, treeData2]);
   const child = useRef({});
   const [expandedKeys, setExpandedKeys] = useState([]);
@@ -27,6 +27,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
   const [deptName, setDeptName] = useState();
   const [treeD, setTreeD] = useState([]);
   const [indexS, setIndexS] = useState('');
+  const [no, setNo] = useState(0);
   useEffect(() => {
     setExpandedKeys(treeList.map(item => item.key));
     // setDeptId(treeList[1]?treeList[1].deptId:'')
@@ -52,6 +53,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
   //   );
   // }, [treeData]);
   const resetTreeData = (index = '', no = 0) => {
+    setNo(no);
     //inex 0->source 1->mp 3->user 4->auth
     // index = Number(index);
     let data = _.cloneDeep(treeData);
@@ -104,7 +106,7 @@ const Manage: FC<PageProps> = ({ manage, dispatch }) => {
     dispatch!({
       type: 'manage/queryTwo',
     });
-    resetTreeData(indexS);
+    resetTreeData(indexS, no);
   }, [indexS]);
   const onSelect = (selectedKeys: any, info: any) => {
     let deptId = undefined,
