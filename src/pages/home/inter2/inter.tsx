@@ -90,7 +90,8 @@ const Inter: FC<PageProps> = ({ index, dispatch }) => {
                   ' ' +
                   item.appName +
                   ' ' +
-                  item.logMessage;
+                  item.arithName +
+                  item.appTypeName;
                 return (
                   <div key={item.id}>
                     <div key={item.appName + index}>{txt}</div>
