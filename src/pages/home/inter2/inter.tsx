@@ -32,6 +32,7 @@ const Inter: FC<PageProps> = ({ index, dispatch }) => {
       type: 'index/details',
       payload: {
         appTypes: '1,2,3,4',
+        logAppType: 2,
       },
       callback: list => {
         setList(list);
