@@ -196,18 +196,18 @@ const Auth: FC<PageProps> = props => {
     form.resetFields();
     setShowForm('0');
   };
+
   const showFormFunc = (i: string) => {
     if (deptId === undefined && i === '1') {
       message.warn('请先勾选部门！');
       return false;
     }
-    console.log(localStorage);
     if (i === '4') {
-      const list = localStorage.getItem('manage')?.split(',')
-        ? localStorage.getItem('manage')?.split(',')
-        : [];
-      if (!list.includes('94')) {
-        message.warn('无修改角色权限');
+      //授权
+      const userMenu = localStorage.getItem('userMenu');
+      console.log(userMenu);
+      if (userMenu === 'true') {
+        message.warn('无权限修改');
         return false;
       }
     }
@@ -263,6 +263,7 @@ const Auth: FC<PageProps> = props => {
           },
           callback: data => {
             //list
+            console.log(data);
             setTree(treeMake2(data));
             setShowTree(true);
           },

@@ -76,6 +76,25 @@ const BasicLayout: FC<PageProps> = props => {
         }
         setMenu([...data]);
         // setMenu([{name:'首页'}, {name:'密码应用'},{name:'风险监控'},{name:'系统管理'},])
+
+        dispatch!({
+          type: 'index/userInfo',
+          callback: user => {
+            console.log(user.user);
+            try {
+              window.localStorage.setItem('userInfo', user.user);
+              user.user.userId != 1 &&
+                !(user.user.menuList && user.user.menuList.includes(94));
+              window.localStorage.setItem(
+                'userMenu',
+                user.user.userId != 1 &&
+                  !(user.user.menuList && user.user.menuList.includes(94)),
+              );
+            } catch (e) {
+              console.log(e);
+            }
+          },
+        });
       },
     });
   }, []);

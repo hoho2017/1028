@@ -16,3 +16,8 @@ export async function getMenu() {
     method: 'GET',
   });
 }
+export async function userInfo(params) {
+  return request(`/sys/user/info`, {
+    method: 'GET',
+  });
+}

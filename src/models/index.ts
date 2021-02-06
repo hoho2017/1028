@@ -1,5 +1,5 @@
 import { Effect, Reducer, Subscription, request } from 'umi';
-import { login, getMenu } from '@/services/login';
+import { login, getMenu, userInfo } from '@/services/login';
 import { queryZD } from '@/services/cipher';
 import { details } from '@/services/risk';
 
@@ -26,6 +26,7 @@ export interface IndexModelType {
     details: Effect;
     getMenu: Effect;
     loginOut: Effect;
+    userInfo: Effect;
   };
   reducers: {
     save: Reducer<IndexModelState>;
@@ -46,12 +47,12 @@ const IndexModel: IndexModelType = {
       if (callback) callback();
     },
     *login({ type, payload, callback }, { put, call, select }) {
-      const data = yield call(login, {
-        username: 'admin',
-        password: '123456',
-      });
-      document.cookie = `JSESSIONID=${data.JSESSIONID}`;
-      if (callback) callback();
+      // const data = yield call(login, {
+      //   username: 'admin',
+      //   password: '123456',
+      // });
+      // document.cookie = `JSESSIONID=${data.JSESSIONID}`;
+      // if (callback) callback();
     },
     *getMenu({ type, callback }, { put, call, select }) {
       const { menuList } = yield call(getMenu);
@@ -71,6 +72,10 @@ const IndexModel: IndexModelType = {
     *interDataInit({ type, payload, callback }, { put, call }) {
       const data = yield call(interDataInit, payload);
       if (callback) callback(data);
+    },
+    *userInfo({ type, payload, callback }, { put, call, select }) {
+      const infoList = yield call(userInfo);
+      if (callback) callback(infoList);
     },
     *query({ type, payload }, { put, call, select }) {
       //请求tree data
