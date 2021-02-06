@@ -201,6 +201,16 @@ const Auth: FC<PageProps> = props => {
       message.warn('请先勾选部门！');
       return false;
     }
+    console.log(localStorage);
+    if (i === '4') {
+      const list = localStorage.getItem('manage')?.split(',')
+        ? localStorage.getItem('manage')?.split(',')
+        : [];
+      if (!list.includes('94')) {
+        message.warn('无修改角色权限');
+        return false;
+      }
+    }
     if (
       (JSON.stringify(choose) === '{}' && i === '2') ||
       (JSON.stringify(choose) === '{}' && i === '4') ||
