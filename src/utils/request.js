@@ -122,7 +122,7 @@ export function requestRaw(url, option = { method: 'GET' }) {
           return null;
         } else if (json.code === 500) {
           message.warning('接口' + url + '异常500', 6);
-          window.location.reload();
+          // window.location.reload();
           return null;
         }
         return { headers, data: json };

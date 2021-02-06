@@ -54,7 +54,7 @@ const Confi: FC<PageProps> = props => {
           return { key: k, value };
         });
         const arr = [];
-        for (let i = Number(moment().year() - 19); i <= moment().year(); i++) {
+        for (let i = Number(moment().year() - 1); i <= moment().year(); i++) {
           const obj = {};
           obj.k = i;
           obj.color = 'black';
@@ -65,6 +65,7 @@ const Confi: FC<PageProps> = props => {
           });
           arr.push(obj);
         }
+        console.log(arr);
         setYear([...arr]);
       },
     });
@@ -316,7 +317,7 @@ const Confi: FC<PageProps> = props => {
                 <Col span={2}>
                   <span className={styles.head}>年份</span>
                 </Col>
-                {year.slice(10, 20).map(item => {
+                {year.slice(0, 10).map(item => {
                   return (
                     <Col span={2} key={item.k}>
                       <span
@@ -337,7 +338,7 @@ const Confi: FC<PageProps> = props => {
                 })}
               </Row>
               <Row style={{ display: isAll ? 'flex' : 'none' }}>
-                {year.slice(0, 10).map((item, index) => {
+                {year.slice(10, 20).map((item, index) => {
                   return (
                     <Col span={2} offset={index === 0 ? 2 : 0} key={item.k}>
                       <span
