@@ -94,19 +94,18 @@ function Sec(props) {
         deptId,
       },
       callback: (allMonthTotal, percent, monthArith, allArithType) => {
-        console.log(allArithType);
         let arr = [];
         let mdata = Object.values(monthArith)[
           Object.values(monthArith).length - 1
         ];
         arith.forEach(item => {
+          console.log(item);
           arr.push({
             name: item.value,
-            ytotal: allArithType[item.code] || '-',
-            mtotal: mdata[item.code] || '-',
+            ytotal: allArithType[item.code] ? allArithType[item.code] : '-',
+            mtotal: mdata && mdata[item.code] ? mdata[item.code] : '-',
           });
         });
-        console.log(arr);
         settable2(arr);
       },
     });
