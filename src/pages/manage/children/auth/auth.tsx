@@ -364,11 +364,28 @@ const Auth: FC<PageProps> = props => {
       },
     },
   ]);
+  let arrPart = [];
+  if (
+    localStorage
+      .getItem('manage')
+      ?.split(',')
+      .includes('94')
+  ) {
+    arrPart.push(titleArr[0]);
+  }
+  if (
+    localStorage
+      .getItem('manage')
+      ?.split(',')
+      .includes('95')
+  ) {
+    arrPart.push(titleArr[1]);
+  }
   return (
     <div ref={boxRef}>
       <div className={styles.content}>
         <Row>
-          {titleArr.map((item, index) => {
+          {arrPart.map((item, index) => {
             return (
               <Col
                 key={item.name}

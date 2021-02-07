@@ -5,7 +5,8 @@ export default defineConfig({
   antd: {},
   proxy: {
     '/sys/': {
-      target: 'http://localhost:8280/',
+      target: 'http://49.232.45.79:8280/',
+      // target: 'http://localhost:8280/',
       changeOrigin: true,
       pathRewrite: { '^/api/': '' },
     },

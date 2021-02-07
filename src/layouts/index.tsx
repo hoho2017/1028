@@ -35,6 +35,7 @@ const BasicLayout: FC<PageProps> = props => {
       callback: data => {
         window.localStorage.clear();
         // const arrManage =  [{list:[{menuId:'93'}, {menuId:'130'}, {menuId:'131'}, {menuId:'137'}, {menuId:'139'}, {menuId:'140'}, {menuId:'166'}, {menuId:'171'}]}];
+        console.log(data);
         const arrManage = data.filter(item => {
           return item.menuId === 89;
         });
@@ -80,7 +81,6 @@ const BasicLayout: FC<PageProps> = props => {
         dispatch!({
           type: 'index/userInfo',
           callback: user => {
-            console.log(user.user);
             try {
               window.localStorage.setItem('userInfo', user.user);
               user.user.userId != 1 &&

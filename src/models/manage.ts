@@ -340,6 +340,8 @@ const ManageModel: ManageModelType = {
       const list = localStorage.getItem('manage')?.split(',')
         ? localStorage.getItem('manage')?.split(',')
         : [];
+      //用户授权 95  角色管理94
+      console.log(list);
       if (list === undefined) return;
       const localData = [];
 
