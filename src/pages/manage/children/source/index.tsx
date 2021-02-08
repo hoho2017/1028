@@ -235,7 +235,8 @@ const Source: FC<PageProps> = props => {
         values.parentDeptId = choose.parentDeptId;
         values.deptId = choose.deptId;
         values.appId = choose.appId;
-        values.appType = choose.appType;
+        // values.appType = choose.appType;
+        console.log(values.appType);
         dispatch({
           type: 'manage/appModify',
           payload: values,
