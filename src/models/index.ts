@@ -48,7 +48,7 @@ const IndexModel: IndexModelType = {
     },
     *login({ type, payload, callback }, { put, call, select }) {
       // const data = yield call(login, {
-      //   username: 'anquan',
+      //   username: 'xitong',
       //   password: '123456',
       // });
       // document.cookie = `JSESSIONID=${data.JSESSIONID}`;

@@ -114,17 +114,20 @@ const Auth: FC<PageProps> = props => {
   };
 
   useEffect(() => {
-    if (
-      no === 0 &&
-      localStorage
-        .getItem('manage')
-        ?.split(',')
-        .includes('94')
-    ) {
-      queryTApp(current);
-    } else {
-      queryTOrg(current);
-    }
+    queryTApp(current);
+    queryTOrg(current);
+
+    // if (
+    //   no === 0 &&
+    //   localStorage
+    //     .getItem('manage')
+    //     ?.split(',')
+    //     .includes('94')
+    // ) {
+    //   queryTApp(current);
+    // } else {
+    //   queryTOrg(current);
+    // }
   }, [deptId, no, current]); //no -> 0 1 2 3
   useEffect(() => {
     setCurrent(1);
