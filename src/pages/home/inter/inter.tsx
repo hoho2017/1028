@@ -23,7 +23,7 @@ const Inter: FC<PageProps> = ({ index, dispatch }) => {
   useEffect(() => {
     dispatch!({
       type: 'index/interDataInit',
-      payload: { appType: 1 },
+      payload: { appType: 2 },
       callback: data => {
         setTotalData({ ...data.data });
       },
@@ -32,7 +32,7 @@ const Inter: FC<PageProps> = ({ index, dispatch }) => {
       type: 'index/details',
       payload: {
         appTypes: '1,2,3,4',
-        logAppType: 1,
+        logAppType: 2,
       },
       callback: list => {
         setList(list);

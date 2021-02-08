@@ -114,7 +114,13 @@ const Auth: FC<PageProps> = props => {
   };
 
   useEffect(() => {
-    if (no === 0) {
+    if (
+      no === 0 &&
+      localStorage
+        .getItem('manage')
+        ?.split(',')
+        .includes('94')
+    ) {
       queryTApp(current);
     } else {
       queryTOrg(current);
@@ -381,6 +387,7 @@ const Auth: FC<PageProps> = props => {
   ) {
     arrPart.push(titleArr[1]);
   }
+  console.log(listOrg);
   return (
     <div ref={boxRef}>
       <div className={styles.content}>
@@ -415,7 +422,13 @@ const Auth: FC<PageProps> = props => {
       </div>
       <Row style={{ position: 'relative', zIndex: '3', margin: '2rem' }}>
         {operation.map((item, index) => {
-          if (no === index) {
+          if (
+            no === index &&
+            localStorage
+              .getItem('manage')
+              ?.split(',')
+              .includes('94')
+          ) {
             return Array.from('1234').map(i => {
               return (
                 <Col key={i} span={5} offset={i === '1' ? 1 : 0}>
@@ -517,7 +530,11 @@ const Auth: FC<PageProps> = props => {
         }}
       >
         <Col span={22} offset={1}>
-          {no === 0 ? (
+          {no === 0 &&
+          localStorage
+            .getItem('manage')
+            ?.split(',')
+            .includes('94') ? (
             <Table
               pagination={{
                 total,
@@ -534,7 +551,10 @@ const Auth: FC<PageProps> = props => {
               columns={columnsRole}
               dataSource={listApp}
             />
-          ) : (
+          ) : localStorage
+              .getItem('manage')
+              ?.split(',')
+              .includes('95') ? (
             <Table
               pagination={{
                 total,
@@ -546,7 +566,7 @@ const Auth: FC<PageProps> = props => {
               columns={columnsAuth2}
               dataSource={listOrg}
             />
-          )}
+          ) : null}
         </Col>
       </Row>
       <Modal

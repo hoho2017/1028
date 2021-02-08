@@ -137,7 +137,7 @@ const OuterNet: FC<PageProps> = ({ index, dispatch }) => {
   useEffect(() => {
     dispatch!({
       type: 'index/outerInit',
-      payload: { appType: 1 },
+      payload: { appType: 2 },
       callback: data => {
         setTotalData({ ...data.data });
         setCity([...data.city]);
