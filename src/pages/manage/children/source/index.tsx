@@ -235,7 +235,9 @@ const Source: FC<PageProps> = props => {
         values.parentDeptId = choose.parentDeptId;
         values.deptId = choose.deptId;
         values.appId = choose.appId;
-        // values.appType = choose.appType;
+        values.appType = isNaN(Number(values.appType))
+          ? choose.appType
+          : values.appType;
         console.log(values.appType);
         dispatch({
           type: 'manage/appModify',
