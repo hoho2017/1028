@@ -151,6 +151,7 @@ function F(props) {
                 ' ' +
                 item.appName +
                 ' ' +
+                item.arithName +
                 item.appTypeName
               ).split('停止');
               return (
@@ -172,6 +173,7 @@ function F(props) {
                 ' ' +
                 item.appName +
                 ' ' +
+                item.arithName +
                 item.appTypeName
               ).includes('故障')
                 ? (
@@ -179,6 +181,7 @@ function F(props) {
                     ' ' +
                     item.appName +
                     ' ' +
+                    item.arithName +
                     item.appTypeName
                   ).split('故障')
                 : (
@@ -186,6 +189,7 @@ function F(props) {
                     ' ' +
                     item.appName +
                     ' ' +
+                    item.arithName +
                     item.appTypeName
                   ).split('延时');
               return (
