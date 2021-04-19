@@ -20,12 +20,21 @@ interface PageProps extends ConnectProps {
 }
 const BasicLayout: FC<PageProps> = props => {
   const [menu, setMenu] = useState([]);
+  const [title, setTitle] = useState('');
   const [menuData, setMenuData] = useState([]);
   const {
     location: { pathname },
     children,
   } = props;
   const { index, dispatch } = props;
+  useEffect(() => {
+    dispatch!({
+      type: 'index/getTitleName',
+      callback: name => {
+        setTitle(name.data);
+      },
+    });
+  }, []);
   useEffect(() => {
     dispatch!({
       type: 'index/login',
@@ -129,6 +138,7 @@ const BasicLayout: FC<PageProps> = props => {
       </Menu.Item>
     </Menu>
   );
+  console.log(window.localStorage.getItem('title'));
   return (
     <Layout>
       <Sider
@@ -178,7 +188,7 @@ const BasicLayout: FC<PageProps> = props => {
                   padding: '0 31px',
                 }}
               >
-                密码应用在线管理平台
+                {title}
               </div>
             </Col>
             <Col span={3} offset={1}>

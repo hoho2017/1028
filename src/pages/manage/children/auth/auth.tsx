@@ -2,6 +2,7 @@ import { ConnectProps, connect, ManageModelState } from 'umi';
 import React, { FC, useEffect, useState, useRef } from 'react';
 import styles from './auth.less';
 import { treeMake2 } from '@/utils/translateFunc.js';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import {
   Row,
   Col,
@@ -59,6 +60,7 @@ const Auth: FC<PageProps> = props => {
   const [authObj, setAuthObj] = useState({});
   const [selectionType, setSelectionType] = useState('checkbox');
   const [tree, setTree] = useState([]);
+  const { confirm } = Modal;
   const queryTApp = page => {
     dispatch({
       type: 'manage/queryTRole',
@@ -247,19 +249,31 @@ const Auth: FC<PageProps> = props => {
       }
       if (i === '3') {
         //注销
-        dispatch({
-          type: 'manage/roleDelete',
-          payload: {
-            id: choose.roleId,
+        confirm({
+          title: '确认删除角色?',
+          icon: <ExclamationCircleOutlined />,
+          // content: 'Some descriptions',
+          okText: '确认',
+          cancelText: '取消',
+          onOk() {
+            dispatch({
+              type: 'manage/roleDelete',
+              payload: {
+                id: choose.roleId,
+              },
+              callback: data => {
+                if (data.code === 500) {
+                  message.error(data.msg);
+                } else if (data.code === 0) {
+                  message.success('操作成功!');
+                  onReset();
+                  queryTApp(current);
+                }
+              },
+            });
           },
-          callback: data => {
-            if (data.code === 500) {
-              message.error(data.msg);
-            } else if (data.code === 0) {
-              message.success('操作成功!');
-              onReset();
-              queryTApp(current);
-            }
+          onCancel() {
+            console.log('Cancel');
           },
         });
       }
@@ -390,7 +404,6 @@ const Auth: FC<PageProps> = props => {
   ) {
     arrPart.push(titleArr[1]);
   }
-  console.log(listOrg);
   return (
     <div ref={boxRef}>
       <div className={styles.content}>

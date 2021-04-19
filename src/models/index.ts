@@ -8,6 +8,7 @@ import {
   outerInit,
   interDataInit,
   loginOut,
+  getTitleName,
 } from '@/services/home';
 export interface IndexModelState {
   catalogue: Array<string>;
@@ -27,6 +28,7 @@ export interface IndexModelType {
     getMenu: Effect;
     loginOut: Effect;
     userInfo: Effect;
+    getTitleName: Effect;
   };
   reducers: {
     save: Reducer<IndexModelState>;
@@ -47,12 +49,12 @@ const IndexModel: IndexModelType = {
       if (callback) callback();
     },
     *login({ type, payload, callback }, { put, call, select }) {
-      // const data = yield call(login, {
-      //   username: 'xitong',
-      //   password: '123456',
-      // });
-      // document.cookie = `JSESSIONID=${data.JSESSIONID}`;
-      // if (callback) callback();
+      const data = yield call(login, {
+        username: 'admin',
+        password: '123456',
+      });
+      document.cookie = `JSESSIONID=${data.JSESSIONID}`;
+      if (callback) callback();
     },
     *getMenu({ type, callback }, { put, call, select }) {
       const { menuList } = yield call(getMenu);
@@ -76,6 +78,10 @@ const IndexModel: IndexModelType = {
     *userInfo({ type, payload, callback }, { put, call, select }) {
       const infoList = yield call(userInfo);
       if (callback) callback(infoList);
+    },
+    *getTitleName({ type, payload, callback }, { put, call, select }) {
+      const name = yield call(getTitleName);
+      if (callback) callback(name);
     },
     *query({ type, payload }, { put, call, select }) {
       //请求tree data
